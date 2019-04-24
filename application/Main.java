@@ -1,3 +1,22 @@
+///////////////////////////////////////////////////////////////////////////////
+//
+// Title:           Final Project: EvolutionTree
+// Due Date:        Milestone 1: 4/25/2019 10pm
+//                  Milestone 2: 5/2/2019 10pm
+//                  
+// Course:          CS400, Spring 2018, Lecture 002
+//
+// Authors:          Erica Heying, Ben Procknow, Ajman Naqab, Callan Patel
+// Lecturer's Name: Deb Deppeler
+//
+///////////////////////////// CREDIT OUTSIDE HELP /////////////////////////////
+//
+// Persons:         NONE
+// Online Sources:  https://docs.oracle.com/javafx/2/ui_controls/combo-box.htm
+//
+///////////////////////////// KNOWN BUGS///////////////////////////////////////
+// Known Bugs:      NONE     
+///////////////////////////////////////////////////////////////////////////////
 package application;
 
 import java.util.ArrayList;
