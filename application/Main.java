@@ -274,12 +274,23 @@ public class Main extends Application {
    */
   private Scene searchResults() {
     Text users = new Text("Users with your search criteria: ");
+    Text user1 = new Text("Erica Heying: eheying@wisc.edu");
+    Text user2 = new Text("Ben Procknow: bprocknow@wisc.edu");
+    Text user3 = new Text("Ajman Naqab : @wisc.edu");
+    Text user4 = new Text("Callan Patel: cpatel@wisc.edu");
     Text otherInfo = new Text("More information about your search: ");
+    Text otherInfo1 = new Text("Recommended next course: CS352");
+    Text otherInfo2 = new Text("This search returned 5% of users.");
     GridPane grid = new GridPane();
     grid.add(users, 0, 0);
-    grid.add(otherInfo, 0, 1);
+    grid.add(user1, 1, 2);
+    grid.add(user2, 1, 3);
+    grid.add(user3, 1, 4);
+    grid.add(user4, 1, 5);
+    grid.add(otherInfo, 0, 7);
+    grid.add(otherInfo1, 1, 8);
+    grid.add(otherInfo2, 1, 9);
 
-    grid.setAlignment(Pos.CENTER);
     BorderPane borderPane = new BorderPane();
     borderPane.setCenter(grid);
     borderPane.setBottom(logout);

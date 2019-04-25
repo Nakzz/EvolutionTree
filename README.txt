@@ -1,0 +1,1 @@
+Our application allows users to search for other users dependent on the search criteria.
