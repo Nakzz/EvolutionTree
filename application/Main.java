@@ -6,18 +6,19 @@
 //                  
 // Course:          CS400, Spring 2018, Lecture 002
 //
-// Authors:          Erica Heying, Ben Procknow, Ajman Naqab, Callan Patel
+// Authors:         Erica Heying, Ben Procknow, Ajman Naqab, Callan Patel
+// A team:          63
 // Lecturer's Name: Deb Deppeler
 //
 ///////////////////////////// CREDIT OUTSIDE HELP /////////////////////////////
 //
 // Persons:         NONE
-// Online Sources:  https://docs.oracle.com/javafx/2/ui_controls/combo-box.htm
+// Online Sources:  https://docs.oracle.com/javafx/2/ui_controls/radio-button.htm
 //
 ///////////////////////////// KNOWN BUGS///////////////////////////////////////
 // Known Bugs:      NONE     
 ///////////////////////////////////////////////////////////////////////////////
-package application.EvolutionTree.application;
+package application;
 
 import java.util.ArrayList;
 import javafx.application.Application;
@@ -31,13 +32,20 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-
+/**
+ * Main application
+ * @author erica, ben, aj, callen
+ *
+ */
 public class Main extends Application {
-  Stage primaryStage;
-  Button logout = new Button("Logout"); // add logout button functionality somewhere
+  Stage primaryStage; // the one and only stage
+  Button logout = new Button("Logout"); // add logout button functionality on each page
+  
+  /**
+   * The start method that sets the stage
+   */
   @Override
   public void start(Stage primaryStage) {
     try {
@@ -56,6 +64,10 @@ public class Main extends Application {
     }
   }
 
+  /**
+   * main that launches the program
+   * @param args
+   */
   public static void main(String[] args) {
     launch(args);
   }
@@ -67,14 +79,14 @@ public class Main extends Application {
   private  Scene loginScreen() {
     // log in with valid username 
     Text loginPrompt = new Text(20,30,"Login: ");
-    TextField userEntry = new TextField();
     Button submit = new Button("Submit");
-    HBox loginEntry = new HBox();
-    loginEntry.getChildren().addAll(loginPrompt, userEntry,submit);
-
-
     Text signupPrompt = new Text(20,30,"Sign-up: ");
-    TextField newUsername = new TextField();
+    GridPane grid = new GridPane();
+    grid.add(loginPrompt, 0, 0);
+    grid.add(new TextField(), 1, 0);
+    grid.add(submit, 3, 0);
+    grid.add(signupPrompt, 0, 1);
+    grid.add(new TextField(), 1, 1);
 
     // radio button for the user type when a user wants to sign up
     ToggleGroup type = new ToggleGroup();
@@ -88,12 +100,11 @@ public class Main extends Application {
 
     Button signup = new Button("Sign-up!");
 
-    HBox part1 = new HBox();
-    part1.getChildren().addAll(signupPrompt, newUsername);
-
-    VBox part2 = new VBox();
-    part2.getChildren().addAll(part1,userTypeStudent,userTypeFaculty,signup);
-
+    grid.add(userTypeStudent, 1, 2);
+    grid.add(userTypeFaculty, 1, 3);
+    grid.add(signup, 1, 4);
+    
+    // button functionality
     signup.setOnAction(student -> {
       if(userTypeStudent.isSelected()) {
         Scene studentSignUp = signupScreenStudent();
@@ -106,18 +117,18 @@ public class Main extends Application {
       }
     });
 
+    // button functionality 
     submit.setOnAction(toSearch->{
       Scene search = search();
       primaryStage.setScene(search);
       primaryStage.show();
     });
-    // VBox
-    VBox loginMenu = new VBox();
-    loginMenu.getChildren().addAll(loginEntry,part2);
-    loginMenu.setAlignment(Pos.CENTER);
+    
 
+    grid.setAlignment(Pos.CENTER);
     BorderPane root = new BorderPane();
-    root.setCenter(loginMenu);
+    root.setCenter(grid);
+    root.setBottom(logout);
 
     Scene login = new Scene(root,800,600);
     login.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -154,6 +165,7 @@ public class Main extends Application {
       primaryStage.show();      
     });
 
+    grid.setAlignment(Pos.CENTER);
     BorderPane borderPane = new BorderPane();
     borderPane.setCenter(grid);
     borderPane.setBottom(logout);
@@ -190,7 +202,7 @@ public class Main extends Application {
       primaryStage.show();      
     });
 
-
+    grid.setAlignment(Pos.CENTER);
     BorderPane borderPane = new BorderPane();
     borderPane.setCenter(grid);
     borderPane.setBottom(logout);
@@ -246,6 +258,8 @@ public class Main extends Application {
       primaryStage.setScene(searchResults);
       primaryStage.show();      
     });
+    
+    grid.setAlignment(Pos.CENTER);
     BorderPane borderPane = new BorderPane();
     borderPane.setCenter(grid);
     borderPane.setBottom(logout);
@@ -260,10 +274,22 @@ public class Main extends Application {
    */
   private Scene searchResults() {
     Text users = new Text("Users with your search criteria: ");
+    Text user1 = new Text("Erica Heying: eheying@wisc.edu");
+    Text user2 = new Text("Ben Procknow: bprocknow@wisc.edu");
+    Text user3 = new Text("Ajman Naqab : @wisc.edu");
+    Text user4 = new Text("Callan Patel: cpatel@wisc.edu");
     Text otherInfo = new Text("More information about your search: ");
+    Text otherInfo1 = new Text("Recommended next course: CS352");
+    Text otherInfo2 = new Text("This search returned 5% of users.");
     GridPane grid = new GridPane();
     grid.add(users, 0, 0);
-    grid.add(otherInfo, 0, 1);
+    grid.add(user1, 1, 2);
+    grid.add(user2, 1, 3);
+    grid.add(user3, 1, 4);
+    grid.add(user4, 1, 5);
+    grid.add(otherInfo, 0, 7);
+    grid.add(otherInfo1, 1, 8);
+    grid.add(otherInfo2, 1, 9);
 
     BorderPane borderPane = new BorderPane();
     borderPane.setCenter(grid);
