@@ -36,7 +36,7 @@ import javafx.scene.text.Text;
 
 /**
  * Main application
- * @author erica, ben, aj, callen
+ * @author erica, ben, aj, callan
  *
  */
 public class Main extends Application {
