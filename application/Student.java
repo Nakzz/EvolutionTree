@@ -2,7 +2,7 @@ package application.EvolutionTree.application;
 
 import java.util.ArrayList;
 
-public class Student extends User{
+public class Student{
 	private int yearOfGrad;
 	private ArrayList<String> major;
 	private ArrayList<String> certificate;
