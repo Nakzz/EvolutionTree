@@ -4,7 +4,7 @@ public class Category<User>{
 	private String name;
 	
 	//inner class node
-	private class Node<User>{
+	private class Node<User> {
 		private User user;
 		private Node next;
 		
