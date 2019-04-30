@@ -1,4 +1,4 @@
-package application.EvolutionTree.application;
+package application;
 
 import java.util.ArrayList;
 
@@ -7,7 +7,9 @@ public class Faculty extends User{
 	private ArrayList<String> officeHours;
 	private ArrayList<String> officeLocation;
 	
-	public Faculty(ArrayList<String> coursesTaught, ArrayList<String> officeHours, ArrayList<String> officeLocation) {
+	public Faculty(ArrayList<String> coursesTaught, ArrayList<String> officeHours, ArrayList<String> officeLocation,
+			String name, String email, String password) {
+		super(name, email, password);
 		this.coursesTaught = coursesTaught;
 		this.officeHours = officeHours;
 		this.officeLocation = officeLocation;

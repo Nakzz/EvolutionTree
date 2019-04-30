@@ -1,4 +1,4 @@
-package application;
+package application.EvolutionTree.application;
 
 public class User {
 	private String name;
@@ -11,7 +11,7 @@ public class User {
 		this.name = name;
 		this.email = email;
 		this.password = password;
-		isPublic = true;
+		this.isPublic = true;
 	}
 	
 	public boolean auth(String password) {
@@ -57,4 +57,5 @@ public class User {
 	public void setPublic(boolean isPublic) {
 		this.isPublic = isPublic;
 	}
+	
 }

@@ -2,7 +2,7 @@ package application.EvolutionTree.application;
 
 import java.util.ArrayList;
 
-public class Student{
+public class Student extends User{
 	private int yearOfGrad;
 	private ArrayList<String> major;
 	private ArrayList<String> certificate;
@@ -12,7 +12,8 @@ public class Student{
 	private ArrayList<String> workExperience;
 	
 	public Student(int yearOfGrad, ArrayList<String> major, ArrayList<String> certificate, ArrayList<String> clubs,
-			ArrayList<String> scholership, ArrayList<String> courses, ArrayList<String> workExperience){
+			ArrayList<String> scholership, ArrayList<String> courses, ArrayList<String> workExperience, String name, String email, String password){
+		super(name, email, password);
 		this.yearOfGrad = yearOfGrad;
 		this.major = major;
 		this.certificate = certificate;
