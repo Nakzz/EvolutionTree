@@ -1,14 +1,15 @@
 package application.EvolutionTree.application;
-
+/**
+ * Category Class
+ * 
+ * @author erica, ben, aj, callan
+ *
+ */
 public class Category{
 	private String name;
 	
 	//inner class node
-<<<<<<< HEAD
-	private class Node<User> {
-=======
 	private class Node{
->>>>>>> a81e5a543ea705dab80cccf4ebf045639dacce22
 		private User user;
 		private Node next;
 		
