@@ -18,6 +18,17 @@ public class Student extends User{
 	private ArrayList<String> courses;
 	private ArrayList<String> workExperience;
 	
+	   public Student(int yearOfGrad, ArrayList<String> major, ArrayList<String> certificate, ArrayList<String> clubs,
+         ArrayList<String> scholership, ArrayList<String> courses, ArrayList<String> workExperience, String name, String email){            
+     super(name, email); //calls User constructor with name, email, password
+     this.yearOfGrad = yearOfGrad;
+     this.major = major;
+     this.certificate = certificate;
+     this.clubs = clubs;
+     this.scholership = scholership;
+     this.courses = courses;
+     this.workExperience = workExperience;   
+ }
 	
 	//Constructor
 	//@param int yearOfGrad
