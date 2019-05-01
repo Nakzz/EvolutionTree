@@ -77,6 +77,7 @@ public class Main extends Application {
 		return textList;
 	}
 	
+	
 	private Map<String, ArrayList<String>> createNewStudentMap(String username){
 		Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
 		map.put(Config.USERNAME_FIELD, new ArrayList<String>());
@@ -95,6 +96,15 @@ public class Main extends Application {
 		return map;
 	}
 
+	private Map<String, ArrayList<String>> createNewFacultyMap(String username){
+		Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+		map.put(Config.USERNAME_FIELD, new ArrayList<String>());
+		map.put(Config.NAME_FIELD, new ArrayList<String>());
+		map.put(Config.OFFICELOCATION_FIELD, new ArrayList<String>());
+		map.put(Config.COURSESTAUGHT_FILED, new ArrayList<String>());
+		map.put(Config.OFFICEHOURS_FIELD, new ArrayList<String>());
+	}
+	
 	/**
 	 * Create the log in scene
 	 * 
@@ -107,7 +117,7 @@ public class Main extends Application {
 		Text signupPrompt = new Text(20, 30, "Sign-up: ");
 		GridPane grid = new GridPane();
 		TextField loginTextField = new TextField();
-		TextField signUpTextField = new TextField("Username");
+		TextField signUpTextField = new TextField("Email Address");
 		grid.add(loginPrompt, 0, 0);
 		grid.add(loginTextField, 1, 0);
 		grid.add(submit, 3, 0);
@@ -115,12 +125,11 @@ public class Main extends Application {
 		grid.add(signUpTextField, 1, 1);
 		
 		signUpTextField.setOnMouseClicked(event->{
-			if (signUpTextField.getText().equals("Username")) {
+			if (signUpTextField.getText().equals("Email Address")) {
 				signUpTextField.clear();
 			}
 		});
-		
-
+	
 		// radio button for the user type when a user wants to sign up
 		ToggleGroup type = new ToggleGroup();
 
@@ -136,6 +145,8 @@ public class Main extends Application {
 		//This is needed to add a blank space between the Radio Button and the Sign-Up block.  If the username is
 		//Already taken this space will be filled with a new text field saying that the username has already been chosen.
 		Text blankText = new Text("");
+		//userNameTakenText will popup if the username is already taken.
+		Text userNameTakenText = new Text("This username has already been taken, try again!");
 		
 		grid.add(userTypeStudent, 1, 2);
 		grid.add(userTypeFaculty, 1, 3);
@@ -151,7 +162,6 @@ public class Main extends Application {
 						studentDriver.register(signUpTextField.getText());
 						break;
 					} catch (UserExists e) {
-						Text userNameTakenText = new Text("This username has already been taken, try again!");
 						grid.add(userNameTakenText, 1, 4);
 					}
 				}
@@ -161,6 +171,17 @@ public class Main extends Application {
 				primaryStage.setScene(studentSignUp);
 				primaryStage.show();
 			} else {
+				UserDriverApplication facultyDriver = new UserDriverApplication();
+				while(true) {
+					try {
+						facultyDriver.register(signUpTextField.getText());
+						break;
+					} catch (UserExists e) {
+						grid.add(userNameTakenText, 1, 4);
+					}
+				}
+				Map<String, ArrayList<String>> facultyMap = this.createNewFacultyMap(signUpTextField.getText());
+				//facultyDriver.editUser(facultyMap);
 				Scene facultySignUp = signupScreenFaculty();
 				primaryStage.setScene(facultySignUp);
 			}
@@ -269,14 +290,12 @@ public class Main extends Application {
 		fields.add(new Text("Name: "));
 		fields.add(new Text("Email: "));
 		fields.add(new Text("Office building: "));
-		fields.add(new Text("Office room number: "));
 		fields.add(new Text("Classes taught: "));
 		fields.add(new Text("Office Hours: "));
 		
 		TextField nameTextField = new TextField();
 		TextField emailGraduationTextField = new TextField();
 		TextField officeBuildingTextField = new TextField();
-		TextField officeRoomNumberTextField = new TextField();
 		TextField classesTaughtTextField = new TextField();
 		TextField officeHoursTextField = new TextField();
 		ArrayList<TextField> signUpFacultyTextFieldList = new ArrayList<TextField>() {
@@ -284,7 +303,6 @@ public class Main extends Application {
 				add(nameTextField);
 				add(emailGraduationTextField);
 				add(officeBuildingTextField);
-				add(officeRoomNumberTextField);
 				add(classesTaughtTextField);
 				add(officeHoursTextField);
 			}
