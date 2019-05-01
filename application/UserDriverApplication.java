@@ -14,6 +14,7 @@ import org.json.simple.parser.ParseException;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -26,13 +27,15 @@ public class UserDriverApplication {
   private String username = null; // the username of the user
   private boolean isAdmin = false; // if the user has admin priv
   private boolean isPopulated = false;
-  private final String jsonFilePath = ""; // TODO: add a jsonFilePath
-  private Map<String, Category> database = null;
   
+  private Map<String, Category> database = null;
+  private int totalUsers;
   private List<String> listOfUsers = null;
 
-  // CONSTANTS
+  // CONSTANTS TODO: add these constants to a seperate file so Main.java can also access them 
+  // TODO: match their string to what they actually are in the json file
   private final String USERS_CATEGORY = "USERS_CATEGORY";
+  
 
   /**
    * Instantiates a new user driver application by just populating the database and initializing
@@ -50,16 +53,20 @@ public class UserDriverApplication {
     // populating database
     if (!isPopulated)
       try {
-        populateDatastructureWithUsers(jsonFilePath);
+        populateDatastructureWithUsers(Config.JSON_LOCATION);
 
       } catch (FileNotFoundException e) {
-        // TODO Auto-generated catch block
+        System.out.println("ERROR: UserDriverApplication_constructor: ");
+        System.out.println("  FileNotFoundException. Make sure JSON file path is proper");
         e.printStackTrace();
       } catch (IOException e) {
-        // TODO Auto-generated catch block
+        System.out.println("ERROR: UserDriverApplication_constructor: ");
+        System.out
+          .println("  IOException. Make sure JSON file is not opened by another application");
         e.printStackTrace();
       } catch (ParseException e) {
-        // TODO Auto-generated catch block
+        System.out.println("ERROR: UserDriverApplication_constructor: ");
+        System.out.println("  ParseException. Check JSON file");
         e.printStackTrace();
       }
 
@@ -76,7 +83,7 @@ public class UserDriverApplication {
 
     if (!isPopulated)
       try {
-        populateDatastructureWithUsers(jsonFilePath);
+        populateDatastructureWithUsers(Config.JSON_LOCATION);
 
       } catch (FileNotFoundException e) {
         System.out.println("ERROR: UserDriverApplication_constructor: ");
@@ -181,37 +188,92 @@ public class UserDriverApplication {
    * Adds the user to the database, and USERS_CATEGORY map. For each profileInfo field, if
    * corresponding Category doesn't exist, initialize a new field.
    *
+   * If username is null, return false
    *
    * @param username the username
    * @param profileInfo the profile info
    * @return true, if successful
    * @throws UserExists the user exists
    */
-  private boolean addUser(String username, List profileInfo) throws UserExists {
+  private boolean addUser(String username, Map<String,ArrayList<String>> profileInfo) throws UserExists {
 
     if (this.listOfUsers.contains(username)) {
       throw new UserExists();
-    }
+    } 
     
-if(profileInfo == null) {
+    if(username == null)
+      return false;
+    
+    String emailField, catName;   
+    ArrayList<String> name, profileType = null; // profileType refers to if student or faculty
+
+    //get arraylist
+     profileType = profileInfo.get(Config.PROFILE_TYPE_FIELD);
+     name = profileInfo.get(Config.NAME_FIELD);
+     
+     //acess the first element since they should only have one element
+     String nameField = name.get(0); 
+     String profileTypeName = profileType.get(0);
+     
+     switch(profileTypeName) {
+       case "student":
+         //get the fields related to the student
+         
+         
+         //create a student user 
+         Student newUser = new Student(name, username);
+         
+         break;
+       case "faculty":
+         //get the fields related to the student
+         
+
+         // create a faculty user
+         
+         break;
+       default:
+         System.out.println("ERROR: UserDriverApplication_addUser: ");
+         System.out.println("  ProfileType is not defined");
+         return false;
+     }
+    
+//if(profileInfo != null) {
 // create new user with just the username
-  User newUser = new User(username, null); // register with just the name. must add email from profile info later
+    
+    
+    
+    
+  User newUser = new User(name, username); // register with just the name. must add email from profile info later
 
   Category userCategory = this.database.get(USERS_CATEGORY);
- 
   userCategory.insert(newUser);
-} else {
-  String email = null;
+  this.totalUsers++;
+  
+  
+  
   
   for(int i=0; i < profileInfo.size(); i++) {
         
     String currentCatName =  (String) profileInfo.get(i);   //TODO: the list should be a list of string
     
-    for(int j=0; j< this.database.)
     
+    if(!this.database.containsKey(currentCatName)) {
+   // category doesn't exist, so create one
+      Category newCat = new Category(currentCatName);
+      
+    } else {
+      
+    }
   }
+//} else {
+//
+//
+//      
+//    }
+      
+ 
   
-} 
+
 
 
     
@@ -230,7 +292,10 @@ if(profileInfo == null) {
    * @throws ParseException the parse exception
    */
   public void populateDatastructureWithUsers(String jsonFilePath) throws FileNotFoundException, IOException, ParseException  {
-
+    
+    this.totalUsers = 0;
+    
+   
     if(database == null) {
       database = new HashMap<String, Category>();
 
@@ -340,4 +405,7 @@ if(profileInfo == null) {
     return this.username;
   }
 
+  public int getTotalUser() {
+    return this.totalUsers;
+  }
 }
