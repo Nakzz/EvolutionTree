@@ -3,7 +3,7 @@ package application;
 public class Config {
 
   //JSON FILE NAME
-  public static final String JSON_LOCATION = "PROFILE_TYPE_FIELD";
+  public static final String JSON_LOCATION = "./application/users.json";
   
   //ALL THE FIELD IN JSON file
   public static final String USERNAME_FIELD = "username";
