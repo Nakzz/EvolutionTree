@@ -198,7 +198,7 @@ public class UserDriverApplication {
      
      Category userCategory = this.database.get(USERS_CATEGORY);
      Category cat = null;
-     int yearOfGrad = 0000;
+     int yearOfGrad = 0000; // TODO: get this field
      
      switch(profileTypeName) {
        case "student":
@@ -345,7 +345,7 @@ public class UserDriverApplication {
          // create a faculty user
          Faculty newUser2 = new Faculty(coursesTaughtField, officeHoursField, officeLocationField, nameField.get(0), username);
          
-         userCategory.insert(newUser);
+         userCategory.insert(newUser2);
          
          if(coursesTaughtField.size() != 0) {
         	 for(int count = 0; count < coursesTaughtField.size(); count++) {
@@ -467,7 +467,7 @@ public class UserDriverApplication {
     } catch (ParseException e) {
       throw new ParseException(0);
     }
-
+    }
 
     //TODO: set data populated true
   }
@@ -519,17 +519,79 @@ public class UserDriverApplication {
       
       Category userCategory = this.database.get(USERS_CATEGORY);
       
-      User user = userCategory.getUser(username); // TODO: have cal implement the method
+     
       
+    //get arraylist that are required for any type of User
+      ArrayList<String> profileTypeField = profileInfo.get(Config.PROFILE_TYPE_FIELD);
+      ArrayList<String> nameField = profileInfo.get(Config.NAME_FIELD);
+      ArrayList<String> usernameField = profileInfo.get(Config.USERNAME_FIELD);
+      ArrayList<String> isAdminField = profileInfo.get(Config.IS_ADMIN_FIELD);
+      ArrayList<String> isPublicField = profileInfo.get(Config.IS_PUBLIC_FIELD);
       
-      // TODO: edit user information
-      // iterator through profileInfo
+      //access the first element since they should only have one element
+      String name = nameField.get(0); 
+      String email = usernameField.get(0); 
+      String profileTypeName = profileTypeField.get(0);
+      Boolean isAdminText = Boolean.parseBoolean( isAdminField.get(0));
+      Boolean isPublicText = Boolean.parseBoolean( isPublicField.get(0));
+      
+      int yearOfGrad = 0;
+      
+      switch(profileTypeName) {
+        case "student":
+          //get the fields related to the student
+          ArrayList<String> majorField = profileInfo.get(Config.MAJORS_FIELD);
+          ArrayList<String> certificatesField = profileInfo.get(Config.CERTIFICATES_FIELD);
+          ArrayList<String> clubsField = profileInfo.get(Config.CLUBS_FIELD);
+          ArrayList<String> scholarshipField = profileInfo.get(Config.SCHOLARSHIPS_FIELD);
+          ArrayList<String> coursesField = profileInfo.get(Config.COURSES_FIELD);
+          ArrayList<String> workField = profileInfo.get(Config.WORK_EXPERIANCES_FIELD);
+          ArrayList<String> yearOfGradField = profileInfo.get(Config.YEAROFGRAD_FIELD); // TODO: add year of grad
+          try{
+             yearOfGrad = Integer.parseInt(yearOfGradField.get(0)); //TODO: parseInt from the first element of yearOfGradField
+          } catch(NumberFormatException e) {
+              
+          }
+          
+          Student user = userCategory.getUser(username); // TODO: have cal implement the method
+          
+          
+          
+         user.setMajor(majorField);
+         user.setCertificate(certificatesField);
+         user.setClubs(clubsField);
+         user.setScholership(scholarshipField);
+         user.setCourses(coursesField);
+         user.setWorkExperience(workField);
+         user.setYearOfGrad(yearOfGrad);
+            
+                
+          
+          break;
+        case "faculty":   
+            ArrayList<String> coursesTaughtField = profileInfo.get(Config.COURSESTAUGHT_FILED);
+            ArrayList<String> officeHoursField = profileInfo.get(Config.OFFICEHOURS_FIELD);
+            ArrayList<String> officeLocationField = profileInfo.get(Config.OFFICELOCATION_FIELD);
+          //get the fields related to the student
+          
+            Faculty userF = userCategory.getUser(username); // TODO: have cal implement the method
+        
+          userF.setCoursesTaught(coursesTaughtField);
+          userF.setOfficeHours(officeHoursField);
+          userF.setOfficeLocation(officeLocationField);
+         
+          break;
+        default:
+          System.out.println("ERROR: UserDriverApplication_addUser: ");
+          System.out.println("  ProfileType is not defined");
+          return false;
+      }
 
-      return true;
+      return true; // successfully edited profile info
     }
 
 
-    return false;
+    return false; // either you are not an admin, or the same user that you are trying to edit for;
   }
 
 
