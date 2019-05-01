@@ -26,26 +26,29 @@ public class UserDriverApplication {
   private String username = null; // the username of the user
   private boolean isAdmin = false; // if the user has admin priv
   private boolean isPopulated = false;
-  private final String jsonFilePath = ""; //TODO: add a jsonFilePath
-  private Map<String, Category> database =null;
+  private final String jsonFilePath = ""; // TODO: add a jsonFilePath
+  private Map<String, Category> database = null;
+  
   private List<String> listOfUsers = null;
 
-  //CONSTANTS
+  // CONSTANTS
   private final String USERS_CATEGORY = "USERS_CATEGORY";
 
   /**
-   * Instantiates a new user driver application by just populating the database and initializing proper fields.
-   * The DEV must register the user manually using register(username) method.
+   * Instantiates a new user driver application by just populating the database and initializing
+   * proper fields. The DEV must register the user manually using register(username) method.
+   * 
+   * After registering the user, use editUser(username, profileInfo) to add information
    *
    * @param username the username
    * @param type the type
    * @throws UserExists the user exists
    */
-  public UserDriverApplication() throws UserExists{
+  public UserDriverApplication() throws UserExists {
 
 
-    //populating database
-    if(!isPopulated)
+    // populating database
+    if (!isPopulated)
       try {
         populateDatastructureWithUsers(jsonFilePath);
 
@@ -68,25 +71,29 @@ public class UserDriverApplication {
    * @param username the username
    * @throws InvalidUsername the invalid username
    */
-  //login in with an exisiting user
-  public UserDriverApplication(String username) throws InvalidUsername{
+  // login in with an exisiting user
+  public UserDriverApplication(String username) throws InvalidUsername {
 
-    if(!isPopulated)
+    if (!isPopulated)
       try {
         populateDatastructureWithUsers(jsonFilePath);
 
       } catch (FileNotFoundException e) {
-        // TODO Auto-generated catch block
+        System.out.println("ERROR: UserDriverApplication_constructor: ");
+        System.out.println("  FileNotFoundException. Make sure JSON file path is proper");
         e.printStackTrace();
       } catch (IOException e) {
-        // TODO Auto-generated catch block
+        System.out.println("ERROR: UserDriverApplication_constructor: ");
+        System.out
+          .println("  IOException. Make sure JSON file is not opened by another application");
         e.printStackTrace();
       } catch (ParseException e) {
-        // TODO Auto-generated catch block
+        System.out.println("ERROR: UserDriverApplication_constructor: ");
+        System.out.println("  ParseException. Check JSON file");
         e.printStackTrace();
       }
 
-    try{
+    try {
       login(username);
 
     } catch (InvalidUsername e) {
@@ -96,57 +103,62 @@ public class UserDriverApplication {
   }
 
   /**
-   * Login user with current username if the user exists in the databse. If the username doesn't exist, then throw user not exists.
+   * Login user with current username if the user exists in the databse. If the username doesn't
+   * exist, then throw user not exists.
    *
    * @param username the username
    * @return true, if successful
    * @throws InvalidUsername the invalid username
    */
-  public void login(String username) throws InvalidUsername {
+  public boolean login(String username) throws InvalidUsername {
 
-    //IF USER EXISTS, then do the following
-    if(this.listOfUsers.contains(username)) {
-    //SET USERNAME field.
+    if (!this.isLogged) {// making sure a logged in user is not trying to change login
+      // IF USER EXISTS, then do the following
+      if (this.listOfUsers.contains(username)) {
+        // SET USERNAME field.
 
-      this.username = username;
-      this.isLogged = true;
+        this.username = username;
+        this.isLogged = true;
 
-      //SET isAdmin field
-      //TODO: CHECK IF THE USER IS AN ADMIN
+        // SET isAdmin field
+        // TODO: CHECK IF THE USER IS AN ADMIN
 
+        return true;
+      } else {
+        throw new InvalidUsername();
+      }
     } else {
-    throw new InvalidUsername();
+      return false; // making sure a logged in user is not trying to change login
     }
-
-
+    
   }
-  
+
   /**
-   * Registers user with current username if the user doesn't exists in the databse. If the username  exist, then throw UserExists.
+   * Registers user with current username if the user doesn't exists in the databse. If the username
+   * exist, then throw UserExists.
    *
    * @param username the username
    * @throws UserExists the username existst
    */
   public void register(String username) throws UserExists {
 
-    //IF USER doesn't EXISTS, then do the following
-    if(!this.listOfUsers.contains(username)) {
+    // IF USER doesn't EXISTS, then do the following
+    if (!this.listOfUsers.contains(username)) {
 
-    //add user to database
-    try {
-      addUser(username, null);
-    } catch (UserExists e) {
-      System.out.println("UserDriverApplication_register: THIS SHOULD NOT HAPPEN. Already checked that User exists.");
-      e.printStackTrace();
-    }
+      // add user to database
+      try {
+        addUser(username, null);
+      } catch (UserExists e) {
+        System.out.println("ERROR: UserDriverApplication_register: ");
+        System.out.println("  THIS SHOULD NOT HAPPEN. Already checked that User exists.");
+        e.printStackTrace();
+      }
 
-    //SET USERNAME field.
-      //SET isAdmin field
-      this.username = username;
-      this.isAdmin = false;
+      this.username = username; // SET USERNAME field.
+      this.isAdmin = false; // SET isAdmin field
 
     } else {
-    throw new UserExists();
+      throw new UserExists();
     }
 
 
@@ -156,27 +168,55 @@ public class UserDriverApplication {
    * Logout the current user.
    */
   public void logout() {
-    //reset the fields
+    // reset the fields
     this.username = null;
     this.isAdmin = false;
-    this.isPopulated= false;
+    this.isPopulated = false;
     this.database = null;
     this.listOfUsers = null;
     //
   }
 
   /**
-   * Adds the user to the database, and USERS_CATEGORY map.
-   * For each profileInfo field, if corresponding Category doesn't exist, initialize a new field.
+   * Adds the user to the database, and USERS_CATEGORY map. For each profileInfo field, if
+   * corresponding Category doesn't exist, initialize a new field.
+   *
    *
    * @param username the username
    * @param profileInfo the profile info
    * @return true, if successful
    * @throws UserExists the user exists
    */
-  private boolean addUser(String username, List profileInfo) throws UserExists{
+  private boolean addUser(String username, List profileInfo) throws UserExists {
 
-    //TODO add user to each profileInfo field, if corresponding Category doesn't exist, initialize a new field.
+    if (this.listOfUsers.contains(username)) {
+      throw new UserExists();
+    }
+    
+if(profileInfo == null) {
+// create new user with just the username
+  User newUser = new User(username, null); // register with just the name. must add email from profile info later
+
+  Category userCategory = this.database.get(USERS_CATEGORY);
+ 
+  userCategory.insert(newUser);
+} else {
+  String email = null;
+  
+  for(int i=0; i < profileInfo.size(); i++) {
+        
+    String currentCatName =  (String) profileInfo.get(i);   //TODO: the list should be a list of string
+    
+    for(int j=0; j< this.database.)
+    
+  }
+  
+} 
+
+
+    
+    // TODO add user to each profileInfo field, if corresponding Category doesn't exist, initialize a
+    // new field.
     return false;
   }
 
@@ -244,7 +284,7 @@ public class UserDriverApplication {
    * @return the list
    * @throws InvalidUsername the invalid username
    */
-  public List<User> searchUser(List profileInfo) throws InvalidUsername{
+  public List<User> searchUser(List profileInfo) throws InvalidUsername {
 
     return null;
   }
@@ -257,11 +297,11 @@ public class UserDriverApplication {
    * @return true, if successful
    * @throws InvalidUsername the invalid username
    */
-  public boolean editUser(String username, List profileInfo) throws InvalidUsername{
+  public boolean editUser(String username, List profileInfo) throws InvalidUsername {
 
-    if(username == this.username || this.isAdmin) {
+    if (username == this.username || this.isAdmin) {
 
-      //TODO: edit user information
+      // TODO: edit user information
 
       return true;
     }
@@ -271,7 +311,7 @@ public class UserDriverApplication {
   }
 
 
-  //GETTER METHODS
+  // GETTER METHODS
 
   /**
    * Checks if is logged in.
