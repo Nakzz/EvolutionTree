@@ -60,7 +60,6 @@ public class UserDriverApplication {
         e.printStackTrace();
       }
 
-    
   }
   
   /**
@@ -87,15 +86,13 @@ public class UserDriverApplication {
         e.printStackTrace();
       }
     
-    if(login(username)) {
-      this.isLogged = true;
-      //TODO: generate users from JSON file
+    try{
+      login(username);
       
-    }else {
+    } catch (InvalidUsername e) {
       this.isLogged = false;
       throw new InvalidUsername();
     }
-    
   }
   
   /**
@@ -110,9 +107,12 @@ public class UserDriverApplication {
     //IF USER EXISTS, then do the following
     if(this.listOfUsers.contains(username)) {
     //SET USERNAME field.
-      //SET isAdmin field
+     
       this.username = username;
+      this.isLogged = true;
       
+      //SET isAdmin field
+      //TODO: CHECK IF THE USER IS AN ADMIN
       
     } else {
     throw new InvalidUsername();  
