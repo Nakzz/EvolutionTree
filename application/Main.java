@@ -134,20 +134,19 @@ public class Main extends Application {
 		// button functionality
 		signup.setOnAction(student -> {
 			
-//			if (true) {
+//			try {
+//				addNewUser()
 //				Text userNameAlreadyTaken = new Text("Username Already Taken!");
 //				grid.add(userNameAlreadyTaken, 1, 4);
+//			} catch (UserExistsException e){
 //			}
 			/*
 			 *  ^
 			 * 	|
-			 * I need the class/method for finding whether the username was taken or not.  If it is a boolean put
-			 * it here	
+			 * I need the class/method for finding whether the username was taken or not. 
 			 * 
-			 * This code will be dead until the if statement is changed!!!
 			 * 
-			 */
-//			else if goes here once the statement that checks if the username is already taken is filled out.			
+			 */			
 			if (userTypeStudent.isSelected()) {
 				ArrayList<String> textFromLoginScreen = this.getTextFieldInformationFromTextField(textFieldList);
 				/*
