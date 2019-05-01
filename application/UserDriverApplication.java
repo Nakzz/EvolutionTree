@@ -20,6 +20,7 @@ import java.lang.reflect.Array;
 /**
  * The Class UserDriverApplication.
  */
+
 public class UserDriverApplication {
 
 
@@ -30,7 +31,9 @@ public class UserDriverApplication {
   
   private Map<String, Category> database = null;
   private int totalUsers;
-  private List<String> listOfUsers = null;
+  private List<String> listOfUsers = null; //TODO: maybe not going to need
+  
+  
 
   // CONSTANTS TODO: add these constants to a seperate file so Main.java can also access them 
   // TODO: match their string to what they actually are in the json file
@@ -204,24 +207,65 @@ public class UserDriverApplication {
     if(username == null)
       return false;
     
-    String emailField, catName;   
-    ArrayList<String> name, profileType = null; // profileType refers to if student or faculty
+    String catName;   
+   
 
-    //get arraylist
-     profileType = profileInfo.get(Config.PROFILE_TYPE_FIELD);
-     name = profileInfo.get(Config.NAME_FIELD);
+    //get arraylist that are required for any type of User
+     ArrayList<String> profileTypeField = profileInfo.get(Config.PROFILE_TYPE_FIELD);
+     ArrayList<String> nameField = profileInfo.get(Config.NAME_FIELD);
+     ArrayList<String> isAdminField = profileInfo.get(Config.IS_ADMIN_FIELD);
+     ArrayList<String> isPublicField = profileInfo.get(Config.IS_PUBLIC_FIELD);
      
-     //acess the first element since they should only have one element
-     String nameField = name.get(0); 
-     String profileTypeName = profileType.get(0);
+     //access the first element since they should only have one element
+     String name = nameField.get(0); 
+//     String email = TODO: get the username 
+     String profileTypeName = profileTypeField.get(0);
+     Boolean isAdminText = Boolean.parseBoolean( isAdminField.get(0));
+     Boolean isPublicText = Boolean.parseBoolean( isPublicField.get(0));
+     
+     Category userCategory = this.database.get(USERS_CATEGORY);
+     Category cat = null;
+     
      
      switch(profileTypeName) {
        case "student":
          //get the fields related to the student
+         ArrayList<String> majorField = profileInfo.get(Config.MAJORS_FIELD);
+         ArrayList<String> certificatesField = profileInfo.get(Config.CERTIFICATES_FIELD);
+         ArrayList<String> scholarshipField = profileInfo.get(Config.SCHOLARSHIPS_FIELD);
+         ArrayList<String> coursesField = profileInfo.get(Config.COURSES_FIELD);
+         ArrayList<String> workField = profileInfo.get(Config.WORK_EXPERIANCES_FIELD);
+         ArrayList<String> clubsField =  null; //profileInfo.get(Config.CLUBS_FIELD); // TODO: add clubs field
+//       ArrayList<String> yearOfGradField = profileInfo.get(Config.CLUBS_FIELD); // TODO: add year of grad
          
+         int yearOfGrad = 0; //TODO: parseInt from the first element of yearOfGradField
          
          //create a student user 
-         Student newUser = new Student(name, username);
+         Student newUser = new Student(yearOfGrad,majorField, certificatesField, clubsField, scholarshipField, coursesField, workField, name, username, profileTypeName);
+         
+         userCategory.insert(newUser); // this is the master category that contains all the users
+         
+         //FIXME: maybe in the future, do something that would iterate instead of hardcoding  
+// if the fields sting. length is 0, create a new category
+         if(majorField.size() != 0) {
+           if(this.database.containsKey(Config.MAJORS_FIELD)){
+             //add to exisiting category 
+             cat = this.database.get(Config.MAJORS_FIELD);
+             
+             cat.insert(newUser);
+           }
+             }else {
+               // create new category and add user to category
+               cat = new Category(Config.MAJORS_FIELD);
+               cat.insert(newUser);
+               
+               this.database.put(Config.MAJORS_FIELD, cat);
+           }
+           
+             
+         } 
+         
+         
          
          break;
        case "faculty":
@@ -229,6 +273,9 @@ public class UserDriverApplication {
          
 
          // create a faculty user
+         
+         
+         userCategory.insert(newUser);
          
          break;
        default:
