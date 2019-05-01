@@ -22,6 +22,8 @@ package application;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -66,6 +68,32 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
+	
+	private ArrayList<String> getTextFieldInformationFromTextField(ArrayList<TextField> list) {
+		ArrayList<String> textList = new ArrayList<String>();
+		for (TextField i : list) {
+			textList.add(i.getText());
+		}
+		return textList;
+	}
+	
+	private Map<String, ArrayList<String>> createNewStudentMap(String username){
+		Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+		map.put(Config.USERNAME_FIELD, new ArrayList<String>());
+		map.put(Config.NAME_FIELD, new ArrayList<String>());
+		map.put(Config.PROFILE_TYPE_FIELD, new ArrayList<String>());
+		map.put(Config.IS_ADMIN_FIELD, new ArrayList<String>());
+		map.put(Config.IS_PUBLIC_FIELD, new ArrayList<String>());
+		map.put(Config.MAJORS_FIELD, new ArrayList<String>());
+		map.put(Config.CERTIFICATES_FIELD, new ArrayList<String>());
+		map.put(Config.CLUBS_FIELD, new ArrayList<String>());
+		map.put(Config.SCHOLARSHIPS_FIELD, new ArrayList<String>());
+		map.put(Config.COURSES_FIELD, new ArrayList<String>());
+		map.put(Config.WORK_EXPERIENCES_FIELD, new ArrayList<String>());
+		map.put(Config.YEAROFGRAD_FIELD, new ArrayList<String>());
+		map.get(Config.USERNAME_FIELD).add(username);
+		return map;
+	}
 
 	/**
 	 * main that launches the program
@@ -94,14 +122,6 @@ public class Main extends Application {
 		grid.add(submit, 3, 0);
 		grid.add(signupPrompt, 0, 1);
 		grid.add(signUpTextField, 1, 1);
-
-		//ArrayList that contains all of the textfields in the login screen
-		ArrayList<TextField> textFieldList = new ArrayList<TextField>() {
-			{
-				add(loginTextField);
-				add(signUpTextField);
-			}
-		};
 		
 		signUpTextField.setOnMouseClicked(event->{
 			if (signUpTextField.getText().equals("Username")) {
@@ -132,37 +152,12 @@ public class Main extends Application {
 		grid.add(signup, 1, 5);
 
 		// button functionality
-		signup.setOnAction(student -> {
-			
-//			try {
-//				addNewUser()
-//				Text userNameAlreadyTaken = new Text("Username Already Taken!");
-//				grid.add(userNameAlreadyTaken, 1, 4);
-//			} catch (UserExistsException e){
-//			}
-			/*
-			 *  ^
-			 * 	|
-			 * I need the class/method for finding whether the username was taken or not. 
-			 * 
-			 * 
-			 */			
+		signup.setOnAction(student -> {			
 			if (userTypeStudent.isSelected()) {
-				ArrayList<String> textFromLoginScreen = this.getTextFieldInformationFromTextField(textFieldList);
-				/*
-				 * 
-				 * 
-				 * 
-				 * 
-				 * 
-				 * Here is where the output for the signUpButton is. There is an arrayList
-				 * already created that has the two textFields text (String) in it. It is the textFromLoginScreen
-				 * 
-				 * 
-				 * 
-				 * 
-				 * 
-				 */
+				UserDriverApplication studentDriver = new UserDriverApplication();
+				
+				Map<String,ArrayList<String>> studentMap = this.createNewStudentMap(signUpTextField.getText());
+				
 				Scene studentSignUp = signupScreenStudent();
 				primaryStage.setScene(studentSignUp);
 				primaryStage.show();
@@ -336,13 +331,7 @@ public class Main extends Application {
 		return signupScreen;
 	}
 
-	private ArrayList<String> getTextFieldInformationFromTextField(ArrayList<TextField> list) {
-		ArrayList<String> textList = new ArrayList<String>();
-		for (TextField i : list) {
-			textList.add(i.getText());
-		}
-		return textList;
-	}
+	
 
 	/**
 	 * Create search screen
