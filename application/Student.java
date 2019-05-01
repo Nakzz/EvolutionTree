@@ -110,5 +110,10 @@ public class Student extends User{
 		this.workExperience = workExperience;
 	}
 	
+	   //@param ArrayList<String> workExperience
+    public void setYearOfGrad(int yearOfGrad) {
+        this.yearOfGrad = yearOfGrad;
+    }
+	
 }
 
