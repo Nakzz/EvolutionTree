@@ -33,10 +33,6 @@ public class UserDriverApplication {
   private int totalUsers;
   private List<String> listOfUsers = null; //TODO: maybe not going to need
   
-  
-
-  // CONSTANTS TODO: add these constants to a seperate file so Main.java can also access them 
-  // TODO: match their string to what they actually are in the json file
   private final String USERS_CATEGORY = "USERS_CATEGORY";
   
 
@@ -208,7 +204,7 @@ public class UserDriverApplication {
          ArrayList<String> clubsField = profileInfo.get(Config.CLUBS_FIELD);
          ArrayList<String> scholarshipField = profileInfo.get(Config.SCHOLARSHIPS_FIELD);
          ArrayList<String> coursesField = profileInfo.get(Config.COURSES_FIELD);
-         ArrayList<String> workField = profileInfo.get(Config.WORK_EXPERIANCES_FIELD);
+         ArrayList<String> workField = profileInfo.get(Config.WORK_EXPERIENCES_FIELD);
          ArrayList<String> yearOfGradField = profileInfo.get(Config.YEAROFGRAD_FIELD); // TODO: add year of grad
          try{
             yearOfGrad = Integer.parseInt(yearOfGradField.get(0)); //TODO: parseInt from the first element of yearOfGradField
@@ -445,14 +441,79 @@ public class UserDriverApplication {
 
 
       for (int i = 0; i < users.size(); i++) {
-        JSONObject packageItem = (JSONObject) users.get(i);
+        JSONObject profileInfo = (JSONObject) users.get(i);
 
         //TODO: GET ALL THE FIELDS. there has to be a better way of doing this.
-        String packageName = (String) packageItem.get("name"); // gets each packgename
-        JSONArray dependencies = (JSONArray) packageItem.get("dependencies"); // gets each dependencies
+//        JSONArray packageName = (JSONArray) profileInfo.get(); // gets each packgename
+//        JSONArray dependencies = (JSONArray) profileInfo.get("dependencies"); // gets each dependencies
 
-        System.out.println("Package name: " + packageName);
+        JSONArray profileTypeField = (JSONArray) profileInfo.get(Config.PROFILE_TYPE_FIELD);
+        JSONArray nameField = (JSONArray) profileInfo.get(Config.NAME_FIELD);
+        JSONArray isAdminField = (JSONArray) profileInfo.get(Config.IS_ADMIN_FIELD);
+        JSONArray isPublicField = (JSONArray) profileInfo.get(Config.IS_PUBLIC_FIELD);
+        
+        //access the first element since they should only have one element
+        String name = (String) nameField.get(0); 
+//        String email = TODO: get the username 
+        String profileTypeName = (String) profileTypeField.get(0);
+        Boolean isAdminText = Boolean.parseBoolean( (String) isAdminField.get(0));
+        Boolean isPublicText = Boolean.parseBoolean( (String) isPublicField.get(0));
+        
+        
+        switch(profileTypeName) {
+          case "student":
+            //get the fields related to the student
+            JSONArray majorField = (JSONArray) profileInfo.get(Config.MAJORS_FIELD);
+            JSONArray certificatesField = (JSONArray) profileInfo.get(Config.CERTIFICATES_FIELD);
+            JSONArray clubsField = (JSONArray) profileInfo.get(Config.CLUBS_FIELD);
+            JSONArray scholarshipField = (JSONArray) profileInfo.get(Config.SCHOLARSHIPS_FIELD);
+            JSONArray coursesField = (JSONArray) profileInfo.get(Config.COURSES_FIELD);
+            JSONArray workField = (JSONArray) profileInfo.get(Config.WORK_EXPERIENCES_FIELD);
+            JSONArray yearOfGradField = (JSONArray) profileInfo.get(Config.YEAROFGRAD_FIELD); // TOD
 
+            Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+            map.put(Config.USERNAME_FIELD, new ArrayList<String>());
+            map.put(Config.NAME_FIELD, new ArrayList<String>());
+            map.put(Config.PROFILE_TYPE_FIELD, new ArrayList<String>());
+            map.put(Config.IS_ADMIN_FIELD, new ArrayList<String>());
+            map.put(Config.IS_PUBLIC_FIELD, new ArrayList<String>());
+            map.put(Config.MAJORS_FIELD, new ArrayList<String>());
+            map.put(Config.CERTIFICATES_FIELD, new ArrayList<String>());
+            map.put(Config.CLUBS_FIELD, new ArrayList<String>());
+            map.put(Config.SCHOLARSHIPS_FIELD, new ArrayList<String>());
+            map.put(Config.COURSES_FIELD, new ArrayList<String>());
+            map.put(Config.WORK_EXPERIENCES_FIELD, new ArrayList<String>());
+            map.put(Config.YEAROFGRAD_FIELD, new ArrayList<String>());
+            map.get(Config.USERNAME_FIELD).add(username);
+            
+            break;
+            
+          case "faculty":   
+            JSONArray coursesTaughtField = (JSONArray) profileInfo.get(Config.COURSESTAUGHT_FILED);
+            JSONArray officeHoursField = (JSONArray) profileInfo.get(Config.OFFICEHOURS_FIELD);
+            JSONArray officeLocationField = (JSONArray) profileInfo.get(Config.OFFICELOCATION_FIELD);
+            //get the fields related to the student
+            
+            Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+            map.put(Config.USERNAME_FIELD, new ArrayList<String>());
+            map.put(Config.NAME_FIELD, new ArrayList<String>());
+            map.put(Config.PROFILE_TYPE_FIELD, new ArrayList<String>());
+            map.put(Config.IS_ADMIN_FIELD, new ArrayList<String>());
+            map.put(Config.IS_PUBLIC_FIELD, new ArrayList<String>());
+            map.put(Config.MAJORS_FIELD, new ArrayList<String>());
+            map.put(Config.CERTIFICATES_FIELD, new ArrayList<String>());
+            map.put(Config.CLUBS_FIELD, new ArrayList<String>());
+            map.put(Config.SCHOLARSHIPS_FIELD, new ArrayList<String>());
+            map.put(Config.COURSES_FIELD, new ArrayList<String>());
+            map.put(Config.WORK_EXPERIENCES_FIELD, new ArrayList<String>());
+            map.put(Config.YEAROFGRAD_FIELD, new ArrayList<String>());
+            map.get(Config.USERNAME_FIELD).add(username);
+           
+            break;
+          default:
+            System.out.println("ERROR: UserDriverApplication_addUser: ");
+            System.out.println("  ProfileType is not defined");
+        }
        //TODO: add all the users
 
       }
@@ -505,10 +566,7 @@ public class UserDriverApplication {
    * @return true, if successful
    * @throws InvalidUsername the invalid username
    */
-  public boolean editUser(Map<String,ArrayList<String>> profileInfo) throws InvalidUsername {
-
-    if (!this.listOfUsers.contains(username))
-      throw new InvalidUsername();
+  public boolean editUser(Map<String,ArrayList<String>> profileInfo) {
       
     
     if (username == this.username || this.isAdmin) {
@@ -545,7 +603,7 @@ public class UserDriverApplication {
           ArrayList<String> clubsField = profileInfo.get(Config.CLUBS_FIELD);
           ArrayList<String> scholarshipField = profileInfo.get(Config.SCHOLARSHIPS_FIELD);
           ArrayList<String> coursesField = profileInfo.get(Config.COURSES_FIELD);
-          ArrayList<String> workField = profileInfo.get(Config.WORK_EXPERIANCES_FIELD);
+          ArrayList<String> workField = profileInfo.get(Config.WORK_EXPERIENCES_FIELD);
           ArrayList<String> yearOfGradField = profileInfo.get(Config.YEAROFGRAD_FIELD); // TODO: add year of grad
           try{
              yearOfGrad = Integer.parseInt(yearOfGradField.get(0)); //TODO: parseInt from the first element of yearOfGradField
