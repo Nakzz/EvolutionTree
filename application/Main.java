@@ -68,7 +68,7 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private ArrayList<String> getTextFieldInformationFromTextField(ArrayList<TextField> list) {
 		ArrayList<String> textList = new ArrayList<String>();
 		for (TextField i : list) {
@@ -93,15 +93,6 @@ public class Main extends Application {
 		map.put(Config.YEAROFGRAD_FIELD, new ArrayList<String>());
 		map.get(Config.USERNAME_FIELD).add(username);
 		return map;
-	}
-
-	/**
-	 * main that launches the program
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		launch(args);
 	}
 
 	/**
@@ -155,9 +146,17 @@ public class Main extends Application {
 		signup.setOnAction(student -> {			
 			if (userTypeStudent.isSelected()) {
 				UserDriverApplication studentDriver = new UserDriverApplication();
-				
+				while(true) {
+					try {
+						studentDriver.register(signUpTextField.getText());
+						break;
+					} catch (UserExists e) {
+						Text userNameTakenText = new Text("This username has already been taken, try again!");
+						grid.add(userNameTakenText, 1, 4);
+					}
+				}
 				Map<String,ArrayList<String>> studentMap = this.createNewStudentMap(signUpTextField.getText());
-				
+				//studentDriver.editUser(studentMap);
 				Scene studentSignUp = signupScreenStudent();
 				primaryStage.setScene(studentSignUp);
 				primaryStage.show();
@@ -461,4 +460,14 @@ public class Main extends Application {
 		searchResults.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		return searchResults;
 	}
+	
+	/**
+	 * main that launches the program
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		launch(args);
+	}
 }
+
