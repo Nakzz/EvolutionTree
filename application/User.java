@@ -7,6 +7,12 @@ public class User {
 	private boolean isAdmin;
 	private boolean isPublic;
 	
+	   public User(String name, String email) {
+	        this.name = name;
+	        this.email = email;
+	        this.isPublic = true;
+	    }
+	
 	public User(String name, String email, String password) {
 		this.name = name;
 		this.email = email;
