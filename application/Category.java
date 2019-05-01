@@ -1,12 +1,16 @@
 package application.EvolutionTree.application;
-
+/**
+ * Category Class
+ * 
+ * @author erica, ben, aj, callan
+ *
+ */
 public class Category{
 	private String name;
 	
 	//inner class node
-
-	private class Node<User>{
-		protected User user;
+	private class Node{
+		private User user;
 		private Node next;
 		
 		private Node(User user) {
@@ -55,7 +59,7 @@ public class Category{
 				}
 				else {
 					Node temp = head;
-					while(!(temp.next.getUser.getEmail().equals(user.getEmail()))) {
+					while(!(temp.next.user.getEmail().equals(user.getEmail()))) {
 						temp = temp.next;
 					}
 					temp.next = temp.next.next;
