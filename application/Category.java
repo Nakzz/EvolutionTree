@@ -5,7 +5,7 @@ public class Category<User>{
 	
 	//inner class node
 	private class Node<User>{
-		private User user;
+		protected User user;
 		private Node next;
 		
 		private Node(User user) {

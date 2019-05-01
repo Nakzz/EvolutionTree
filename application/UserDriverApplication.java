@@ -1,6 +1,13 @@
 package application;
 
 import java.util.List;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class UserDriverApplication {
 
@@ -18,12 +25,24 @@ public class UserDriverApplication {
     //login user
   }
   
-  //loggin in with an exisiting user
+  //login in with an exisiting user
   public UserDriverApplication(String username) throws InvalidUsername {
   
     //TODO: populate the internal data structure
     if(!isPopulated)
-      populateDatastructureWithUsers(jsonFilePath);
+      try {
+        populateDatastructureWithUsers(jsonFilePath);
+        
+      } catch (FileNotFoundException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      } catch (IOException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      } catch (ParseException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
     
     if(login(username)) {
       this.isLogged = true;
@@ -56,8 +75,44 @@ public class UserDriverApplication {
     return false;
   }
   
-  public void populateDatastructureWithUsers(String jsonFilePath) {
-    //TODO: read from JSON, for each object, add user
+  public void populateDatastructureWithUsers(String jsonFilePath) throws FileNotFoundException, IOException, ParseException  {
+ 
+    JSONParser parser = new JSONParser();
+    
+    try {
+      Object obj = parser.parse(new FileReader(jsonFilePath));
+
+      JSONObject jsonObject = (JSONObject) obj;
+
+      // loop array TODO: check with file
+      JSONArray users = (JSONArray) jsonObject.get("users");
+
+
+      for (int i = 0; i < users.size(); i++) {
+        JSONObject packageItem = (JSONObject) users.get(i); 
+
+        //TODO: GET ALL THE FIELDS. there has to be a better way of doing this. 
+        String packageName = (String) packageItem.get("name"); // gets each packgename
+        JSONArray dependencies = (JSONArray) packageItem.get("dependencies"); // gets each dependencies
+
+        System.out.println("Package name: " + packageName);
+
+       //TODO: add all the users
+
+      }
+
+//      System.out.println("DONE!");
+
+
+    } catch (FileNotFoundException e) {
+      throw new FileNotFoundException();
+    } catch (IOException e) {
+      throw new IOException();
+    } catch (ParseException e) {
+      throw new ParseException(0);
+    }
+    
+    
     //TODO: set data populated true
   }
   
