@@ -1,4 +1,4 @@
-package application.EvolutionTree.application;
+package application;
 
 import java.util.ArrayList;
 /**
@@ -8,13 +8,17 @@ import java.util.ArrayList;
  *
  */
 
+<<<<<<< HEAD
 //This class represents a Student. This class extends User
 public class Student extends User{
+=======
+public class Student{
+>>>>>>> d64deabc8ed757bd36a2c60e9a501f6306f21069
 	private int yearOfGrad;
 	private ArrayList<String> major;
 	private ArrayList<String> certificate;
 	private ArrayList<String> clubs;
-	private ArrayList<String> scholership;
+	private ArrayList<String> scholership; 
 	private ArrayList<String> courses;
 	private ArrayList<String> workExperience;
 	
@@ -24,8 +28,12 @@ public class Student extends User{
 	//@param ArrayList<String> major, certificate, clubs, scholership,courses,workExperience
 	//@param name, email, password
 	public Student(int yearOfGrad, ArrayList<String> major, ArrayList<String> certificate, ArrayList<String> clubs,
+<<<<<<< HEAD
 			ArrayList<String> scholership, ArrayList<String> courses, ArrayList<String> workExperience, String name, String email, String password){
 		super(name, email, password); //calls User constructor with name, email, password
+=======
+			ArrayList<String> scholership, ArrayList<String> courses, ArrayList<String> workExperience){
+>>>>>>> d64deabc8ed757bd36a2c60e9a501f6306f21069
 		this.yearOfGrad = yearOfGrad;
 		this.major = major;
 		this.certificate = certificate;
