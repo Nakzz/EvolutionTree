@@ -1,0 +1,39 @@
+{
+	"users": [
+    	{
+    		"username": ["ccpatel2@wisc.edu"]
+    		"type": ["student"]
+    		"isAdmin": ["false"]
+    		"isPublic": ["true"]
+    		"major": ["computer science", "math"]
+    		"certificate": [""]
+    		"clubs": ["TKE"]
+    		"scholership": [""]
+    		"courses": ["CS400", "ASTRON104", "CS252", "PSYCH202", "PHYSICS102"]
+    		"workExperience": ["Salad Chef"]
+    	},
+    	{
+    		"username": ["aj@wisc.edu"]
+    		"type": ["faculty"]
+    		"isAdmin": ["false"]
+    		"isPublic": ["true"]
+    		"major": ["computer science"]
+    		"certificate": ["math"]
+    		"clubs": ["Comp Sci Club"]
+    		"scholership": ["cool scholar"]
+    		"courses": ["CS400", "CS252", "CS240]
+    		"workExperience": ["programmer"]
+    	},
+    	{
+    		"username": ["ben@wisc.edu"]
+    		"type": ["student"]
+    		"isAdmin": ["true"]
+    		"isPublic": ["true"]
+    		"major": ["math"]
+    		"certificate": ["computer science"]
+    		"clubs": ["coding4good"]
+    		"scholership": [""]
+    		"courses": ["CS400", "POLISCI", "PHYSICS202"]
+    		"workExperience": [""]
+	] 
+}

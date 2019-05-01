@@ -13,7 +13,9 @@ public class User {
 	private String password;
 	private boolean isAdmin;
 	private boolean isPublic;
-	
+
+	//Constructor
+	//@param String name, email
 	   public User(String name, String email) {
 	        this.name = name;
 	        this.email = email;
@@ -22,6 +24,7 @@ public class User {
 	
 
 	//Constructor
+	//@param String name, email, password
 	public User(String name, String email, String password) {
 		this.name = name;
 		this.email = email;

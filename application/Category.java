@@ -5,6 +5,8 @@ package application.EvolutionTree.application;
  * @author erica, ben, aj, callan
  *
  */
+
+//
 public class Category{
 	private String name;
 	
@@ -153,25 +155,21 @@ public class Category{
 		return table[Math.abs(user.hashCode())%capacity].get(user); //calls linkedList get method
 	}
 	
-	//@see HashTableADT.java numKeys()
 	//@return numKeys
 	public int numKeys() {
 		return numKeys;
 	}
 
-	//@see HashTableADT.java getLoadFactorThreshold()
 	//@return loadFactorThreshold
 	public double getLoadFactorThreshold() {
 		return loadFactorThreshold;
 	}
 
-	//@see HashTableADT.java getLoadFactor()
 	//@return loadFactor (numKeys/capacity)
 	public double getLoadFactor() {
 		return ((double)numKeys/capacity);
 	}
 
-	//@see HashTableADT.java getCapacity()
 	//@return capacity
 	public int getCapacity() {
 		return capacity;
