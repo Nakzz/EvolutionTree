@@ -132,9 +132,18 @@ public class UserDriverApplication {
 
         // SET isAdmin field
         // TODO: CHECK IF THE USER IS AN ADMIN
+        Category allUsers = this.database.get(USERS_CATEGORY);
+        
+        User thisUser = allUsers.getUser(username); //TODO: hava Cal make a method that gives user from string.
+        
+        if(thisUser.getAdmin())
+          this.isAdmin = true;
+        else this.isAdmin = false;
 
         return true;
       } else {
+        
+      //User doesn't exist
         throw new InvalidUsername();
       }
     } else {
@@ -361,8 +370,21 @@ public class UserDriverApplication {
    * @return the list
    * @throws InvalidUsername the invalid username
    */
-  public List<User> searchUser(List profileInfo) throws InvalidUsername {
-
+  public List<User> searchUser(Map<String,ArrayList<String>> profileInfo) throws InvalidUsername {
+//TODO: find the complexity analysis for this algo
+    
+    //iterate through all the profileInfo fields; 
+      // check if the field exists
+        //create set of all the fields
+    
+    
+      // find the field with least load factor
+        // search for the users in field
+        // add to a list
+    
+    //if list of users doesn't contain other fields listed in the profileInfo, remove the user from the list
+    // and if user show if public
+    
     return null;
   }
 
@@ -374,11 +396,25 @@ public class UserDriverApplication {
    * @return true, if successful
    * @throws InvalidUsername the invalid username
    */
-  public boolean editUser(String username, List profileInfo) throws InvalidUsername {
+  public boolean editUser(Map<String,ArrayList<String>> profileInfo) throws InvalidUsername {
 
+    if (!this.listOfUsers.contains(username))
+      throw new InvalidUsername();
+      
+    
     if (username == this.username || this.isAdmin) {
+//if own profile or if the user is an admin
 
+      //      List<User> foundUsers = searchUser(profileInfo); 
+//     foundUsers.contains(o)
+      
+      Category userCategory = this.database.get(USERS_CATEGORY);
+      
+      User user = userCategory.getUser(username); // TODO: have cal implement the method
+      
+      
       // TODO: edit user information
+      // iterator through profileInfo
 
       return true;
     }
