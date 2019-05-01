@@ -7,7 +7,7 @@ public class Student{
 	private ArrayList<String> major;
 	private ArrayList<String> certificate;
 	private ArrayList<String> clubs;
-	private ArrayList<String> scholership;
+	private ArrayList<String> scholership; 
 	private ArrayList<String> courses;
 	private ArrayList<String> workExperience;
 	

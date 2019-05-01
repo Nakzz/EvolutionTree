@@ -1,9 +1,10 @@
-package application;
+package application.EvolutionTree.application;
 
-public class Category<User>{
+public class Category{
 	private String name;
 	
 	//inner class node
+
 	private class Node<User>{
 		protected User user;
 		private Node next;
@@ -18,8 +19,8 @@ public class Category<User>{
 		}
 	}
 	
-	private class linkedList<User>{
-		private Node<User> head;
+	private class linkedList{
+		private Node head;
 		private int size;
 		
 		private linkedList() {
@@ -33,11 +34,11 @@ public class Category<User>{
 				size++;
 			}
 			else {
-				Node<User> temp = head;
+				Node temp = head;
 				while(temp.next != null) {
 					temp = temp.next;
 				}
-				temp.next = new Node(user);
+				temp.next = new Node (user);
 				size++;
 			}
 		}
@@ -53,8 +54,8 @@ public class Category<User>{
 					return true;
 				}
 				else {
-					Node<User>temp = head;
-					while(!(temp.next.user.getEmail().equals(user.getEmail()))) {
+					Node temp = head;
+					while(!(temp.next.getUser.getEmail().equals(user.getEmail()))) {
 						temp = temp.next;
 					}
 					temp.next = temp.next.next;
@@ -65,7 +66,7 @@ public class Category<User>{
 		}
 		
 		private boolean contains(User user) {
-			Node<User> temp = head;
+			Node temp = head;
 			while(temp != null) {
 				if(temp.user.getEmail().equals(user.getEmail())) {
 					return true;
@@ -79,7 +80,7 @@ public class Category<User>{
 			if(!contains(user)) {
 				return null;
 			}
-			Node<User>temp = head;
+			Node temp = head;
 			while(!(temp.user.getEmail().equals(user.getEmail()))) {
 				temp = temp.next;
 			}
@@ -95,15 +96,17 @@ public class Category<User>{
 	private int capacity; //table size
 	private double loadFactorThreshold; //loadfactor value that starts resizing
 	int numKeys; //number of keys in HashTable
-	private linkedList<User>[]table; //the HashTable of type linkedList
+	private linkedList[]table; //the HashTable of type linkedList
 	
-	public Category() {
+	public Category(String name) {
 		table = new linkedList[11]; //creates table with initial size of 11
 		capacity = 11;
 		loadFactorThreshold = 0.75; //sets LoadFactor threshold to 0.75
+		this.name = name;
 	}
 	
-	public Category(int initialCapacity, double loadFactorThreshold) {
+	public Category(int initialCapacity, double loadFactorThreshold, String name) {
+		this.name = name;
 		capacity = initialCapacity;
 		table = new linkedList[initialCapacity];
 		this.loadFactorThreshold = loadFactorThreshold;
@@ -113,13 +116,13 @@ public class Category<User>{
 	public void insert(User user) {
 		
 		if(table[Math.abs(user.hashCode())%capacity] == null) { //if hashIndex of Hashtable is null, create new linkedList at index
-			table[Math.abs(user.hashCode())%capacity] = new linkedList<User>();
+			table[Math.abs(user.hashCode())%capacity] = new linkedList();
 		}
 		table[Math.abs(user.hashCode())%capacity].insert(user); //call linkedList insert method
 		numKeys++; //increment numKeys
 		
 		if(getLoadFactor() >= loadFactorThreshold) { //if loadFactor is greater than or equal to the loadFactorThreshold
-			linkedList<User>[]temp = new linkedList[(2*capacity) + 1]; //create temp hashTable with 2 time the size of the original hashTable + 1
+			linkedList[]temp = new linkedList[(2*capacity) + 1]; //create temp hashTable with 2 time the size of the original hashTable + 1
 			int capTemp = 2*capacity + 1;
 			
 			for(int count = 0; count < table.length; count++) { //loops through original hashTable
@@ -170,4 +173,8 @@ public class Category<User>{
 		return capacity;
 	}
 	
+	//returns the hashtable
+	public linkedList[] getTable() {
+		return table;
+	}
 }
