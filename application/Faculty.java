@@ -16,6 +16,17 @@ public class Faculty extends User{
 	
 	//Constructor
 	//@param ArrayList<String> coursesTaught, officeHours, officeLocation
+	//@param String name, email
+	public Faculty(ArrayList<String> coursesTaught, ArrayList<String> officeHours, ArrayList<String> officeLocation,
+			String name, String email) {
+		super(name, email); //calls the User constructor with name, email, and password
+		this.coursesTaught = coursesTaught;
+		this.officeHours = officeHours;
+		this.officeLocation = officeLocation;
+	}
+	
+	//Constructor
+	//@param ArrayList<String> coursesTaught, officeHours, officeLocation
 	//@param String name, email, password
 	public Faculty(ArrayList<String> coursesTaught, ArrayList<String> officeHours, ArrayList<String> officeLocation,
 			String name, String email, String password) {

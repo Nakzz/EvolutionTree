@@ -225,42 +225,136 @@ public class UserDriverApplication {
      
      Category userCategory = this.database.get(USERS_CATEGORY);
      Category cat = null;
-     
+     int yearOfGrad = 0000;
      
      switch(profileTypeName) {
        case "student":
          //get the fields related to the student
          ArrayList<String> majorField = profileInfo.get(Config.MAJORS_FIELD);
          ArrayList<String> certificatesField = profileInfo.get(Config.CERTIFICATES_FIELD);
+         ArrayList<String> clubsField = profileInfo.get(Config.CLUBS_FIELD);
          ArrayList<String> scholarshipField = profileInfo.get(Config.SCHOLARSHIPS_FIELD);
          ArrayList<String> coursesField = profileInfo.get(Config.COURSES_FIELD);
          ArrayList<String> workField = profileInfo.get(Config.WORK_EXPERIANCES_FIELD);
-         ArrayList<String> clubsField =  null; //profileInfo.get(Config.CLUBS_FIELD); // TODO: add clubs field
-//       ArrayList<String> yearOfGradField = profileInfo.get(Config.CLUBS_FIELD); // TODO: add year of grad
-         
-         int yearOfGrad = 0; //TODO: parseInt from the first element of yearOfGradField
+         ArrayList<String> yearOfGradField = profileInfo.get(Config.YEAROFGRAD_FIELD); // TODO: add year of grad
+         try{
+            yearOfGrad = Integer.parseInt(yearOfGradField.get(0)); //TODO: parseInt from the first element of yearOfGradField
+         } catch(NumberFormatException e) {
+        	 
+         }
          
          //create a student user 
-         Student newUser = new Student(yearOfGrad,majorField, certificatesField, clubsField, scholarshipField, coursesField, workField, name, username, profileTypeName);
+         Student newUser = new Student(yearOfGrad,majorField, certificatesField, clubsField, scholarshipField, coursesField, workField, nameField.get(0), username);
          
          userCategory.insert(newUser); // this is the master category that contains all the users
          
          //FIXME: maybe in the future, do something that would iterate instead of hardcoding  
 // if the fields sting. length is 0, create a new category
          if(majorField.size() != 0) {
-           if(this.database.containsKey(Config.MAJORS_FIELD)){
-             //add to exisiting category 
-             cat = this.database.get(Config.MAJORS_FIELD);
-             
-             cat.insert(newUser);
-           }
-             }else {
-               // create new category and add user to category
-               cat = new Category(Config.MAJORS_FIELD);
-               cat.insert(newUser);
-               
-               this.database.put(Config.MAJORS_FIELD, cat);
-           }
+        	 for(int count = 0; count < majorField.size(); count++) {
+        		 if(this.database.containsKey(majorField.get(count))) {
+        			 cat = this.database.get(majorField.get(count));
+        			 cat.insert(newUser);
+        		 }
+        		 else {
+        			 cat = new Category(majorField.get(count));
+        			 cat.insert(newUser);
+        			 this.database.put(majorField.get(count), cat);
+        		 }
+        	 }
+        	 
+         }
+         
+         if(certificatesField.size() != 0) {
+        	 for(int count = 0; count < certificatesField.size(); count++) {
+        		 if(this.database.containsKey(certificatesField.get(count))) {
+        			 cat = this.database.get(certificatesField.get(count));
+        			 cat.insert(newUser);
+        		 }
+        		 else {
+        			 cat = new Category(certificatesField.get(count));
+        			 cat.insert(newUser);
+        			 this.database.put(certificatesField.get(count), cat);
+        		 }
+        	 }
+        	 
+         }
+         
+         if(clubsField.size() != 0) {
+        	 for(int count = 0; count < clubsField.size(); count++) {
+        		 if(this.database.containsKey(clubsField.get(count))) {
+        			 cat = this.database.get(clubsField.get(count));
+        			 cat.insert(newUser);
+        		 }
+        		 else {
+        			 cat = new Category(clubsField.get(count));
+        			 cat.insert(newUser);
+        			 this.database.put(clubsField.get(count), cat);
+        		 }
+        	 }
+        	 
+         }
+         
+         if(scholarshipField.size() != 0) {
+        	 for(int count = 0; count < scholarshipField.size(); count++) {
+        		 if(this.database.containsKey(scholarshipField.get(count))) {
+        			 cat = this.database.get(scholarshipField.get(count));
+        			 cat.insert(newUser);
+        		 }
+        		 else {
+        			 cat = new Category(scholarshipField.get(count));
+        			 cat.insert(newUser);
+        			 this.database.put(scholarshipField.get(count), cat);
+        		 }
+        	 }
+        	 
+         }
+         
+         if(coursesField.size() != 0) {
+        	 for(int count = 0; count < coursesField.size(); count++) {
+        		 if(this.database.containsKey(coursesField.get(count))) {
+        			 cat = this.database.get(coursesField.get(count));
+        			 cat.insert(newUser);
+        		 }
+        		 else {
+        			 cat = new Category(coursesField.get(count));
+        			 cat.insert(newUser);
+        			 this.database.put(coursesField.get(count), cat);
+        		 }
+        	 }
+        	 
+         }
+         
+         
+         if(workField.size() != 0) {
+        	 for(int count = 0; count < workField.size(); count++) {
+        		 if(this.database.containsKey(workField.get(count))) {
+        			 cat = this.database.get(workField.get(count));
+        			 cat.insert(newUser);
+        		 }
+        		 else {
+        			 cat = new Category(workField.get(count));
+        			 cat.insert(newUser);
+        			 this.database.put(workField.get(count), cat);
+        		 }
+        	 }
+        	 
+         }
+         
+         if(yearOfGradField.size() != 0) {
+        	 for(int count = 0; count < yearOfGradField.size(); count++) {
+        		 if(this.database.containsKey(yearOfGradField.get(count))) {
+        			 cat = this.database.get(yearOfGradField.get(count));
+        			 cat.insert(newUser);
+        		 }
+        		 else {
+        			 cat = new Category(yearOfGradField.get(count));
+        			 cat.insert(newUser);
+        			 this.database.put(yearOfGradField.get(count), cat);
+        		 }
+        	 }
+        	 
+         }
            
              
           
@@ -268,14 +362,63 @@ public class UserDriverApplication {
          
          
          break;
-       case "faculty":
+       case "faculty":   
+           ArrayList<String> coursesTaughtField = profileInfo.get(Config.COURSESTAUGHT_FILED);
+           ArrayList<String> officeHoursField = profileInfo.get(Config.OFFICEHOURS_FIELD);
+           ArrayList<String> officeLocationField = profileInfo.get(Config.OFFICELOCATION_FIELD);
          //get the fields related to the student
          
 
          // create a faculty user
-         
+         Faculty newUser2 = new Faculty(coursesTaughtField, officeHoursField, officeLocationField, nameField.get(0), username);
          
          userCategory.insert(newUser);
+         
+         if(coursesTaughtField.size() != 0) {
+        	 for(int count = 0; count < coursesTaughtField.size(); count++) {
+        		 if(this.database.containsKey(coursesTaughtField.get(count))) {
+        			 cat = this.database.get(coursesTaughtField.get(count));
+        			 cat.insert(newUser2);
+        		 }
+        		 else {
+        			 cat = new Category(coursesTaughtField.get(count));
+        			 cat.insert(newUser2);
+        			 this.database.put(coursesTaughtField.get(count), cat);
+        		 }
+        	 }
+        	 
+         }
+         
+         if(officeHoursField.size() != 0) {
+        	 for(int count = 0; count < officeHoursField.size(); count++) {
+        		 if(this.database.containsKey(officeHoursField.get(count))) {
+        			 cat = this.database.get(officeHoursField.get(count));
+        			 cat.insert(newUser2);
+        		 }
+        		 else {
+        			 cat = new Category(officeHoursField.get(count));
+        			 cat.insert(newUser2);
+        			 this.database.put(officeHoursField.get(count), cat);
+        		 }
+        	 }
+        	 
+         }
+         
+         if(officeLocationField.size() != 0) {
+        	 for(int count = 0; count < officeLocationField.size(); count++) {
+        		 if(this.database.containsKey(officeLocationField.get(count))) {
+        			 cat = this.database.get(officeLocationField.get(count));
+        			 cat.insert(newUser2);
+        		 }
+        		 else {
+        			 cat = new Category(officeLocationField.get(count));
+        			 cat.insert(newUser2);
+        			 this.database.put(officeLocationField.get(count), cat);
+        		 }
+        	 }
+        	 
+         }
+         
          
          break;
        default:
@@ -284,7 +427,9 @@ public class UserDriverApplication {
          return false;
      }
     
-//if(profileInfo != null) {
+ if(profileInfo != null) {
+	 User user = new User(nameField.get(0), username);
+ }
 // create new user with just the username
     
     

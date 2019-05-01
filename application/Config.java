@@ -17,6 +17,11 @@ public class Config {
   public static final String SCHOLARSHIPS_FIELD = "scholership";
   public static final String COURSES_FIELD = "courses";
   public static final String WORK_EXPERIANCES_FIELD = "workExperience";
+  public static final String YEAROFGRAD_FIELD = "yearOfGrad";
+  
+  public static final String COURSESTAUGHT_FILED = "coursesTaught";
+  public static final String OFFICEHOURS_FIELD = "officeHours";
+  public static final String OFFICELOCATION_FIELD = "officeLocation";
 
   
   
