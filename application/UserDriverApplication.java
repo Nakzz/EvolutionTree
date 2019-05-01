@@ -263,7 +263,7 @@ public class UserDriverApplication {
            }
            
              
-         } 
+          
          
          
          
@@ -288,45 +288,10 @@ public class UserDriverApplication {
 // create new user with just the username
     
     
-    
-    
-  User newUser = new User(name, username); // register with just the name. must add email from profile info later
-
-  Category userCategory = this.database.get(USERS_CATEGORY);
-  userCategory.insert(newUser);
-  this.totalUsers++;
-  
-  
-  
-  
-  for(int i=0; i < profileInfo.size(); i++) {
-        
-    String currentCatName =  (String) profileInfo.get(i);   //TODO: the list should be a list of string
-    
-    
-    if(!this.database.containsKey(currentCatName)) {
-   // category doesn't exist, so create one
-      Category newCat = new Category(currentCatName);
-      
-    } else {
-      
-    }
-  }
-//} else {
-//
-//
-//      
-//    }
-      
- 
+  this.totalUsers++; // given that a new user was added to the database
   
 
-
-
-    
-    // TODO add user to each profileInfo field, if corresponding Category doesn't exist, initialize a
-    // new field.
-    return false;
+    return false; // if user was not added, otherwise should return true
   }
 
   /**
