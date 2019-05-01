@@ -27,12 +27,12 @@ public class UserDriverApplication {
   private boolean isAdmin = false; // if the user has admin priv
   private boolean isPopulated = false;
   private final String jsonFilePath = ""; //TODO: add a jsonFilePath
-  private Map<String, Category> database =null;    
+  private Map<String, Category> database =null;
   private List<String> listOfUsers = null;
-  
+
   //CONSTANTS
   private final String USERS_CATEGORY = "USERS_CATEGORY";
-  
+
   /**
    * Instantiates a new user driver application by just populating the database and initializing proper fields.
    * The DEV must register the user manually using register(username) method.
@@ -42,13 +42,13 @@ public class UserDriverApplication {
    * @throws UserExists the user exists
    */
   public UserDriverApplication() throws UserExists{
-    
-  
+
+
     //populating database
     if(!isPopulated)
       try {
         populateDatastructureWithUsers(jsonFilePath);
-        
+
       } catch (FileNotFoundException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
@@ -61,7 +61,7 @@ public class UserDriverApplication {
       }
 
   }
-  
+
   /**
    * Instantiates a new user driver application by logging in with a user.
    *
@@ -70,11 +70,11 @@ public class UserDriverApplication {
    */
   //login in with an exisiting user
   public UserDriverApplication(String username) throws InvalidUsername{
-  
+
     if(!isPopulated)
       try {
         populateDatastructureWithUsers(jsonFilePath);
-        
+
       } catch (FileNotFoundException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
@@ -85,16 +85,16 @@ public class UserDriverApplication {
         // TODO Auto-generated catch block
         e.printStackTrace();
       }
-    
+
     try{
       login(username);
-      
+
     } catch (InvalidUsername e) {
       this.isLogged = false;
       throw new InvalidUsername();
     }
   }
-  
+
   /**
    * Login user with current username if the user exists in the databse. If the username doesn't exist, then throw user not exists.
    *
@@ -107,19 +107,19 @@ public class UserDriverApplication {
     //IF USER EXISTS, then do the following
     if(this.listOfUsers.contains(username)) {
     //SET USERNAME field.
-     
+
       this.username = username;
       this.isLogged = true;
-      
+
       //SET isAdmin field
       //TODO: CHECK IF THE USER IS AN ADMIN
-      
+
     } else {
-    throw new InvalidUsername();  
+    throw new InvalidUsername();
     }
-    
-    
-  } 
+
+
+  }
   
   /**
    * Registers user with current username if the user doesn't exists in the databse. If the username  exist, then throw UserExists.
@@ -131,7 +131,7 @@ public class UserDriverApplication {
 
     //IF USER doesn't EXISTS, then do the following
     if(!this.listOfUsers.contains(username)) {
-      
+
     //add user to database
     try {
       addUser(username, null);
@@ -139,19 +139,19 @@ public class UserDriverApplication {
       System.out.println("UserDriverApplication_register: THIS SHOULD NOT HAPPEN. Already checked that User exists.");
       e.printStackTrace();
     }
-      
+
     //SET USERNAME field.
       //SET isAdmin field
       this.username = username;
       this.isAdmin = false;
-      
+
     } else {
-    throw new UserExists();  
+    throw new UserExists();
     }
-    
-    
-  } 
-  
+
+
+  }
+
   /**
    * Logout the current user.
    */
@@ -164,10 +164,10 @@ public class UserDriverApplication {
     this.listOfUsers = null;
     //
   }
-  
+
   /**
    * Adds the user to the database, and USERS_CATEGORY map.
-   * For each profileInfo field, if corresponding Category doesn't exist, initialize a new field. 
+   * For each profileInfo field, if corresponding Category doesn't exist, initialize a new field.
    *
    * @param username the username
    * @param profileInfo the profile info
@@ -176,10 +176,10 @@ public class UserDriverApplication {
    */
   private boolean addUser(String username, List profileInfo) throws UserExists{
 
-    //TODO add user to each profileInfo field, if corresponding Category doesn't exist, initialize a new field. 
+    //TODO add user to each profileInfo field, if corresponding Category doesn't exist, initialize a new field.
     return false;
   }
-  
+
   /**
    * Populate datastructure with users by parsing user informations from json file.
    * Also add users to Users_Category
@@ -190,16 +190,16 @@ public class UserDriverApplication {
    * @throws ParseException the parse exception
    */
   public void populateDatastructureWithUsers(String jsonFilePath) throws FileNotFoundException, IOException, ParseException  {
- 
+
     if(database == null) {
       database = new HashMap<String, Category>();
-    
+
       Category userList = new Category(USERS_CATEGORY);
-      
+
      database.put(USERS_CATEGORY, userList);
-      
+
     JSONParser parser = new JSONParser();
-    
+
     try {
       Object obj = parser.parse(new FileReader(jsonFilePath));
 
@@ -210,9 +210,9 @@ public class UserDriverApplication {
 
 
       for (int i = 0; i < users.size(); i++) {
-        JSONObject packageItem = (JSONObject) users.get(i); 
+        JSONObject packageItem = (JSONObject) users.get(i);
 
-        //TODO: GET ALL THE FIELDS. there has to be a better way of doing this. 
+        //TODO: GET ALL THE FIELDS. there has to be a better way of doing this.
         String packageName = (String) packageItem.get("name"); // gets each packgename
         JSONArray dependencies = (JSONArray) packageItem.get("dependencies"); // gets each dependencies
 
@@ -232,11 +232,11 @@ public class UserDriverApplication {
     } catch (ParseException e) {
       throw new ParseException(0);
     }
-    
-    
+
+
     //TODO: set data populated true
   }
-  
+
   /**
    * Search user in the database.
    *
@@ -245,10 +245,10 @@ public class UserDriverApplication {
    * @throws InvalidUsername the invalid username
    */
   public List<User> searchUser(List profileInfo) throws InvalidUsername{
-    
+
     return null;
   }
-  
+
   /**
    * Edits the user's information if own profile or if the user is an admin.
    *
@@ -258,21 +258,21 @@ public class UserDriverApplication {
    * @throws InvalidUsername the invalid username
    */
   public boolean editUser(String username, List profileInfo) throws InvalidUsername{
-    
+
     if(username == this.username || this.isAdmin) {
-      
+
       //TODO: edit user information
-      
+
       return true;
-    } 
-    
-    
+    }
+
+
     return false;
   }
-  
-  
+
+
   //GETTER METHODS
-  
+
   /**
    * Checks if is logged in.
    *
@@ -281,7 +281,7 @@ public class UserDriverApplication {
   public boolean isLoggedIn() {
     return this.isLogged;
   }
-  
+
   /**
    * Checks if is admin.
    *
@@ -290,7 +290,7 @@ public class UserDriverApplication {
   public boolean isAdmin() {
     return this.isAdmin;
   }
-  
+
   /**
    * Gets the username.
    *
@@ -299,5 +299,5 @@ public class UserDriverApplication {
   public String getUsername() {
     return this.username;
   }
-  
+
 }
