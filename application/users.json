@@ -2,9 +2,11 @@
 	"users": [
     	{
     		"username": ["ccpatel2@wisc.edu"]
+    		"name": ["Callan Patel"]
     		"type": ["student"]
     		"isAdmin": ["false"]
     		"isPublic": ["true"]
+    		"yearOfGrad": ["2022']
     		"major": ["computer science", "math"]
     		"certificate": [""]
     		"clubs": ["TKE"]
@@ -14,21 +16,21 @@
     	},
     	{
     		"username": ["aj@wisc.edu"]
+    		"name": ["AJ"]
     		"type": ["faculty"]
     		"isAdmin": ["false"]
     		"isPublic": ["true"]
-    		"major": ["computer science"]
-    		"certificate": ["math"]
-    		"clubs": ["Comp Sci Club"]
-    		"scholership": ["cool scholar"]
-    		"courses": ["CS400", "CS252", "CS240]
-    		"workExperience": ["programmer"]
+    		"coursesTaught": ["CS400", "CS300", "CS200"]
+    		"officeHours": ["12:00 PM", "12:00 AM"]
+    		"officeLocation": ["1551 Computer Science"]
     	},
     	{
     		"username": ["ben@wisc.edu"]
+    		"name": ["ben"]
     		"type": ["student"]
     		"isAdmin": ["true"]
     		"isPublic": ["true"]
+    		"yearOfGad": ["2021"]
     		"major": ["math"]
     		"certificate": ["computer science"]
     		"clubs": ["coding4good"]
