@@ -59,13 +59,8 @@ public class UserDriverApplication {
         // TODO Auto-generated catch block
         e.printStackTrace();
       }
+
     
-    // registering a new user
-    
-    
-    //add user, if user already exisiting, throw user Exists eception
-    
-    //login user
   }
   
   /**
@@ -127,11 +122,10 @@ public class UserDriverApplication {
   } 
   
   /**
-   * Login user with current username if the user exists in the databse. If the username doesn't exist, then throw user not exists.
+   * Registers user with current username if the user doesn't exists in the databse. If the username  exist, then throw UserExists.
    *
    * @param username the username
-   * @return true, if successful
-   * @throws InvalidUsername the invalid username
+   * @throws UserExists the username existst
    */
   public void register(String username) throws UserExists {
 
@@ -159,10 +153,15 @@ public class UserDriverApplication {
   } 
   
   /**
-   * Logout.
+   * Logout the current user.
    */
   public void logout() {
-    //TODO: reset the fields
+    //reset the fields
+    this.username = null;
+    this.isAdmin = false;
+    this.isPopulated= false;
+    this.database = null;
+    this.listOfUsers = null;
     //
   }
   
@@ -177,7 +176,7 @@ public class UserDriverApplication {
    */
   private boolean addUser(String username, List profileInfo) throws UserExists{
 
-    
+    //TODO add user to each profileInfo field, if corresponding Category doesn't exist, initialize a new field. 
     return false;
   }
   
