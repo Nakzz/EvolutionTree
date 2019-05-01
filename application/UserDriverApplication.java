@@ -50,7 +50,7 @@ public class UserDriverApplication {
    * @param type the type
    * @throws UserExists the user exists
    */
-  public UserDriverApplication() throws UserExists {
+  public UserDriverApplication() {
 
 
     // populating database
@@ -75,42 +75,6 @@ public class UserDriverApplication {
 
   }
 
-  /**
-   * Instantiates a new user driver application by logging in with a user.
-   *
-   * @param username the username
-   * @throws InvalidUsername the invalid username
-   */
-  // login in with an exisiting user
-  public UserDriverApplication(String username) throws InvalidUsername {
-
-    if (!isPopulated)
-      try {
-        populateDatastructureWithUsers(Config.JSON_LOCATION);
-
-      } catch (FileNotFoundException e) {
-        System.out.println("ERROR: UserDriverApplication_constructor: ");
-        System.out.println("  FileNotFoundException. Make sure JSON file path is proper");
-        e.printStackTrace();
-      } catch (IOException e) {
-        System.out.println("ERROR: UserDriverApplication_constructor: ");
-        System.out
-          .println("  IOException. Make sure JSON file is not opened by another application");
-        e.printStackTrace();
-      } catch (ParseException e) {
-        System.out.println("ERROR: UserDriverApplication_constructor: ");
-        System.out.println("  ParseException. Check JSON file");
-        e.printStackTrace();
-      }
-
-    try {
-      login(username);
-
-    } catch (InvalidUsername e) {
-      this.isLogged = false;
-      throw new InvalidUsername();
-    }
-  }
 
   /**
    * Login user with current username if the user exists in the databse. If the username doesn't
