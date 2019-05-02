@@ -641,7 +641,7 @@ if(profileInfo != null) {
 		         ArrayList<String> yearOfGradField = profileInfo.get(Config.YEAROFGRAD_FIELD);
 		         
 		         Set<User> majorSet = new HashSet<User>();
-		         if(majorField.size() > 0) {
+		         if(majorField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < majorField.size(); count++) {
 		        		 if(this.database.containsKey(majorField.get(count))) {
 		        			 List<User> list = this.database.get(majorField.get(count)).getAll();	
@@ -992,6 +992,16 @@ if(profileInfo != null) {
     return thisUser;
   }
 
+  public String getType() {
+    if(getUser() instanceof Student)
+    return "student";
+    
+    if(getUser() instanceof Faculty)
+    return "faculty"; 
+    
+    return "";
+  }
+  
   public int getTotalUser() {
     return this.totalUsers;
   }
