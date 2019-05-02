@@ -413,8 +413,9 @@ public class Main extends Application {
       return signupScreen;
   }
 
-  private Map<String, ArrayList<String>> createNewSearchFacultyMap(){
+  private Map<String, ArrayList<String>> createNewSearchStudentMap(){
 	    Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+	    map.put(Config.PROFILE_TYPE_FIELD, new ArrayList<String>());
 	    map.put(Config.COURSES_FIELD, new ArrayList<String>());
 	    map.put(Config.YEAROFGRAD_FIELD, new ArrayList<String>());
 	    map.put(Config.MAJORS_FIELD, new ArrayList<String>());
@@ -424,8 +425,9 @@ public class Main extends Application {
 	    return map;
 	  }
   
-  private Map<String, ArrayList<String>> createNewSearchStudentMap(){
+  private Map<String, ArrayList<String>> createNewSearchFacultyMap(){
 	    Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+	    map.put(Config.PROFILE_TYPE_FIELD, new ArrayList<String>());
 	    map.put(Config.OFFICELOCATION_FIELD, new ArrayList<String>());
 	    map.put(Config.COURSESTAUGHT_FILED, new ArrayList<String>());
 	    map.put(Config.OFFICEHOURS_FIELD, new ArrayList<String>());
@@ -477,6 +479,8 @@ public class Main extends Application {
          	workExperienceArray[curIndex] = workExperienceArray[curIndex].trim();
       }
       map.get(Config.WORK_EXPERIENCES_FIELD).addAll(Arrays.asList(workExperienceArray));
+      
+      System.out.println(map.toString());
       return map;
   }
   
@@ -507,6 +511,8 @@ public class Main extends Application {
           officeHoursArray[curIndex] = officeHoursArray[curIndex].trim();
       }
       map.get(Config.OFFICEHOURS_FIELD).addAll(Arrays.asList(officeHoursArray));
+      
+      System.out.println(map.toString());
       
       return map;
   }
@@ -588,9 +594,10 @@ public class Main extends Application {
       if (userTypeStudent.isSelected()) {
     	  Map<String,ArrayList<String>> studentSearchMap = this.createNewSearchStudentMap();
     	  this.addSearchStudentUserText(studentSearchMap, studentSearchTextFieldList, "student");
+    	  this.currentDriver.searchUser(studentSearchMap);
     	  
       } else {
-    	  Map<String, ArrayList<String>> facultySearchMap = this.createNewFacultyMap();
+    	  Map<String, ArrayList<String>> facultySearchMap = this.createNewSearchFacultyMap();
     	  this.addSearchFacultyUserText(facultySearchMap, facultySearchTextFieldList, "faculty");
     	  this.currentDriver.searchUser(facultySearchMap);
       }
