@@ -339,7 +339,7 @@ if(profileInfo != null) {
            
              
           
-         
+         return true;
          break;
        case "faculty":   
            ArrayList<String> coursesTaughtField = profileInfo.get(Config.COURSESTAUGHT_FILED);
@@ -399,7 +399,7 @@ if(profileInfo != null) {
         	 
          }
          
-         
+         return true;
          break;
        default:
          System.out.println("ERROR: UserDriverApplication_addUser: ");
@@ -415,6 +415,7 @@ if(profileInfo != null) {
 } else {
     //just create a user with no info
   User user = new User(null, username);
+  return true;
   }
     
   this.totalUsers++; // given that a new user was added to the database
