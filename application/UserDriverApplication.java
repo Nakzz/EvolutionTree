@@ -983,6 +983,14 @@ if(profileInfo != null) {
   public String getUsername() {
     return this.username;
   }
+  
+  public User getUser() {
+    
+    Category userCategory = this.database.get(USERS_CATEGORY);
+    User thisUser = userCategory.get(username);
+    
+    return thisUser;
+  }
 
   public int getTotalUser() {
     return this.totalUsers;
