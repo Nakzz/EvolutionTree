@@ -49,7 +49,7 @@ public class Main extends Application {
   Stage primaryStage; // the one and only stage
   Button logout = new Button("Logout"); // add logout button functionality on each page
   UserDriverApplication currentDriver;
-  //String currentUsername;
+  String currentUsername;
   /**
    * The start method that sets the stage
    */
@@ -155,29 +155,17 @@ public class Main extends Application {
         grid.add(userNameMoreThanOneWord, 1, 5);
       }
       else if (userTypeStudent.isSelected()) {
-        try {
-          this.currentDriver.register(signUpTextField.getText());
-          currentDriver.login(signUpTextField.getText());
-          Scene studentSignUp = signupScreenStudent();
-          primaryStage.setScene(studentSignUp);
-          primaryStage.show();
-        } catch (UserExists e) {
-          grid.add(userNameTakenText, 1, 5);
-        } catch (InvalidUsername e) {
-          // should not get here due to just registered the user
-          System.out.println("Shouldn't throw InvalidUsername when registering a new user.");
-        }
-      } else {
-        try {
-          this.currentDriver.register(signUpTextField.getText());
-          //this.currentUsername = signUpTextField.getText();
+        currentUsername = signUpTextField.getText();
+        Scene studentSignUp = signupScreenStudent();
+        primaryStage.setScene(studentSignUp);
+        primaryStage.show();
+      }
+        else {
+          currentUsername = signUpTextField.getText();
           Scene facultySignUp = signupScreenFaculty();
           primaryStage.setScene(facultySignUp);
-        } catch (UserExists e) {
-          grid.add(userNameTakenText, 1, 5);
         }
-      }
-    });
+      });
 
     // button functionality for logging in
     submit.setOnAction(toSearch -> {
@@ -231,7 +219,7 @@ public class Main extends Application {
     fields.add(new Text("Work Experience: "));
 
     TextField nameTextField = new TextField();
-    TextField emailGraduationTextField = new TextField(currentDriver.getUsername());
+    TextField emailGraduationTextField = new TextField(currentUsername);
     TextField yearOfGraduationTextField = new TextField();
     TextField majorTextField = new TextField();
     TextField minorTextField = new TextField();
@@ -253,6 +241,7 @@ public class Main extends Application {
       }
     };
 
+   
     GridPane grid = new GridPane();
     for (int i = 0; i < fields.size(); i++) {
       grid.add(fields.get(i), 0, i);
@@ -263,11 +252,11 @@ public class Main extends Application {
 
     // button functionality
     signup.setOnAction(toSearch -> {
-      Map<String,ArrayList<String>> studentMap = this.createNewStudentMap();
-      this.addAllUserText(studentMap, signUpStudentTextFieldList);
-      Map<String, ArrayList<String>> profileInfo = null;
+      //Map<String,ArrayList<String>> studentMap = this.createNewStudentMap();
+      //this.addAllUserText(studentMap, signUpStudentTextFieldList);
+      //Map<String, ArrayList<String>> profileInfo = null;
       try {
-        this.currentDriver.addUser(currentDriver.getUsername(), profileInfo);
+        this.currentDriver.addUser(currentUsername, this.createNewStudentMap());
       } catch (UserExists e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
@@ -299,7 +288,7 @@ public class Main extends Application {
     fields.add(new Text("Office Hours: "));
 
     TextField nameTextField = new TextField();
-    TextField emailGraduationTextField = new TextField(currentDriver.getUsername());
+    TextField emailGraduationTextField = new TextField(currentUsername);
     TextField officeBuildingTextField = new TextField();
     TextField classesTaughtTextField = new TextField();
     TextField officeHoursTextField = new TextField();
