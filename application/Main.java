@@ -648,7 +648,13 @@ public class Main extends Application {
     grid.add(reco, 1, 3);
     grid.add(otherInfo2, 1, 9);
 
+    // set button functionality, will return to the search screen
     Button searchAgain = new Button("Search again");
+    searchAgain.setOnAction(toSearch -> {
+      Scene search = search();
+      primaryStage.setScene(search);
+      primaryStage.show();
+    });
     
     BorderPane borderPane = new BorderPane();
     borderPane.setCenter(grid);
