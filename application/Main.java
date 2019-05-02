@@ -211,6 +211,8 @@ public class Main extends Application {
   private Map<String,ArrayList<String>> addStudentUserText(Map<String,ArrayList<String>> map, ArrayList<TextField> userInput){
       map.get(Config.USERNAME_FIELD).add(this.currentUsername);
       
+      map.get(Config.PROFILE_TYPE_FIELD).add("student");
+      
       String[] nameArray = userInput.get(0).getText().split(",");
       for (int curIndex=0;curIndex<nameArray.length;curIndex++) {
           nameArray[curIndex] = nameArray[curIndex].trim();
@@ -328,6 +330,8 @@ public class Main extends Application {
   private Map<String,ArrayList<String>> addFacultyUserText(Map<String,ArrayList<String>> map, ArrayList<TextField> userInput){
       map.get(Config.USERNAME_FIELD).add(this.currentUsername);
       
+      map.get(Config.PROFILE_TYPE_FIELD).add("faculty");
+      
       String[] nameArray = userInput.get(0).getText().split(",");
       for (int curIndex=0;curIndex<nameArray.length;curIndex++) {
           nameArray[curIndex] = nameArray[curIndex].trim();
@@ -338,19 +342,19 @@ public class Main extends Application {
       for (int curIndex=0;curIndex<officeBuildingArray.length;curIndex++) {
           officeBuildingArray[curIndex] = officeBuildingArray[curIndex].trim();
       }
-      map.get(Config.YEAROFGRAD_FIELD).addAll(Arrays.asList(officeBuildingArray));
+      map.get(Config.OFFICELOCATION_FIELD).addAll(Arrays.asList(officeBuildingArray));
       
-      String[] classesTaughtArray = userInput.get(2).getText().split(",");
+      String[] classesTaughtArray = userInput.get(3).getText().split(",");
       for (int curIndex=0;curIndex<classesTaughtArray.length;curIndex++) {
           classesTaughtArray[curIndex] = classesTaughtArray[curIndex].trim();
       }
-      map.get(Config.YEAROFGRAD_FIELD).addAll(Arrays.asList(classesTaughtArray));
+      map.get(Config.COURSESTAUGHT_FILED).addAll(Arrays.asList(classesTaughtArray));
       
-      String[] officeHoursArray = userInput.get(2).getText().split(",");
+      String[] officeHoursArray = userInput.get(4).getText().split(",");
       for (int curIndex=0;curIndex<officeHoursArray.length;curIndex++) {
           officeHoursArray[curIndex] = officeHoursArray[curIndex].trim();
       }
-      map.get(Config.YEAROFGRAD_FIELD).addAll(Arrays.asList(officeHoursArray));
+      map.get(Config.OFFICEHOURS_FIELD).addAll(Arrays.asList(officeHoursArray));
       
       return map;
   }
@@ -409,7 +413,104 @@ public class Main extends Application {
       return signupScreen;
   }
 
-
+  private Map<String, ArrayList<String>> createNewSearchFacultyMap(){
+	    Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+	    map.put(Config.COURSES_FIELD, new ArrayList<String>());
+	    map.put(Config.YEAROFGRAD_FIELD, new ArrayList<String>());
+	    map.put(Config.MAJORS_FIELD, new ArrayList<String>());
+	    map.put(Config.CLUBS_FIELD, new ArrayList<String>());
+	    map.put(Config.SCHOLARSHIPS_FIELD, new ArrayList<String>());
+	    map.put(Config.WORK_EXPERIENCES_FIELD, new ArrayList<String>());
+	    return map;
+	  }
+  
+  private Map<String, ArrayList<String>> createNewSearchStudentMap(){
+	    Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+	    map.put(Config.OFFICELOCATION_FIELD, new ArrayList<String>());
+	    map.put(Config.COURSESTAUGHT_FILED, new ArrayList<String>());
+	    map.put(Config.OFFICEHOURS_FIELD, new ArrayList<String>());
+	    return map;
+	  }
+  
+  /**
+   * Create a map out of the user input from the ArrayList of TextFields.  The keys are all of the keys are the attributes that a student can have. 
+   * @param map
+   * @param userInput
+   * @return
+   */
+  private Map<String,ArrayList<String>> addSearchStudentUserText(Map<String,ArrayList<String>> map, ArrayList<TextField> userInput, String userType){
+	  
+	  map.get(Config.PROFILE_TYPE_FIELD).add(userType);
+	  
+      String[] courseArray = userInput.get(0).getText().split(",");
+      for (int curIndex=0;curIndex<courseArray.length;curIndex++) {
+          courseArray[curIndex] = courseArray[curIndex].trim();
+      }
+      map.get(Config.COURSES_FIELD).addAll(Arrays.asList(courseArray));
+      
+      String[] yearOfGradArray = userInput.get(1).getText().split(",");
+      for (int curIndex=0;curIndex<yearOfGradArray.length;curIndex++) {
+          yearOfGradArray[curIndex] = yearOfGradArray[curIndex].trim();
+      }
+      map.get(Config.YEAROFGRAD_FIELD).addAll(Arrays.asList(yearOfGradArray));
+      
+      String[] majorArray = userInput.get(2).getText().split(",");
+      for (int curIndex=0;curIndex<majorArray.length;curIndex++) {
+    	  majorArray[curIndex] = majorArray[curIndex].trim();
+      }
+      map.get(Config.MAJORS_FIELD).addAll(Arrays.asList(majorArray));
+      
+      String[] clubsArray = userInput.get(3).getText().split(",");
+      for (int curIndex=0;curIndex<clubsArray.length;curIndex++) {
+          clubsArray[curIndex] = clubsArray[curIndex].trim();
+      }
+      map.get(Config.CLUBS_FIELD).addAll(Arrays.asList(clubsArray));
+     
+      String[] scholarshipArray = userInput.get(2).getText().split(",");
+      for (int curIndex=0;curIndex<scholarshipArray.length;curIndex++) {
+          scholarshipArray[curIndex] = scholarshipArray[curIndex].trim();
+      }
+      map.get(Config.SCHOLARSHIPS_FIELD).addAll(Arrays.asList(scholarshipArray));
+      
+      String[] workExperienceArray = userInput.get(2).getText().split(",");
+      for (int curIndex=0;curIndex<workExperienceArray.length;curIndex++) {
+         	workExperienceArray[curIndex] = workExperienceArray[curIndex].trim();
+      }
+      map.get(Config.WORK_EXPERIENCES_FIELD).addAll(Arrays.asList(workExperienceArray));
+      return map;
+  }
+  
+  /**
+   * Create a map out of the user input from the ArrayList of TextFields.  The keys are all of the keys are the attributes that a student can have. 
+   * @param map
+   * @param userInput
+   * @return
+   */
+  private Map<String,ArrayList<String>> addSearchFacultyUserText(Map<String,ArrayList<String>> map, ArrayList<TextField> userInput, String userType){
+     
+	  map.get(Config.PROFILE_TYPE_FIELD).add(userType);
+	  
+      String[] officeBuildingArray = userInput.get(0).getText().split(",");
+      for (int curIndex=0;curIndex<officeBuildingArray.length;curIndex++) {
+          officeBuildingArray[curIndex] = officeBuildingArray[curIndex].trim();
+      }
+      map.get(Config.OFFICELOCATION_FIELD).addAll(Arrays.asList(officeBuildingArray));
+      
+      String[] classesTaughtArray = userInput.get(1).getText().split(",");
+      for (int curIndex=0;curIndex<classesTaughtArray.length;curIndex++) {
+          classesTaughtArray[curIndex] = classesTaughtArray[curIndex].trim();
+      }
+      map.get(Config.COURSESTAUGHT_FILED).addAll(Arrays.asList(classesTaughtArray));
+      
+      String[] officeHoursArray = userInput.get(2).getText().split(",");
+      for (int curIndex=0;curIndex<officeHoursArray.length;curIndex++) {
+          officeHoursArray[curIndex] = officeHoursArray[curIndex].trim();
+      }
+      map.get(Config.OFFICEHOURS_FIELD).addAll(Arrays.asList(officeHoursArray));
+      
+      return map;
+  }
+  
   /**
    * Create search screen
    */
@@ -431,47 +532,52 @@ public class Main extends Application {
     fields.add(new Text("Courses: "));
     fields.add(new Text("Year of graduation: "));
     fields.add(new Text("Major: "));
-    fields.add(new Text("Minor: "));
     fields.add(new Text("Clubs: "));
     fields.add(new Text("Scholarships: "));
     fields.add(new Text("Work Experience: "));
     fields.add(new Text("Office building: "));
-    fields.add(new Text("Office room number: "));
     fields.add(new Text("Classes taught: "));
     fields.add(new Text("Office Hours: "));
 
     TextField coursesTextField = new TextField();
     TextField yearsGraduationTextField = new TextField();
     TextField majorTextField = new TextField();
-    TextField minorTextField = new TextField();
     TextField clubsTextField = new TextField();
     TextField scholarshipsTextField = new TextField();
     TextField workExperienceTextField = new TextField();
     TextField officeBuildingTextField = new TextField();
-    TextField officeRoomNumberTextField = new TextField();
     TextField classesTaughtTextField = new TextField();
     TextField officeHoursTextField = new TextField();
-    ArrayList<TextField> searchTextFieldList = new ArrayList<TextField>() {
+    ArrayList<TextField> studentSearchTextFieldList = new ArrayList<TextField>() {
       {
         add(coursesTextField);
         add(yearsGraduationTextField);
         add(majorTextField);
-        add(minorTextField);
         add(clubsTextField);
         add(scholarshipsTextField);
         add(workExperienceTextField);
-        add(officeBuildingTextField);
-        add(officeRoomNumberTextField);
-        add(classesTaughtTextField);
-        add(officeHoursTextField);
       }
     };
-
+    ArrayList<TextField> facultySearchTextFieldList = new ArrayList<TextField>() {
+    	{
+    		add(officeBuildingTextField);
+    	    add(classesTaughtTextField);
+    	    add(officeHoursTextField);
+    	}
+    };
+    
     GridPane grid = new GridPane();
     grid.add(userType, 0, 0);
     for (int i = 1; i < fields.size() + 1; i++) {
       grid.add(fields.get(i - 1), 0, i);
-      grid.add(searchTextFieldList.get(i - 1), 1, i);
+    }
+
+    for (int i = 0;i<studentSearchTextFieldList.size();i++) {
+    	grid.add(studentSearchTextFieldList.get(i), 1, i+1);
+    }
+    
+    for (int i = studentSearchTextFieldList.size();i<(studentSearchTextFieldList.size()+facultySearchTextFieldList.size());i++) {
+    	grid.add(facultySearchTextFieldList.get(i-studentSearchTextFieldList.size()), 1, i+1);
     }
 
     Button searchButton = new Button("Search");
@@ -479,6 +585,16 @@ public class Main extends Application {
 
     // button functionality
     searchButton.setOnAction(toSearch -> {
+      if (userTypeStudent.isSelected()) {
+    	  Map<String,ArrayList<String>> studentSearchMap = this.createNewSearchStudentMap();
+    	  this.addSearchStudentUserText(studentSearchMap, studentSearchTextFieldList, "student");
+    	  
+      } else {
+    	  Map<String, ArrayList<String>> facultySearchMap = this.createNewFacultyMap();
+    	  this.addSearchFacultyUserText(facultySearchMap, facultySearchTextFieldList, "faculty");
+    	  this.currentDriver.searchUser(facultySearchMap);
+      }
+      
       Scene searchResults = searchResults();
       primaryStage.setScene(searchResults);
       primaryStage.show();

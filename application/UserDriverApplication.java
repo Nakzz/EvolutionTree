@@ -619,7 +619,7 @@ if(profileInfo != null) {
    * @return the list
    * @throws InvalidUsername the invalid username
    */
-  public List<User> searchUser(Map<String, ArrayList<String>> profileInfo) throws InvalidUsername {
+  public List<User> searchUser(Map<String, ArrayList<String>> profileInfo) {
 	  List<User>searchlist = new ArrayList<User>();
     // TODO: find the complexity analysis for this algo
 	  if(profileInfo != null) {
@@ -906,6 +906,52 @@ if(profileInfo != null) {
 
 
     return false; // either you are not an admin, or the same user that you are trying to edit for;
+  }
+  
+  //computation method
+  public List<String> computation(Map<String, ArrayList<String>> profileInfo){
+	  List<User>searchlist = new ArrayList<User>();
+	    // TODO: find the complexity analysis for this algo
+		  if(profileInfo != null) {
+			    //get arraylist that are required for any type of User
+			     ArrayList<String> profileTypeField = profileInfo.get(Config.PROFILE_TYPE_FIELD);
+			     ArrayList<String> nameField = profileInfo.get(Config.NAME_FIELD);
+			     ArrayList<String> isAdminField = profileInfo.get(Config.IS_ADMIN_FIELD);
+			     ArrayList<String> isPublicField = profileInfo.get(Config.IS_PUBLIC_FIELD);
+			     String profileTypeName = profileTypeField.get(0);
+			     switch(profileTypeName) {
+			       case "student":
+			         //get the fields related to the student
+			         ArrayList<String> majorField = profileInfo.get(Config.MAJORS_FIELD);
+			         ArrayList<String> certificatesField = profileInfo.get(Config.CERTIFICATES_FIELD);
+			         ArrayList<String> clubsField = profileInfo.get(Config.CLUBS_FIELD);
+			         ArrayList<String> scholarshipField = profileInfo.get(Config.SCHOLARSHIPS_FIELD);
+			         ArrayList<String> coursesField = profileInfo.get(Config.COURSES_FIELD);
+			         ArrayList<String> workField = profileInfo.get(Config.WORK_EXPERIENCES_FIELD);
+			         ArrayList<String> yearOfGradField = profileInfo.get(Config.YEAROFGRAD_FIELD);
+			         
+			         
+					  List<User>getAll = searchUser(profileInfo);
+					  for(int count = 0; count < getAll.size(); count++) {
+						  
+					  }
+					  
+					  
+			         Set<User> courseSet = new HashSet<User>();
+			         if(coursesField.size() > 0) {
+			        	 for(int count = 0; count < coursesField.size(); count++) {
+			        		 if(this.database.containsKey(coursesField.get(count))) {
+			        			 List<User> list = this.database.get(coursesField.get(count)).getAll();	
+			        			 for(int count2 = 0; count2 < list.size(); count2++) {
+			        				 courseSet.add(list.get(count2));
+			        			 }
+			        		 }
+			        	 }
+			         }
+			         
+			         
+			     }
+		  }
   }
 
 
