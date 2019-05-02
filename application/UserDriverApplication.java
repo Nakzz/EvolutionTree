@@ -340,9 +340,7 @@ if(profileInfo != null) {
         	 
          }
            
-             
-          
-         return true;
+         return true;    
          break;
        case "faculty":   
            ArrayList<String> coursesTaughtField = profileInfo.get(Config.COURSESTAUGHT_FILED);
@@ -401,9 +399,9 @@ if(profileInfo != null) {
         	 }
         	 
          }
-         
          return true;
          break;
+         
        default:
          System.out.println("ERROR: UserDriverApplication_addUser: ");
          System.out.println("  ProfileType is not defined");
@@ -418,11 +416,9 @@ if(profileInfo != null) {
 } else {
     //just create a user with no info
   User user = new User(null, username);
-  return true;
-  }
-    
+  return true; 
   this.totalUsers++; // given that a new user was added to the database
-  
+}
 
     return false; // if user was not added, otherwise should return true
   }
