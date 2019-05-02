@@ -620,6 +620,7 @@ if(profileInfo != null) {
    * @throws InvalidUsername the invalid username
    */
   public List<User> searchUser(Map<String, ArrayList<String>> profileInfo) throws InvalidUsername {
+	  List<User>searchlist = new ArrayList<User>();
     // TODO: find the complexity analysis for this algo
 	  if(profileInfo != null) {
 		    //get arraylist that are required for any type of User
@@ -723,8 +724,19 @@ if(profileInfo != null) {
 		        	 }
 		         }
 		         
-		         Set<User> inter = new HashSet<User>();
-		         //Intersection????
+		         majorSet.retainAll(clubSet);
+		         majorSet.retainAll(certificateSet);
+		         majorSet.retainAll(scholarshipSet);
+		         majorSet.retainAll(courseSet);
+		         majorSet.retainAll(workSet);
+		         majorSet.retainAll(yearOfGradSet);
+		         
+		         User[]inter = (User[])majorSet.toArray();
+		         for(int count = 0; count < inter.length; count++) {
+		        	 searchlist.add(inter[count]);
+		         }
+		         return searchlist;
+		         
 		         break;
 		       case("Faculty"):
 		         ArrayList<String> coursesTaughtField = profileInfo.get(Config.COURSESTAUGHT_FILED);
@@ -767,7 +779,13 @@ if(profileInfo != null) {
 		        	 }
 		         }
 		         
-		         //Intersection?????
+		         coursesTaughtSet.retainAll(officeHourSet);
+		         coursesTaughtSet.retainAll(officeLocationSet);
+		         User[]inter2 = (User[])coursesTaughtSet.toArray();
+		         for(int count = 0; count < inter2.length; count++) {
+		        	 searchlist.add(inter2[count]);
+		         }
+		         return searchlist;
 	  }
 		     
   }
@@ -784,7 +802,7 @@ if(profileInfo != null) {
     // list
     // and if user show if public
 
-    return null;
+    return null; //no users found during the search
   }
 
   /**
