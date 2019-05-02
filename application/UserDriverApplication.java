@@ -735,7 +735,6 @@ if(profileInfo != null) {
 		         for(int count = 0; count < inter.length; count++) {
 		        	 searchlist.add(inter[count]);
 		         }
-		         return searchlist;
 		         
 		         break;
 		       case("Faculty"):
@@ -785,7 +784,8 @@ if(profileInfo != null) {
 		         for(int count = 0; count < inter2.length; count++) {
 		        	 searchlist.add(inter2[count]);
 		         }
-		         return searchlist;
+		         
+		         break;
 	  }
 		     
   }
@@ -802,6 +802,10 @@ if(profileInfo != null) {
     // list
     // and if user show if public
 
+	if(searchlist.size() > 0) {
+		return searchlist;
+	} 
+	
     return null; //no users found during the search
   }
 
