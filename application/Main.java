@@ -619,7 +619,12 @@ public class Main extends Application {
     
     editButton.setOnAction(event->{
     	//Check for type of user
-    	if () 
+    	if (this.currentDriver.getType()=="student") {
+    		this.primaryStage.setScene(this.editStudentScene());
+    	}
+    	else {
+    		this.primaryStage.setScene(this.editFacultyScene());
+    	}
     });
     
     grid.setAlignment(Pos.CENTER);
@@ -639,6 +644,7 @@ public class Main extends Application {
 		  output+=i;
 		  output+=", ";
 	  }
+	  return output;
   }
   
   private Scene editStudentScene() {
@@ -661,7 +667,7 @@ public class Main extends Application {
       TextField scholarshipsTextField = new TextField(this.listToString(studentUser.getScholership()));
       TextField coursesTextField = new TextField(this.listToString(studentUser.getCourses()));
       TextField workExperienceTextField = new TextField(this.listToString(studentUser.getWorkExperience()));
-      ArrayList<TextField> signUpStudentTextFieldList = new ArrayList<TextField>() {
+      ArrayList<TextField> editStudentTextFieldList = new ArrayList<TextField>() {
           {
               add(nameTextField);
               add(emailTextField);
@@ -677,14 +683,71 @@ public class Main extends Application {
       GridPane grid = new GridPane();
       for (int i = 0; i < fields.size(); i++) {
           grid.add(fields.get(i), 0, i);
-          grid.add(signUpStudentTextFieldList.get(i), 1, i);
+          grid.add(editStudentTextFieldList.get(i), 1, i);
       }
-      Button signup = new Button("Confirm changes");
-      grid.add(signup, 1, fields.size());
+      Button confirmChangesButton = new Button("Confirm changes");
+      grid.add(confirmChangesButton, 1, fields.size());
 
       // button functionality
-      signup.setOnAction(toSearch -> {
+      confirmChangesButton.setOnAction(toSearch -> {
+    	  Map<String,ArrayList<String>> studentMap = this.createNewStudentMap();
+    	  this.addStudentUserText(studentMap, editStudentTextFieldList);
+    	  this.currentDriver.editUser(studentMap);
           Scene search = this.search();
+          primaryStage.setScene(search);
+          primaryStage.show();
+      });
+
+      grid.setAlignment(Pos.CENTER);
+      BorderPane borderPane = new BorderPane();
+      borderPane.setCenter(grid);
+      borderPane.setBottom(logout);
+
+      Scene signupScreen = new Scene(borderPane, 800, 600);
+      signupScreen.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+      return signupScreen;
+  }
+  
+  
+  
+  private Scene editFacultyScene() {
+	  ArrayList<Text> fields = new ArrayList<Text>();
+      fields.add(new Text("Name: "));
+      fields.add(new Text("Email: "));
+      fields.add(new Text("Office building: "));
+      fields.add(new Text("Classes taught: "));
+      fields.add(new Text("Office Hours: "));
+      
+      Faculty facultyUser = (Faculty) this.currentDriver.getUser();
+      TextField nameTextField = new TextField(facultyUser.getName());
+      TextField emailGraduationTextField = new TextField(facultyUser.getEmail());
+      TextField officeBuildingTextField = new TextField(this.listToString(facultyUser.getOfficeLocation()));
+      TextField classesTaughtTextField = new TextField(this.listToString(facultyUser.getCoursesTaught()));
+      TextField officeHoursTextField = new TextField(this.listToString(facultyUser.getOfficeHours()));
+      ArrayList<TextField> editFacultyTextFieldList = new ArrayList<TextField>() {
+          {
+              add(nameTextField);
+              add(emailGraduationTextField);
+              add(officeBuildingTextField);
+              add(classesTaughtTextField);
+              add(officeHoursTextField);
+          }
+      };
+
+      GridPane grid = new GridPane();
+      for (int i = 0; i < fields.size(); i++) {
+          grid.add(fields.get(i), 0, i);
+          grid.add(editFacultyTextFieldList.get(i), 1, i);
+      }
+      Button editUserButton = new Button("Confirm");
+      grid.add(editUserButton, 1, fields.size());
+
+      // button functionality
+      editUserButton.setOnAction(toSearch -> {
+          Map<String, ArrayList<String>> facultyMap = this.createNewFacultyMap();
+          this.addFacultyUserText(facultyMap, editFacultyTextFieldList);
+          this.currentDriver.editUser(facultyMap);
+          Scene search = search();
           primaryStage.setScene(search);
           primaryStage.show();
       });
