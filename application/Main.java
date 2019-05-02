@@ -191,13 +191,39 @@ public class Main extends Application {
 		login.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		return login;
 	}
+	
 
 	private Map<String,ArrayList<String>> addAllUserText(Map<String,ArrayList<String>> map, ArrayList<TextField> userInput){
-		for (String curWord: userInput.get(0).getText().split(",")){
-			
+		map.get(Config.USERNAME_FIELD).add(this.currentUsername);
+		for (int curIndex=0;curIndex<userInput.get(0).getText().split(",").length;curIndex++) {
+			userInput.get(0).getText().split(",")[curIndex] = userInput.get(0).getText().split(",")[curIndex].trim();
 		}
-		map.get(Config.USERNAME_FIELD).addAll(Arrays.asList(userInput.get(0).getText().split(",")));
-		
+		map.get(Config.NAME_FIELD).addAll(Arrays.asList(userInput.get(0).getText().split(",")));
+		for (int curIndex=0;curIndex<userInput.get(2).getText().split(",").length;curIndex++) {
+			userInput.get(1).getText().split(",")[curIndex] = userInput.get(2).getText().split(",")[curIndex].trim();
+		}
+		map.get(Config.YEAROFGRAD_FIELD).addAll(Arrays.asList(userInput.get(2).getText().split(",")));
+		for (int curIndex=0;curIndex<userInput.get(3).getText().split(",").length;curIndex++) {
+			userInput.get(1).getText().split(",")[curIndex] = userInput.get(3).getText().split(",")[curIndex].trim();
+		}
+		map.get(Config.MAJORS_FIELD).addAll(Arrays.asList(userInput.get(3).getText().split(",")));
+		for (int curIndex=0;curIndex<userInput.get(4).getText().split(",").length;curIndex++) {
+			userInput.get(1).getText().split(",")[curIndex] = userInput.get(4).getText().split(",")[curIndex].trim();
+		}
+		map.get(Config.CLUBS_FIELD).addAll(Arrays.asList(userInput.get(4).getText().split(",")));
+		for (int curIndex=0;curIndex<userInput.get(5).getText().split(",").length;curIndex++) {
+			userInput.get(1).getText().split(",")[curIndex] = userInput.get(5).getText().split(",")[curIndex].trim();
+		}
+		map.get(Config.SCHOLARSHIPS_FIELD).addAll(Arrays.asList(userInput.get(5).getText().split(",")));
+		for (int curIndex=0;curIndex<userInput.get(6).getText().split(",").length;curIndex++) {
+			userInput.get(1).getText().split(",")[curIndex] = userInput.get(6).getText().split(",")[curIndex].trim();
+		}
+		map.get(Config.COURSES_FIELD).addAll(Arrays.asList(userInput.get(6).getText().split(",")));
+		for (int curIndex=0;curIndex<userInput.get(7).getText().split(",").length;curIndex++) {
+			userInput.get(1).getText().split(",")[curIndex] = userInput.get(7).getText().split(",")[curIndex].trim();
+		}
+		map.get(Config.WORK_EXPERIENCES_FIELD).addAll(Arrays.asList(userInput.get(7).getText().split(",")));
+		return map;
 	}
 	
 	/**
@@ -206,20 +232,16 @@ public class Main extends Application {
 	private Scene signupScreenStudent() {
 		ArrayList<Text> fields = new ArrayList<Text>();
 		fields.add(new Text("Name: "));
-		fields.add(new Text("Email: "));
 		fields.add(new Text("Year of graduation: "));
 		fields.add(new Text("Major: "));
-		fields.add(new Text("Minor: "));
 		fields.add(new Text("Clubs: "));
 		fields.add(new Text("Scholarships: "));
 		fields.add(new Text("Courses: "));
 		fields.add(new Text("Work Experience: "));
 
-		TextField nameTextField = new TextField(this.currentUsername);
-		TextField emailGraduationTextField = new TextField();
+		TextField nameTextField = new TextField();
 		TextField yearOfGraduationTextField = new TextField();
 		TextField majorTextField = new TextField();
-		TextField minorTextField = new TextField();
 		TextField clubsTextField = new TextField();
 		TextField scholarshipsTextField = new TextField();
 		TextField coursesTextField = new TextField();
@@ -227,10 +249,8 @@ public class Main extends Application {
 		ArrayList<TextField> signUpStudentTextFieldList = new ArrayList<TextField>() {
 			{
 				add(nameTextField);
-				add(emailGraduationTextField);
 				add(yearOfGraduationTextField);
 				add(majorTextField);
-				add(minorTextField);
 				add(clubsTextField);
 				add(scholarshipsTextField);
 				add(coursesTextField);
@@ -250,7 +270,7 @@ public class Main extends Application {
 		signup.setOnAction(toSearch -> {
 			Map<String,ArrayList<String>> studentMap = this.createNewStudentMap();
 			this.addAllUserText(studentMap, signUpStudentTextFieldList);
-			this.currentDriver.addUser(this.currentUsername, profileInfo)
+			//this.currentDriver.addUser(this.currentUsername, this.addAllUserText(studentMap, signUpStudentTextFieldList));
 			Scene search = search();
 			primaryStage.setScene(search);
 			primaryStage.show();
