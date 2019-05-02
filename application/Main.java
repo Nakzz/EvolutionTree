@@ -215,43 +215,43 @@ public class Main extends Application {
       
       String[] nameArray = userInput.get(0).getText().split(",");
       for (int curIndex=0;curIndex<nameArray.length;curIndex++) {
-          nameArray[curIndex] = nameArray[curIndex].trim();
+          nameArray[curIndex] = nameArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.NAME_FIELD).addAll(Arrays.asList(nameArray));
       
       String[] yearOfGradArray = userInput.get(2).getText().split(",");
       for (int curIndex=0;curIndex<yearOfGradArray.length;curIndex++) {
-          yearOfGradArray[curIndex] = yearOfGradArray[curIndex].trim();
+          yearOfGradArray[curIndex] = yearOfGradArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.YEAROFGRAD_FIELD).addAll(Arrays.asList(yearOfGradArray));
       
       String[] majorArray = userInput.get(3).getText().split(",");
       for (int curIndex=0;curIndex<majorArray.length;curIndex++) {
-          majorArray[curIndex] = majorArray[curIndex].trim();
+          majorArray[curIndex] = majorArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.MAJORS_FIELD).addAll(Arrays.asList(majorArray));
       
       String[] clubArray = userInput.get(4).getText().split(",");
       for (int curIndex=0;curIndex<clubArray.length;curIndex++) {
-          clubArray[curIndex] = clubArray[curIndex].trim();
+          clubArray[curIndex] = clubArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.CLUBS_FIELD).addAll(Arrays.asList(clubArray));
       
       String[] scholarshipArray = userInput.get(5).getText().split(",");
       for (int curIndex=0;curIndex<scholarshipArray.length;curIndex++) {
-          scholarshipArray[curIndex] = scholarshipArray[curIndex].trim();
+          scholarshipArray[curIndex] = scholarshipArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.SCHOLARSHIPS_FIELD).addAll(Arrays.asList(scholarshipArray));
       
       String[] coursesArray = userInput.get(6).getText().split(",");
       for (int curIndex=0;curIndex<userInput.get(6).getText().split(",").length;curIndex++) {
-          coursesArray[curIndex] = coursesArray[curIndex].trim();
+          coursesArray[curIndex] = coursesArray[curIndex].trim().toUpperCase();
       }
       map.get(Config.COURSES_FIELD).addAll(Arrays.asList(coursesArray));
       
       String[] workExperienceArray = userInput.get(7).getText().split(",");
       for (int curIndex=0;curIndex<workExperienceArray.length;curIndex++) {
-          workExperienceArray[curIndex] = workExperienceArray[curIndex].trim();
+          workExperienceArray[curIndex] = workExperienceArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.WORK_EXPERIENCES_FIELD).addAll(Arrays.asList(workExperienceArray));
       return map;
@@ -334,25 +334,25 @@ public class Main extends Application {
       
       String[] nameArray = userInput.get(0).getText().split(",");
       for (int curIndex=0;curIndex<nameArray.length;curIndex++) {
-          nameArray[curIndex] = nameArray[curIndex].trim();
+          nameArray[curIndex] = nameArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.NAME_FIELD).addAll(Arrays.asList(nameArray));
       
       String[] officeBuildingArray = userInput.get(2).getText().split(",");
       for (int curIndex=0;curIndex<officeBuildingArray.length;curIndex++) {
-          officeBuildingArray[curIndex] = officeBuildingArray[curIndex].trim();
+          officeBuildingArray[curIndex] = officeBuildingArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.OFFICELOCATION_FIELD).addAll(Arrays.asList(officeBuildingArray));
       
       String[] classesTaughtArray = userInput.get(3).getText().split(",");
       for (int curIndex=0;curIndex<classesTaughtArray.length;curIndex++) {
-          classesTaughtArray[curIndex] = classesTaughtArray[curIndex].trim();
+          classesTaughtArray[curIndex] = classesTaughtArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.COURSESTAUGHT_FILED).addAll(Arrays.asList(classesTaughtArray));
       
       String[] officeHoursArray = userInput.get(4).getText().split(",");
       for (int curIndex=0;curIndex<officeHoursArray.length;curIndex++) {
-          officeHoursArray[curIndex] = officeHoursArray[curIndex].trim();
+          officeHoursArray[curIndex] = officeHoursArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.OFFICEHOURS_FIELD).addAll(Arrays.asList(officeHoursArray));
       
@@ -447,43 +447,43 @@ public class Main extends Application {
 	  
       String[] courseArray = userInput.get(0).getText().split(",");
       for (int curIndex=0;curIndex<courseArray.length;curIndex++) {
-          courseArray[curIndex] = courseArray[curIndex].trim();
+          courseArray[curIndex] = courseArray[curIndex].trim().toUpperCase();
       }
       map.get(Config.COURSES_FIELD).addAll(Arrays.asList(courseArray));
       
       String[] yearOfGradArray = userInput.get(1).getText().split(",");
       for (int curIndex=0;curIndex<yearOfGradArray.length;curIndex++) {
-          yearOfGradArray[curIndex] = yearOfGradArray[curIndex].trim();
+          yearOfGradArray[curIndex] = yearOfGradArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.YEAROFGRAD_FIELD).addAll(Arrays.asList(yearOfGradArray));
       
       String[] majorArray = userInput.get(2).getText().split(",");
       for (int curIndex=0;curIndex<majorArray.length;curIndex++) {
-    	  majorArray[curIndex] = majorArray[curIndex].trim();
+    	  majorArray[curIndex] = majorArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.MAJORS_FIELD).addAll(Arrays.asList(majorArray));
       
       String[] certificatesArray = userInput.get(3).getText().split(",");
       for (int curIndex=0;curIndex<majorArray.length;curIndex++) {
-    	  certificatesArray[curIndex] = certificatesArray[curIndex].trim();
+    	  certificatesArray[curIndex] = certificatesArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.CERTIFICATES_FIELD).addAll(Arrays.asList(certificatesArray));
       
       String[] clubsArray = userInput.get(4).getText().split(",");
       for (int curIndex=0;curIndex<clubsArray.length;curIndex++) {
-          clubsArray[curIndex] = clubsArray[curIndex].trim();
+          clubsArray[curIndex] = clubsArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.CLUBS_FIELD).addAll(Arrays.asList(clubsArray));
      
       String[] scholarshipArray = userInput.get(5).getText().split(",");
       for (int curIndex=0;curIndex<scholarshipArray.length;curIndex++) {
-          scholarshipArray[curIndex] = scholarshipArray[curIndex].trim();
+          scholarshipArray[curIndex] = scholarshipArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.SCHOLARSHIPS_FIELD).addAll(Arrays.asList(scholarshipArray));
       
       String[] workExperienceArray = userInput.get(6).getText().split(",");
       for (int curIndex=0;curIndex<workExperienceArray.length;curIndex++) {
-         	workExperienceArray[curIndex] = workExperienceArray[curIndex].trim();
+         	workExperienceArray[curIndex] = workExperienceArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.WORK_EXPERIENCES_FIELD).addAll(Arrays.asList(workExperienceArray));
       
@@ -502,23 +502,21 @@ public class Main extends Application {
 	  
       String[] officeBuildingArray = userInput.get(0).getText().split(",");
       for (int curIndex=0;curIndex<officeBuildingArray.length;curIndex++) {
-          officeBuildingArray[curIndex] = officeBuildingArray[curIndex].trim();
+          officeBuildingArray[curIndex] = officeBuildingArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.OFFICELOCATION_FIELD).addAll(Arrays.asList(officeBuildingArray));
       
       String[] classesTaughtArray = userInput.get(1).getText().split(",");
       for (int curIndex=0;curIndex<classesTaughtArray.length;curIndex++) {
-          classesTaughtArray[curIndex] = classesTaughtArray[curIndex].trim();
+          classesTaughtArray[curIndex] = classesTaughtArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.COURSESTAUGHT_FILED).addAll(Arrays.asList(classesTaughtArray));
       
       String[] officeHoursArray = userInput.get(2).getText().split(",");
       for (int curIndex=0;curIndex<officeHoursArray.length;curIndex++) {
-          officeHoursArray[curIndex] = officeHoursArray[curIndex].trim();
+          officeHoursArray[curIndex] = officeHoursArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.OFFICEHOURS_FIELD).addAll(Arrays.asList(officeHoursArray));
-      
-      System.out.println(map.toString());
       
       return map;
   }
@@ -597,6 +595,7 @@ public class Main extends Application {
 
     Button searchButton = new Button("Search");
     grid.add(searchButton, 1, fields.size() + 1);
+    
 
     // button functionality
     searchButton.setOnAction(toSearch -> {
@@ -615,10 +614,18 @@ public class Main extends Application {
       primaryStage.setScene(searchResults);
       primaryStage.show();
     });
-
+    
+    Button editButton = new Button("Edit Profile");
+    
+    editButton.setOnAction(event->{
+    	//Check for type of user
+    	if () 
+    });
+    
     grid.setAlignment(Pos.CENTER);
     BorderPane borderPane = new BorderPane();
     borderPane.setCenter(grid);
+    borderPane.setTop(editButton);
     borderPane.setBottom(logout);
 
     Scene searchScreen = new Scene(borderPane, 800, 600);
@@ -626,6 +633,72 @@ public class Main extends Application {
     return searchScreen;
   }
 
+  private String listToString(ArrayList<String> list) {
+	  String output = "";
+	  for (String i:list) {
+		  output+=i;
+		  output+=", ";
+	  }
+  }
+  
+  private Scene editStudentScene() {
+	  ArrayList<Text> fields = new ArrayList<Text>();
+      fields.add(new Text("Name: "));
+      fields.add(new Text("Email: "));
+      fields.add(new Text("Year of graduation: "));
+      fields.add(new Text("Major: "));
+      fields.add(new Text("Clubs: "));
+      fields.add(new Text("Scholarships: "));
+      fields.add(new Text("Courses: "));
+      fields.add(new Text("Work Experience: "));
+    
+      Student studentUser = (Student) this.currentDriver.getUser();
+      TextField nameTextField = new TextField(studentUser.getName());
+      TextField emailTextField = new TextField(this.currentUsername);
+      TextField yearOfGraduationTextField = new TextField(String.valueOf(studentUser.getYearOfGrad()));
+      TextField majorTextField = new TextField(studentUser.getMajor().get(0));
+      TextField clubsTextField = new TextField(this.listToString(studentUser.getClubs()));
+      TextField scholarshipsTextField = new TextField(this.listToString(studentUser.getScholership()));
+      TextField coursesTextField = new TextField(this.listToString(studentUser.getCourses()));
+      TextField workExperienceTextField = new TextField(this.listToString(studentUser.getWorkExperience()));
+      ArrayList<TextField> signUpStudentTextFieldList = new ArrayList<TextField>() {
+          {
+              add(nameTextField);
+              add(emailTextField);
+              add(yearOfGraduationTextField);
+              add(majorTextField);
+              add(clubsTextField);
+              add(scholarshipsTextField);
+              add(coursesTextField);
+              add(workExperienceTextField);
+          }
+      };
+      
+      GridPane grid = new GridPane();
+      for (int i = 0; i < fields.size(); i++) {
+          grid.add(fields.get(i), 0, i);
+          grid.add(signUpStudentTextFieldList.get(i), 1, i);
+      }
+      Button signup = new Button("Confirm changes");
+      grid.add(signup, 1, fields.size());
+
+      // button functionality
+      signup.setOnAction(toSearch -> {
+          Scene search = this.search();
+          primaryStage.setScene(search);
+          primaryStage.show();
+      });
+
+      grid.setAlignment(Pos.CENTER);
+      BorderPane borderPane = new BorderPane();
+      borderPane.setCenter(grid);
+      borderPane.setBottom(logout);
+
+      Scene signupScreen = new Scene(borderPane, 800, 600);
+      signupScreen.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+      return signupScreen;
+  }
+  
   /**
    * search results screen
    */
