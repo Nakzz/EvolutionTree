@@ -68,6 +68,10 @@ public class UserDriverApplication {
         System.out.println("ERROR: UserDriverApplication_constructor: ");
         System.out.println("  ParseException. Check JSON file");
         e.printStackTrace();
+      } catch (UserExists e) {
+        System.out.println("ERROR: UserDriverApplication_constructor: ");
+        System.out.println("  Check JSON file. JSON file contains two same users");
+        e.printStackTrace();
       }
 
   }
@@ -95,7 +99,8 @@ public class UserDriverApplication {
         // TODO: CHECK IF THE USER IS AN ADMIN
         Category allUsers = this.database.get(USERS_CATEGORY);
         
-        User thisUser = allUsers.getUser(username); //TODO: hava Cal make a method that gives user from string.
+//        User thisUser = allUsers.getUser(username); //TODO: hava Cal make a method that gives user from string.
+        User thisUser = new User("TESTNAME", username); //TODO: remove this line after CAL adds new method
         
         if(thisUser.getAdmin())
           this.isAdmin = true;
@@ -417,8 +422,9 @@ public class UserDriverApplication {
    * @throws FileNotFoundException the file not found exception
    * @throws IOException Signals that an I/O exception has occurred.
    * @throws ParseException the parse exception
+   * @throws UserExists 
    */
-  public void populateDatastructureWithUsers(String jsonFilePath) throws FileNotFoundException, IOException, ParseException  {
+  public void populateDatastructureWithUsers(String jsonFilePath) throws FileNotFoundException, IOException, ParseException, UserExists  {
     
     this.totalUsers = 0;
     
@@ -461,6 +467,7 @@ public class UserDriverApplication {
         String isAdminText =  (String) isAdminField.get(0);
         String isPublicText = (String) isPublicField.get(0);
         
+        int k=0;
         
         switch(profileTypeName) {
           case "student":
@@ -487,7 +494,7 @@ public class UserDriverApplication {
             
              ArrayList<String> major =new ArrayList<String>();
              
-             int k=0;
+
                
              for(k=0; k< majorField.size(); k++) {
                major.add((String) majorField.get(k));
@@ -528,7 +535,7 @@ public class UserDriverApplication {
 
             map.put(Config.YEAROFGRAD_FIELD, new ArrayList<String>(Arrays.asList(yearOfGradField.toString())));
             
-//            addUser(username, profileInfo);
+            addUser(username, map);
             
             break;
             
@@ -540,7 +547,27 @@ public class UserDriverApplication {
             
             Map<String, ArrayList<String>> mapF = new HashMap<String, ArrayList<String>>();
           
+            
+            ArrayList<String> coursesTaught =new ArrayList<String>();
+            for(k=0; k< coursesTaughtField.size(); k++) {
+              coursesTaught.add((String) coursesTaughtField.get(k));
+            }
+            mapF.put(Config.COURSESTAUGHT_FILED, coursesTaught);
            
+            ArrayList<String> officeHours =new ArrayList<String>();
+            for(k=0; k< officeHoursField.size(); k++) {
+              officeHours.add((String) officeHoursField.get(k));
+            }
+            mapF.put(Config.OFFICEHOURS_FIELD, officeHours);
+            
+            ArrayList<String> officeLocation =new ArrayList<String>();
+            for(k=0; k< officeLocationField.size(); k++) {
+              officeLocation.add((String) officeLocationField.get(k));
+            }
+            mapF.put(Config.OFFICELOCATION_FIELD, officeLocation);
+            
+            addUser(username, mapF);
+            
             break;
           default:
             System.out.println("ERROR: UserDriverApplication_addUser: ");
@@ -643,8 +670,8 @@ public class UserDriverApplication {
               
           }
           
-          Student user = userCategory.getUser(username); // TODO: have cal implement the method
-          
+//          Student user = userCategory.getUser(username); // TODO: have cal implement the method
+          Student user = new Student(yearOfGrad, majorField, majorField, majorField, majorField, majorField, majorField, profileTypeName, profileTypeName); //TODO: remove this line after CAL adds new method
           
           
          user.setMajor(majorField);
@@ -664,7 +691,9 @@ public class UserDriverApplication {
             ArrayList<String> officeLocationField = profileInfo.get(Config.OFFICELOCATION_FIELD);
           //get the fields related to the student
           
-            Faculty userF = userCategory.getUser(username); // TODO: have cal implement the method
+//            Faculty userF = userCategory.getUser(username); // TODO: have cal implement the method
+            majorField = null; // TODO remove this link after cal adds new method
+            Faculty userF = new Faculty(majorField, majorField, majorField, "TESTNAME", username); //TODO: remove this line after CAL adds new method
         
           userF.setCoursesTaught(coursesTaughtField);
           userF.setOfficeHours(officeHoursField);
