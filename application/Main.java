@@ -655,9 +655,12 @@ public class Main extends Application {
     grid.add(reco, 1, 3);
     grid.add(otherInfo2, 1, 9);
 
+    Button searchAgain = new Button("Search again");
+    
     BorderPane borderPane = new BorderPane();
     borderPane.setCenter(grid);
     borderPane.setBottom(logout);
+    borderPane.setRight(searchAgain);
 
     Scene searchResults = new Scene(borderPane, 800, 600);
     searchResults.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
