@@ -228,6 +228,7 @@ if(profileInfo != null) {
          
          //create a student user 
          Student newUser = new Student(yearOfGrad,majorField, certificatesField, clubsField, scholarshipField, coursesField, workField, nameField.get(0), username);
+         this.totalUsers++;
          
          userCategory.insert(newUser); // this is the master category that contains all the users
          System.out.println(username);
@@ -340,7 +341,6 @@ if(profileInfo != null) {
         	 
          }
            
-         return true;    
          break;
        case "faculty":   
            ArrayList<String> coursesTaughtField = profileInfo.get(Config.COURSESTAUGHT_FILED);
@@ -399,7 +399,6 @@ if(profileInfo != null) {
         	 }
         	 
          }
-         return true;
          break;
          
        default:
@@ -416,11 +415,11 @@ if(profileInfo != null) {
 } else {
     //just create a user with no info
   User user = new User(null, username);
-  return true; 
   this.totalUsers++; // given that a new user was added to the database
+  return true; 
 }
 
-    return false; // if user was not added, otherwise should return true
+    return true; // if user was not added, otherwise should return true
   }
 
   /**
