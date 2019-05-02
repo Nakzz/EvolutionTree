@@ -296,7 +296,7 @@ public class Main extends Application {
       signup.setOnAction(toSearch -> {
           Map<String,ArrayList<String>> studentMap = this.createNewStudentMap();
           this.addStudentUserText(studentMap, signUpStudentTextFieldList);
-          //this.currentDriver.addUser(this.currentUsername, this.addAllUserText(studentMap, signUpStudentTextFieldList));
+          //this.currentDriver.addUser(this.currentUsername, this.addStudentUserText(studentMap, signUpStudentTextFieldList));
           Scene search = search();
           primaryStage.setScene(search);
           primaryStage.show();
@@ -310,6 +310,42 @@ public class Main extends Application {
       Scene signupScreen = new Scene(borderPane, 800, 600);
       signupScreen.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
       return signupScreen;
+  }
+  
+  /**
+   * Create a map out of the user input from the ArrayList of TextFields.  The keys are all of the keys are the attributes that a student can have. 
+   * @param map
+   * @param userInput
+   * @return
+   */
+  private Map<String,ArrayList<String>> addFacultyUserText(Map<String,ArrayList<String>> map, ArrayList<TextField> userInput){
+      map.get(Config.USERNAME_FIELD).add(this.currentUsername);
+      
+      String[] nameArray = userInput.get(0).getText().split(",");
+      for (int curIndex=0;curIndex<nameArray.length;curIndex++) {
+          nameArray[curIndex] = nameArray[curIndex].trim();
+      }
+      map.get(Config.NAME_FIELD).addAll(Arrays.asList(nameArray));
+      
+      String[] officeBuildingArray = userInput.get(2).getText().split(",");
+      for (int curIndex=0;curIndex<officeBuildingArray.length;curIndex++) {
+          officeBuildingArray[curIndex] = officeBuildingArray[curIndex].trim();
+      }
+      map.get(Config.YEAROFGRAD_FIELD).addAll(Arrays.asList(officeBuildingArray));
+      
+      String[] classesTaughtArray = userInput.get(2).getText().split(",");
+      for (int curIndex=0;curIndex<classesTaughtArray.length;curIndex++) {
+          classesTaughtArray[curIndex] = classesTaughtArray[curIndex].trim();
+      }
+      map.get(Config.YEAROFGRAD_FIELD).addAll(Arrays.asList(classesTaughtArray));
+      
+      String[] officeHoursArray = userInput.get(2).getText().split(",");
+      for (int curIndex=0;curIndex<officeHoursArray.length;curIndex++) {
+          officeHoursArray[curIndex] = officeHoursArray[curIndex].trim();
+      }
+      map.get(Config.YEAROFGRAD_FIELD).addAll(Arrays.asList(officeHoursArray));
+      
+      return map;
   }
   
   /**
@@ -348,7 +384,9 @@ public class Main extends Application {
 
       // button functionality
       signup.setOnAction(toSearch -> {
-          
+          Map<String, ArrayList<String>> facultyMap = this.createNewFacultyMap();
+          this.addFacultyUserText(facultyMap, signUpFacultyTextFieldList);
+        //this.currentDriver.addUser(this.currentUsername, this.addFacultyUserText(studentMap, signUpStudentTextFieldList));
           Scene search = search();
           primaryStage.setScene(search);
           primaryStage.show();
