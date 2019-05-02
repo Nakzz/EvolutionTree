@@ -694,8 +694,9 @@ if(profileInfo != null) {
           }
 
           // Student user = userCategory.getUser(username); // TODO: have cal implement the method
-          Student user = new Student(yearOfGrad, majorField, majorField, majorField, majorField,
-            majorField, majorField, profileTypeName, profileTypeName); // TODO: remove this line after CAL adds new method
+     //     Student user = new Student(yearOfGrad, majorField, majorField, majorField, majorField,
+     //, majorField, profileTypeName, profileTypeName); // TODO: remove this line after CAL adds new method
+          Student user = (Student)userCategory.get(username);
 
 
           user.setMajor(majorField);
@@ -717,7 +718,8 @@ if(profileInfo != null) {
 
           // Faculty userF = userCategory.getUser(username); // TODO: have cal implement the method
           majorField = null; // TODO remove this link after cal adds new method
-          Faculty userF = new Faculty(majorField, majorField, majorField, "TESTNAME", username); // TODO: remove this line after CAL adds new method
+         // Faculty userF = new Faculty(majorField, majorField, majorField, "TESTNAME", username); // TODO: remove this line after CAL adds new method
+          Faculty userF = (Faculty)userCategory.get(username);
 
           userF.setCoursesTaught(coursesTaughtField);
           userF.setOfficeHours(officeHoursField);
