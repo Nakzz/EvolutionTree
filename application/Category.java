@@ -151,8 +151,18 @@ public class Category{
 		
 	}
 	
-	public String get(User user) {
-		return table[Math.abs(user.hashCode())%capacity].get(user); //calls linkedList get method
+	public User get(String username) {
+		for(int count = 0; count < table.length; count++) {
+			if(table[count].size > 0) {
+				Node temp = table[count].head;
+				while(temp != null) {
+					if(temp.user.getEmail().equals(username)) {
+						return temp.user;
+					}
+					temp = temp.next;
+				}
+			}
+		}
 	}
 	
 	//@return numKeys
