@@ -194,154 +194,175 @@ public class Main extends Application {
     return login;
   }
 
-  private Map<String,ArrayList<String>> addAllUserText(Map<String,ArrayList<String>> map, ArrayList<TextField> userInput){
-    for (String curWord: userInput.get(0).getText().split(",")){
 
-    }
-    map.get(Config.USERNAME_FIELD).addAll(Arrays.asList(userInput.get(0).getText().split(",")));
-    return map;
-
+  /**
+   * Create a map out of the user input from the ArrayList of TextFields.  The keys are all of the keys are the attributes that a student can have. 
+   * @param map
+   * @param userInput
+   * @return
+   */
+  private Map<String,ArrayList<String>> addStudentUserText(Map<String,ArrayList<String>> map, ArrayList<TextField> userInput){
+      map.get(Config.USERNAME_FIELD).add(this.currentUsername);
+      
+      String[] nameArray = userInput.get(0).getText().split(",");
+      for (int curIndex=0;curIndex<nameArray.length;curIndex++) {
+          nameArray[curIndex] = nameArray[curIndex].trim();
+      }
+      map.get(Config.NAME_FIELD).addAll(Arrays.asList(nameArray));
+      
+      String[] yearOfGradArray = userInput.get(2).getText().split(",");
+      for (int curIndex=0;curIndex<yearOfGradArray.length;curIndex++) {
+          yearOfGradArray[curIndex] = yearOfGradArray[curIndex].trim();
+      }
+      map.get(Config.YEAROFGRAD_FIELD).addAll(Arrays.asList(yearOfGradArray));
+      
+      String[] majorArray = userInput.get(3).getText().split(",");
+      for (int curIndex=0;curIndex<majorArray.length;curIndex++) {
+          majorArray[curIndex] = majorArray[curIndex].trim();
+      }
+      map.get(Config.MAJORS_FIELD).addAll(Arrays.asList(majorArray));
+      
+      String[] clubArray = userInput.get(4).getText().split(",");
+      for (int curIndex=0;curIndex<clubArray.length;curIndex++) {
+          clubArray[curIndex] = clubArray[curIndex].trim();
+      }
+      map.get(Config.CLUBS_FIELD).addAll(Arrays.asList(clubArray));
+      
+      String[] scholarshipArray = userInput.get(5).getText().split(",");
+      for (int curIndex=0;curIndex<scholarshipArray.length;curIndex++) {
+          scholarshipArray[curIndex] = scholarshipArray[curIndex].trim();
+      }
+      map.get(Config.SCHOLARSHIPS_FIELD).addAll(Arrays.asList(scholarshipArray));
+      
+      String[] coursesArray = userInput.get(6).getText().split(",");
+      for (int curIndex=0;curIndex<userInput.get(6).getText().split(",").length;curIndex++) {
+          coursesArray[curIndex] = coursesArray[curIndex].trim();
+      }
+      map.get(Config.COURSES_FIELD).addAll(Arrays.asList(coursesArray));
+      
+      String[] workExperienceArray = userInput.get(7).getText().split(",");
+      for (int curIndex=0;curIndex<workExperienceArray.length;curIndex++) {
+          workExperienceArray[curIndex] = workExperienceArray[curIndex].trim();
+      }
+      map.get(Config.WORK_EXPERIENCES_FIELD).addAll(Arrays.asList(workExperienceArray));
+      return map;
   }
+  
 
   /**
    * Create Sign-up scene for students
    */
   private Scene signupScreenStudent() {
-    ArrayList<Text> fields = new ArrayList<Text>();
-    fields.add(new Text("Name: "));
-    fields.add(new Text("Email: "));
-    fields.add(new Text("Year of graduation: "));
-    fields.add(new Text("Major: "));
-    fields.add(new Text("Minor: "));
-    fields.add(new Text("Clubs: "));
-    fields.add(new Text("Scholarships: "));
-    fields.add(new Text("Courses: "));
-    fields.add(new Text("Work Experience: "));
+      ArrayList<Text> fields = new ArrayList<Text>();
+      fields.add(new Text("Name: "));
+      fields.add(new Text("Email: "));
+      fields.add(new Text("Year of graduation: "));
+      fields.add(new Text("Major: "));
+      fields.add(new Text("Clubs: "));
+      fields.add(new Text("Scholarships: "));
+      fields.add(new Text("Courses: "));
+      fields.add(new Text("Work Experience: "));
 
-    TextField nameTextField = new TextField();
-    TextField emailGraduationTextField = new TextField(currentUsername);
-    TextField yearOfGraduationTextField = new TextField();
-    TextField majorTextField = new TextField();
-    TextField minorTextField = new TextField();
-    TextField clubsTextField = new TextField();
-    TextField scholarshipsTextField = new TextField();
-    TextField coursesTextField = new TextField();
-    TextField workExperienceTextField = new TextField();
-    ArrayList<TextField> signUpStudentTextFieldList = new ArrayList<TextField>() {
-      {
-        add(nameTextField);
-        add(emailGraduationTextField);
-        add(yearOfGraduationTextField);
-        add(majorTextField);
-        add(minorTextField);
-        add(clubsTextField);
-        add(scholarshipsTextField);
-        add(coursesTextField);
-        add(workExperienceTextField);
+      TextField nameTextField = new TextField();
+      TextField emailTextField = new TextField(this.currentUsername);
+      TextField yearOfGraduationTextField = new TextField();
+      TextField majorTextField = new TextField();
+      TextField clubsTextField = new TextField();
+      TextField scholarshipsTextField = new TextField();
+      TextField coursesTextField = new TextField();
+      TextField workExperienceTextField = new TextField();
+      ArrayList<TextField> signUpStudentTextFieldList = new ArrayList<TextField>() {
+          {
+              add(nameTextField);
+              add(emailTextField);
+              add(yearOfGraduationTextField);
+              add(majorTextField);
+              add(clubsTextField);
+              add(scholarshipsTextField);
+              add(coursesTextField);
+              add(workExperienceTextField);
+          }
+      };
+      
+      GridPane grid = new GridPane();
+      for (int i = 0; i < fields.size(); i++) {
+          grid.add(fields.get(i), 0, i);
+          grid.add(signUpStudentTextFieldList.get(i), 1, i);
       }
-    };
+      Button signup = new Button("Sign-up!");
+      grid.add(signup, 1, fields.size());
 
-   
-    GridPane grid = new GridPane();
-    for (int i = 0; i < fields.size(); i++) {
-      grid.add(fields.get(i), 0, i);
-      grid.add(signUpStudentTextFieldList.get(i), 1, i);
-    }
-    Button signup = new Button("Sign-up!");
-    grid.add(signup, 1, fields.size());
+      // button functionality
+      signup.setOnAction(toSearch -> {
+          Map<String,ArrayList<String>> studentMap = this.createNewStudentMap();
+          this.addStudentUserText(studentMap, signUpStudentTextFieldList);
+          //this.currentDriver.addUser(this.currentUsername, this.addAllUserText(studentMap, signUpStudentTextFieldList));
+          Scene search = search();
+          primaryStage.setScene(search);
+          primaryStage.show();
+      });
 
-    // button functionality
-    signup.setOnAction(toSearch -> {
-      //Map<String,ArrayList<String>> studentMap = this.createNewStudentMap();
-      //this.addAllUserText(studentMap, signUpStudentTextFieldList);
-      //Map<String, ArrayList<String>> profileInfo = null;
-      try {
-        this.currentDriver.addUser(currentUsername, this.createNewStudentMap());
-      } catch (UserExists e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-      Scene search = search();
-      primaryStage.setScene(search);
-      primaryStage.show();
-    });
+      grid.setAlignment(Pos.CENTER);
+      BorderPane borderPane = new BorderPane();
+      borderPane.setCenter(grid);
+      borderPane.setBottom(logout);
 
-    grid.setAlignment(Pos.CENTER);
-    BorderPane borderPane = new BorderPane();
-    borderPane.setCenter(grid);
-    borderPane.setBottom(logout);
-
-    Scene signupScreen = new Scene(borderPane, 800, 600);
-    signupScreen.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-    return signupScreen;
+      Scene signupScreen = new Scene(borderPane, 800, 600);
+      signupScreen.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+      return signupScreen;
   }
-
+  
   /**
    * Create Sign-up scene for Faculty
    */
   private Scene signupScreenFaculty() {
-    ArrayList<Text> fields = new ArrayList<Text>();
-    fields.add(new Text("Name: "));
-    fields.add(new Text("Email: "));
-    fields.add(new Text("Office building: "));
-    fields.add(new Text("Classes taught: "));
-    fields.add(new Text("Office Hours: "));
+      ArrayList<Text> fields = new ArrayList<Text>();
+      fields.add(new Text("Name: "));
+      fields.add(new Text("Email: "));
+      fields.add(new Text("Office building: "));
+      fields.add(new Text("Classes taught: "));
+      fields.add(new Text("Office Hours: "));
+      
+      TextField nameTextField = new TextField();
+      TextField emailGraduationTextField = new TextField();
+      TextField officeBuildingTextField = new TextField();
+      TextField classesTaughtTextField = new TextField();
+      TextField officeHoursTextField = new TextField();
+      ArrayList<TextField> signUpFacultyTextFieldList = new ArrayList<TextField>() {
+          {
+              add(nameTextField);
+              add(emailGraduationTextField);
+              add(officeBuildingTextField);
+              add(classesTaughtTextField);
+              add(officeHoursTextField);
+          }
+      };
 
-    TextField nameTextField = new TextField();
-    TextField emailGraduationTextField = new TextField(currentUsername);
-    TextField officeBuildingTextField = new TextField();
-    TextField classesTaughtTextField = new TextField();
-    TextField officeHoursTextField = new TextField();
-    ArrayList<TextField> signUpFacultyTextFieldList = new ArrayList<TextField>() {
-      {
-        add(nameTextField);
-        add(emailGraduationTextField);
-        add(officeBuildingTextField);
-        add(classesTaughtTextField);
-        add(officeHoursTextField);
+      GridPane grid = new GridPane();
+      for (int i = 0; i < fields.size(); i++) {
+          grid.add(fields.get(i), 0, i);
+          grid.add(signUpFacultyTextFieldList.get(i), 1, i);
       }
-    };
+      Button signup = new Button("Sign-up!");
+      grid.add(signup, 1, fields.size());
 
-    GridPane grid = new GridPane();
-    for (int i = 0; i < fields.size(); i++) {
-      grid.add(fields.get(i), 0, i);
-      grid.add(signUpFacultyTextFieldList.get(i), 1, i);
-    }
-    Button signup = new Button("Sign-up!");
-    grid.add(signup, 1, fields.size());
+      // button functionality
+      signup.setOnAction(toSearch -> {
+          
+          Scene search = search();
+          primaryStage.setScene(search);
+          primaryStage.show();
+      });
 
-    // button functionality
-    signup.setOnAction(toSearch -> {
+      grid.setAlignment(Pos.CENTER);
+      BorderPane borderPane = new BorderPane();
+      borderPane.setCenter(grid);
+      borderPane.setBottom(logout);
 
-      /*
-       * 
-       * 
-       * 
-       * 
-       * 
-       * Here is where the output for the signUpButton is. There is an arrayList
-       * already created that has the two textFields text (String) in it. It is the textFromLoginScreen
-       * 
-       * 
-       * 
-       * 
-       * 
-       */
-      Scene search = search();
-      primaryStage.setScene(search);
-      primaryStage.show();
-    });
-
-    grid.setAlignment(Pos.CENTER);
-    BorderPane borderPane = new BorderPane();
-    borderPane.setCenter(grid);
-    borderPane.setBottom(logout);
-
-    Scene signupScreen = new Scene(borderPane, 800, 600);
-    signupScreen.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-    return signupScreen;
+      Scene signupScreen = new Scene(borderPane, 800, 600);
+      signupScreen.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+      return signupScreen;
   }
-
 
 
   /**
