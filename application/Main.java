@@ -192,7 +192,11 @@ public class Main extends Application {
 		return login;
 	}
 
-	private Map<String,ArrayList<String>> addAllUserText(Map<String,ArrayList<String>> map){
+	private Map<String,ArrayList<String>> addAllUserText(Map<String,ArrayList<String>> map, ArrayList<TextField> userInput){
+		for (String curWord: userInput.get(0).getText().split(",")){
+			
+		}
+		map.get(Config.USERNAME_FIELD).addAll(Arrays.asList(userInput.get(0).getText().split(",")));
 		
 	}
 	
@@ -220,7 +224,7 @@ public class Main extends Application {
 		TextField scholarshipsTextField = new TextField();
 		TextField coursesTextField = new TextField();
 		TextField workExperienceTextField = new TextField();
-		ArrayList<TextField> signUpFacultyTextFieldList = new ArrayList<TextField>() {
+		ArrayList<TextField> signUpStudentTextFieldList = new ArrayList<TextField>() {
 			{
 				add(nameTextField);
 				add(emailGraduationTextField);
@@ -237,7 +241,7 @@ public class Main extends Application {
 		GridPane grid = new GridPane();
 		for (int i = 0; i < fields.size(); i++) {
 			grid.add(fields.get(i), 0, i);
-			grid.add(signUpFacultyTextFieldList.get(i), 1, i);
+			grid.add(signUpStudentTextFieldList.get(i), 1, i);
 		}
 		Button signup = new Button("Sign-up!");
 		grid.add(signup, 1, fields.size());
@@ -245,7 +249,7 @@ public class Main extends Application {
 		// button functionality
 		signup.setOnAction(toSearch -> {
 			Map<String,ArrayList<String>> studentMap = this.createNewStudentMap();
-			
+			this.addAllUserText(studentMap, signUpStudentTextFieldList);
 			this.currentDriver.addUser(this.currentUsername, profileInfo)
 			Scene search = search();
 			primaryStage.setScene(search);
