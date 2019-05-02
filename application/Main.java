@@ -49,7 +49,7 @@ public class Main extends Application {
   Stage primaryStage; // the one and only stage
   Button logout = new Button("Logout"); // add logout button functionality on each page
   UserDriverApplication currentDriver;
-  String currentUsername;
+  //String currentUsername;
   /**
    * The start method that sets the stage
    */
@@ -155,38 +155,41 @@ public class Main extends Application {
         grid.add(userNameMoreThanOneWord, 1, 5);
       }
       else if (userTypeStudent.isSelected()) {
-        this.currentDriver = new UserDriverApplication();
         try {
           this.currentDriver.register(signUpTextField.getText());
-          this.currentUsername = signUpTextField.getText();
+          currentDriver.login(signUpTextField.getText());
+          Scene studentSignUp = signupScreenStudent();
+          primaryStage.setScene(studentSignUp);
+          primaryStage.show();
         } catch (UserExists e) {
           grid.add(userNameTakenText, 1, 5);
+        } catch (InvalidUsername e) {
+          // should not get here due to just registered the user
+          System.out.println("Shouldn't throw InvalidUsername when registering a new user.");
         }
-        Scene studentSignUp = signupScreenStudent();
-        primaryStage.setScene(studentSignUp);
-        primaryStage.show();
       } else {
-        this.currentDriver = new UserDriverApplication();
         try {
           this.currentDriver.register(signUpTextField.getText());
-          this.currentUsername = signUpTextField.getText();
+          //this.currentUsername = signUpTextField.getText();
+          Scene facultySignUp = signupScreenFaculty();
+          primaryStage.setScene(facultySignUp);
         } catch (UserExists e) {
           grid.add(userNameTakenText, 1, 5);
         }
-        Scene facultySignUp = signupScreenFaculty();
-        primaryStage.setScene(facultySignUp);
       }
     });
 
     // button functionality for logging in
     submit.setOnAction(toSearch -> {
-      try { // try loggin in the user with the username provided
+      try { // try logging in the user with the username provided
         if(currentDriver.login(loginTextField.getText())) {
           // once logged in, display the search screen
           Scene search = search();
           primaryStage.setScene(search);
           primaryStage.show();
         }
+        else
+          System.out.println("currentDriver.login returned false, which shouldn't happen");
       } // if the user is not registered then display the following message 
       catch (InvalidUsername e) {
         grid.add(new Label("Invalid Username. Please sign up or try again."), 1, 0);
@@ -227,8 +230,8 @@ public class Main extends Application {
     fields.add(new Text("Courses: "));
     fields.add(new Text("Work Experience: "));
 
-    TextField nameTextField = new TextField(this.currentUsername);
-    TextField emailGraduationTextField = new TextField();
+    TextField nameTextField = new TextField();
+    TextField emailGraduationTextField = new TextField(currentDriver.getUsername());
     TextField yearOfGraduationTextField = new TextField();
     TextField majorTextField = new TextField();
     TextField minorTextField = new TextField();
@@ -264,7 +267,7 @@ public class Main extends Application {
       this.addAllUserText(studentMap, signUpStudentTextFieldList);
       Map<String, ArrayList<String>> profileInfo = null;
       try {
-        this.currentDriver.addUser(this.currentUsername, profileInfo);
+        this.currentDriver.addUser(currentDriver.getUsername(), profileInfo);
       } catch (UserExists e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
@@ -296,7 +299,7 @@ public class Main extends Application {
     fields.add(new Text("Office Hours: "));
 
     TextField nameTextField = new TextField();
-    TextField emailGraduationTextField = new TextField();
+    TextField emailGraduationTextField = new TextField(currentDriver.getUsername());
     TextField officeBuildingTextField = new TextField();
     TextField classesTaughtTextField = new TextField();
     TextField officeHoursTextField = new TextField();

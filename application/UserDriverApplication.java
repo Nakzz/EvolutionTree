@@ -159,9 +159,10 @@ public class UserDriverApplication {
     // reset the fields
     this.username = null;
     this.isAdmin = false;
-    this.isPopulated = false;
-    this.database = null;
-    this.listOfUsers = null;
+   // this.isPopulated = false;
+   // this.database = null;
+   // this.listOfUsers = null;
+    this.isLogged = false;
     //
   }
 
