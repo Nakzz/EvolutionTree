@@ -47,7 +47,8 @@ import javafx.scene.text.Text;
 public class Main extends Application {
 	Stage primaryStage; // the one and only stage
 	Button logout = new Button("Logout"); // add logout button functionality on each page
-
+	UserDriverApplication currentDriver;
+	String currentUsername;
 	/**
 	 * The start method that sets the stage
 	 */
@@ -68,17 +69,8 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-
-	private ArrayList<String> getTextFieldInformationFromTextField(ArrayList<TextField> list) {
-		ArrayList<String> textList = new ArrayList<String>();
-		for (TextField i : list) {
-			textList.add(i.getText());
-		}
-		return textList;
-	}
 	
-	
-	private Map<String, ArrayList<String>> createNewStudentMap(String username){
+	private Map<String, ArrayList<String>> createNewStudentMap(){
 		Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
 		map.put(Config.USERNAME_FIELD, new ArrayList<String>());
 		map.put(Config.NAME_FIELD, new ArrayList<String>());
@@ -92,17 +84,17 @@ public class Main extends Application {
 		map.put(Config.COURSES_FIELD, new ArrayList<String>());
 		map.put(Config.WORK_EXPERIENCES_FIELD, new ArrayList<String>());
 		map.put(Config.YEAROFGRAD_FIELD, new ArrayList<String>());
-		map.get(Config.USERNAME_FIELD).add(username);
 		return map;
 	}
 
-	private Map<String, ArrayList<String>> createNewFacultyMap(String username){
+	private Map<String, ArrayList<String>> createNewFacultyMap(){
 		Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
 		map.put(Config.USERNAME_FIELD, new ArrayList<String>());
 		map.put(Config.NAME_FIELD, new ArrayList<String>());
 		map.put(Config.OFFICELOCATION_FIELD, new ArrayList<String>());
 		map.put(Config.COURSESTAUGHT_FILED, new ArrayList<String>());
 		map.put(Config.OFFICEHOURS_FIELD, new ArrayList<String>());
+		return map;
 	}
 	
 	/**
@@ -147,6 +139,7 @@ public class Main extends Application {
 		Text blankText = new Text("");
 		//userNameTakenText will popup if the username is already taken.
 		Text userNameTakenText = new Text("This username has already been taken, try again!");
+		Text userNameMoreThanOneWord = new Text("Make sure the username email adress is correct.  Must be one word.");
 		
 		grid.add(userTypeStudent, 1, 2);
 		grid.add(userTypeFaculty, 1, 3);
@@ -154,34 +147,29 @@ public class Main extends Application {
 		grid.add(signup, 1, 5);
 
 		// button functionality
-		signup.setOnAction(student -> {			
-			if (userTypeStudent.isSelected()) {
-				UserDriverApplication studentDriver = new UserDriverApplication();
-				while(true) {
-					try {
-						studentDriver.register(signUpTextField.getText());
-						break;
-					} catch (UserExists e) {
-						grid.add(userNameTakenText, 1, 4);
-					}
+		signup.setOnAction(student -> {
+			if(signUpTextField.getText().split(" ").length>1) {
+				grid.add(userNameMoreThanOneWord, 1, 4);
+			}
+			else if (userTypeStudent.isSelected()) {
+				this.currentDriver = new UserDriverApplication();
+				try {
+					this.currentDriver.register(signUpTextField.getText());
+					this.currentUsername = signUpTextField.getText();
+				} catch (UserExists e) {
+					grid.add(userNameTakenText, 1, 4);
 				}
-				Map<String,ArrayList<String>> studentMap = this.createNewStudentMap(signUpTextField.getText());
-				//studentDriver.editUser(studentMap);
 				Scene studentSignUp = signupScreenStudent();
 				primaryStage.setScene(studentSignUp);
 				primaryStage.show();
 			} else {
-				UserDriverApplication facultyDriver = new UserDriverApplication();
-				while(true) {
-					try {
-						facultyDriver.register(signUpTextField.getText());
-						break;
-					} catch (UserExists e) {
-						grid.add(userNameTakenText, 1, 4);
-					}
+				this.currentDriver = new UserDriverApplication();
+				try {
+					this.currentDriver.register(signUpTextField.getText());
+					this.currentUsername = signUpTextField.getText();
+				} catch (UserExists e) {
+					grid.add(userNameTakenText, 1, 4);
 				}
-				Map<String, ArrayList<String>> facultyMap = this.createNewFacultyMap(signUpTextField.getText());
-				//facultyDriver.editUser(facultyMap);
 				Scene facultySignUp = signupScreenFaculty();
 				primaryStage.setScene(facultySignUp);
 			}
@@ -204,6 +192,10 @@ public class Main extends Application {
 		return login;
 	}
 
+	private Map<String,ArrayList<String>> addAllUserText(Map<String,ArrayList<String>> map){
+		
+	}
+	
 	/**
 	 * Create Sign-up scene for students
 	 */
@@ -219,7 +211,7 @@ public class Main extends Application {
 		fields.add(new Text("Courses: "));
 		fields.add(new Text("Work Experience: "));
 
-		TextField nameTextField = new TextField();
+		TextField nameTextField = new TextField(this.currentUsername);
 		TextField emailGraduationTextField = new TextField();
 		TextField yearOfGraduationTextField = new TextField();
 		TextField majorTextField = new TextField();
@@ -252,21 +244,9 @@ public class Main extends Application {
 
 		// button functionality
 		signup.setOnAction(toSearch -> {
-			ArrayList textFromStudentSignUpTextField = this.getTextFieldInformationFromTextField(signUpFacultyTextFieldList);
-			/*
-			 * 
-			 * 
-			 * 
-			 * 
-			 * 
-			 * Here is where the output for the signUpButton is. There is an arrayList
-			 * already created that has the two textFields text (String) in it. It is the textFromLoginScreen
-			 * 
-			 * 
-			 * 
-			 * 
-			 * 
-			 */
+			Map<String,ArrayList<String>> studentMap = this.createNewStudentMap();
+			
+			this.currentDriver.addUser(this.currentUsername, profileInfo)
 			Scene search = search();
 			primaryStage.setScene(search);
 			primaryStage.show();
@@ -318,7 +298,7 @@ public class Main extends Application {
 
 		// button functionality
 		signup.setOnAction(toSearch -> {
-			ArrayList<String> textFromFacultySignUpTextField = this.getTextFieldInformationFromTextField(signUpFacultyTextFieldList);
+			
 			/*
 			 * 
 			 * 
@@ -419,20 +399,6 @@ public class Main extends Application {
 
 		// button functionality
 		searchButton.setOnAction(toSearch -> {
-			ArrayList<String> textFromSearchList = this.getTextFieldInformationFromTextField(searchTextFieldList);
-			/*
-			 * 
-			 * 
-			 * 
-			 * 
-			 * Here is the output from the search button (textFromSearchList). It Contains all of the information
-			 * that the user typed into all of the text fields in the search screen.
-			 * the zeroth index is the text that the user typed into the courses textField 
-			 * 
-			 * 
-			 * 
-			 * 
-			 */
 			Scene searchResults = searchResults();
 			primaryStage.setScene(searchResults);
 			primaryStage.show();
