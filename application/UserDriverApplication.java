@@ -29,13 +29,13 @@ public class UserDriverApplication {
   private String username = null; // the username of the user
   private boolean isAdmin = false; // if the user has admin priv
   private boolean isPopulated = false;
-  
+
   private Map<String, Category> database = null;
   private int totalUsers;
-  private List<String> listOfUsers = null; //TODO: maybe not going to need
-  
+  private List<String> listOfUsers = null; // TODO: maybe not going to need
+
   private final String USERS_CATEGORY = "USERS_CATEGORY";
-  
+
 
   /**
    * Instantiates a new user driver application by just populating the database and initializing
@@ -49,7 +49,8 @@ public class UserDriverApplication {
    */
   public UserDriverApplication() {
 
-
+    this.listOfUsers = new ArrayList<String>();
+    
     // populating database
     if (!isPopulated)
       try {
@@ -98,24 +99,26 @@ public class UserDriverApplication {
         // SET isAdmin field
         // TODO: CHECK IF THE USER IS AN ADMIN
         Category allUsers = this.database.get(USERS_CATEGORY);
-        
-//        User thisUser = allUsers.getUser(username); //TODO: hava Cal make a method that gives user from string.
-        User thisUser = new User("TESTNAME", username); //TODO: remove this line after CAL adds new method
-        
-        if(thisUser.getAdmin())
+
+        // User thisUser = allUsers.getUser(username); //TODO: hava Cal make a method that gives user from
+        // string.
+        User thisUser = new User("TESTNAME", username); // TODO: remove this line after CAL adds new method
+
+        if (thisUser.getAdmin())
           this.isAdmin = true;
-        else this.isAdmin = false;
+        else
+          this.isAdmin = false;
 
         return true;
       } else {
-        
-      //User doesn't exist
+
+        // User doesn't exist
         throw new InvalidUsername();
       }
     } else {
       return false; // making sure a logged in user is not trying to change login
     }
-    
+
   }
 
   /**
@@ -128,7 +131,7 @@ public class UserDriverApplication {
   public void register(String username) throws UserExists {
 
     // IF USER doesn't EXISTS, then do the following
-    if (!this.listOfUsers.contains(username)) {
+    if (this.listOfUsers != null && !this.listOfUsers.contains(username)) {
 
       // add user to database
       try {
@@ -175,16 +178,17 @@ public class UserDriverApplication {
    */
   public boolean addUser(String username, Map<String,ArrayList<String>> profileInfo) throws UserExists {
 
-    if (this.listOfUsers.contains(username)) {
+    if (this.listOfUsers != null && this.listOfUsers.contains(username)) {
       throw new UserExists();
     } 
     
-    if(username == null)
+    
+    if(username == null )
       return false;
     
     String catName;   
    
-
+if(profileInfo != null) {
     //get arraylist that are required for any type of User
      ArrayList<String> profileTypeField = profileInfo.get(Config.PROFILE_TYPE_FIELD);
      ArrayList<String> nameField = profileInfo.get(Config.NAME_FIELD);
@@ -222,7 +226,8 @@ public class UserDriverApplication {
          Student newUser = new Student(yearOfGrad,majorField, certificatesField, clubsField, scholarshipField, coursesField, workField, nameField.get(0), username);
          
          userCategory.insert(newUser); // this is the master category that contains all the users
-         
+         System.out.println(username);
+         this.listOfUsers.add(username);
          //FIXME: maybe in the future, do something that would iterate instead of hardcoding  
 // if the fields sting. length is 0, create a new category
          if(majorField.size() != 0) {
@@ -334,8 +339,6 @@ public class UserDriverApplication {
              
           
          
-         
-         
          break;
        case "faculty":   
            ArrayList<String> coursesTaughtField = profileInfo.get(Config.COURSESTAUGHT_FILED);
@@ -348,6 +351,7 @@ public class UserDriverApplication {
          Faculty newUser2 = new Faculty(coursesTaughtField, officeHoursField, officeLocationField, nameField.get(0), username);
          
          userCategory.insert(newUser2);
+         this.listOfUsers.add(username);
          
          if(coursesTaughtField.size() != 0) {
         	 for(int count = 0; count < coursesTaughtField.size(); count++) {
@@ -401,12 +405,16 @@ public class UserDriverApplication {
          System.out.println("  ProfileType is not defined");
          return false;
      }
+     
     
- if(profileInfo != null) {
-	 User user = new User(nameField.get(0), username);
- }
+
+//	 User user = new User(nameField.get(0), username);
+ 
 // create new user with just the username
-    
+} else {
+    //just create a user with no info
+  User user = new User(null, username);
+  }
     
   this.totalUsers++; // given that a new user was added to the database
   
@@ -415,181 +423,193 @@ public class UserDriverApplication {
   }
 
   /**
-   * Populate datastructure with users by parsing user informations from json file.
-   * Also add users to Users_Category
+   * Populate datastructure with users by parsing user informations from json file. Also add users to
+   * Users_Category
    *
    * @param jsonFilePath the json file path
    * @throws FileNotFoundException the file not found exception
    * @throws IOException Signals that an I/O exception has occurred.
    * @throws ParseException the parse exception
-   * @throws UserExists 
+   * @throws UserExists
    */
-  public void populateDatastructureWithUsers(String jsonFilePath) throws FileNotFoundException, IOException, ParseException, UserExists  {
-    
+  public void populateDatastructureWithUsers(String jsonFilePath)
+    throws FileNotFoundException, IOException, ParseException, UserExists {
+
     this.totalUsers = 0;
-    
-   
-    if(database == null) {
+
+
+    if (database == null) {
       database = new HashMap<String, Category>();
 
       Category userList = new Category(USERS_CATEGORY);
 
-     database.put(USERS_CATEGORY, userList);
+      database.put(USERS_CATEGORY, userList);
 
-    JSONParser parser = new JSONParser();
+      JSONParser parser = new JSONParser();
 
-    try {
-      Object obj = parser.parse(new FileReader(jsonFilePath));
+      try {
+        Object obj = parser.parse(new FileReader(jsonFilePath));
 
-      JSONObject jsonObject = (JSONObject) obj;
+        JSONObject jsonObject = (JSONObject) obj;
 
-      // loop array TODO: check with file
-      JSONArray users = (JSONArray) jsonObject.get("users");
+        // loop array TODO: check with file
+        JSONArray users = (JSONArray) jsonObject.get("users");
 
 
-      for (int i = 0; i < users.size(); i++) {
-        JSONObject profileInfo = (JSONObject) users.get(i);
+        for (int i = 0; i < users.size(); i++) {
+          JSONObject profileInfo = (JSONObject) users.get(i);
 
-        //TODO: GET ALL THE FIELDS. there has to be a better way of doing this.
-//        JSONArray packageName = (JSONArray) profileInfo.get(); // gets each packgename
-//        JSONArray dependencies = (JSONArray) profileInfo.get("dependencies"); // gets each dependencies
+          // TODO: GET ALL THE FIELDS. there has to be a better way of doing this.
+          // JSONArray packageName = (JSONArray) profileInfo.get(); // gets each packgename
+          // JSONArray dependencies = (JSONArray) profileInfo.get("dependencies"); // gets each dependencies
 
-        JSONArray profileTypeField = (JSONArray) profileInfo.get(Config.PROFILE_TYPE_FIELD);
-        JSONArray usernameField = (JSONArray) profileInfo.get(Config.USERNAME_FIELD);
-        JSONArray nameField = (JSONArray) profileInfo.get(Config.NAME_FIELD);
-        JSONArray isAdminField = (JSONArray) profileInfo.get(Config.IS_ADMIN_FIELD);
-        JSONArray isPublicField = (JSONArray) profileInfo.get(Config.IS_PUBLIC_FIELD);
-        
-        //access the first element since they should only have one element
-        String name = (String) nameField.get(0); 
-        String email = (String) usernameField.get(0);
-        String profileTypeName = (String) profileTypeField.get(0);
-        String isAdminText =  (String) isAdminField.get(0);
-        String isPublicText = (String) isPublicField.get(0);
-        
-        int k=0;
-        
-        switch(profileTypeName) {
-          case "student":
-            
-            
-            //get the fields related to the student
-            JSONArray majorField = (JSONArray) profileInfo.get(Config.MAJORS_FIELD);
-            JSONArray certificatesField = (JSONArray) profileInfo.get(Config.CERTIFICATES_FIELD);
-            JSONArray clubsField = (JSONArray) profileInfo.get(Config.CLUBS_FIELD);
-            JSONArray scholarshipField = (JSONArray) profileInfo.get(Config.SCHOLARSHIPS_FIELD);
-            JSONArray coursesField = (JSONArray) profileInfo.get(Config.COURSES_FIELD);
-            JSONArray workField = (JSONArray) profileInfo.get(Config.WORK_EXPERIENCES_FIELD);
-            JSONArray yearOfGradField = (JSONArray) profileInfo.get(Config.YEAROFGRAD_FIELD); // TOD
+          JSONArray profileTypeField = (JSONArray) profileInfo.get(Config.PROFILE_TYPE_FIELD);
+          JSONArray usernameField = (JSONArray) profileInfo.get(Config.USERNAME_FIELD);
+          JSONArray nameField = (JSONArray) profileInfo.get(Config.NAME_FIELD);
+          JSONArray isAdminField = (JSONArray) profileInfo.get(Config.IS_ADMIN_FIELD);
+          JSONArray isPublicField = (JSONArray) profileInfo.get(Config.IS_PUBLIC_FIELD);
 
- 
-            
-            Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
-            
-            map.put(Config.USERNAME_FIELD, new ArrayList<String>(Arrays.asList(email)));
-            map.put(Config.NAME_FIELD, new ArrayList<String>(Arrays.asList(name)));
-            map.put(Config.PROFILE_TYPE_FIELD, new ArrayList<String>(Arrays.asList(profileTypeName)));
-            map.put(Config.IS_ADMIN_FIELD, new ArrayList<String>(Arrays.asList(isAdminText)));
-            map.put(Config.IS_PUBLIC_FIELD, new ArrayList<String>(Arrays.asList(isPublicText)));
-            
-             ArrayList<String> major =new ArrayList<String>();
-             
+          // access the first element since they should only have one element
+          String name = (String) nameField.get(0);
+          String email = (String) usernameField.get(0);
+          String profileTypeName = (String) profileTypeField.get(0);
+          String isAdminText = (String) isAdminField.get(0);
+          String isPublicText = (String) isPublicField.get(0);
 
-               
-             for(k=0; k< majorField.size(); k++) {
-               major.add((String) majorField.get(k));
-               
-             }
-            map.put(Config.MAJORS_FIELD, major);
-            
-            ArrayList<String> certificates =new ArrayList<String>();
-            for(k=0; k< certificatesField.size(); k++) {
-              certificates.add((String) certificatesField.get(k));
-            }
-            map.put(Config.CERTIFICATES_FIELD, certificates);
+          int k = 0;
 
-            ArrayList<String> clubs =new ArrayList<String>();
-            for(k=0; k< clubsField.size(); k++) {
-              clubs.add((String) clubsField.get(k));
-            }
-            map.put(Config.CLUBS_FIELD, clubs);
-         
-            ArrayList<String> scholarship =new ArrayList<String>();
-            for(k=0; k< scholarshipField.size(); k++) {
-              scholarship.add((String) scholarshipField.get(k));
-            }
-            map.put(Config.SCHOLARSHIPS_FIELD, scholarship);
-            
-            ArrayList<String> courses =new ArrayList<String>();
-            for(k=0; k< coursesField.size(); k++) {
-              courses.add((String) coursesField.get(k));
-            }
-            map.put(Config.COURSES_FIELD, courses);
-            
-            ArrayList<String> work =new ArrayList<String>();
-            for(k=0; k< workField.size(); k++) {
-              work.add((String) workField.get(k));
-            }
-            map.put(Config.WORK_EXPERIENCES_FIELD, work);
-            
+          switch (profileTypeName) {
+            case "student":
 
-            map.put(Config.YEAROFGRAD_FIELD, new ArrayList<String>(Arrays.asList(yearOfGradField.toString())));
-            
-            addUser(username, map);
-            
-            break;
-            
-          case "faculty":   
-            JSONArray coursesTaughtField = (JSONArray) profileInfo.get(Config.COURSESTAUGHT_FILED);
-            JSONArray officeHoursField = (JSONArray) profileInfo.get(Config.OFFICEHOURS_FIELD);
-            JSONArray officeLocationField = (JSONArray) profileInfo.get(Config.OFFICELOCATION_FIELD);
-            //get the fields related to the student
-            
-            Map<String, ArrayList<String>> mapF = new HashMap<String, ArrayList<String>>();
-          
-            
-            ArrayList<String> coursesTaught =new ArrayList<String>();
-            for(k=0; k< coursesTaughtField.size(); k++) {
-              coursesTaught.add((String) coursesTaughtField.get(k));
-            }
-            mapF.put(Config.COURSESTAUGHT_FILED, coursesTaught);
-           
-            ArrayList<String> officeHours =new ArrayList<String>();
-            for(k=0; k< officeHoursField.size(); k++) {
-              officeHours.add((String) officeHoursField.get(k));
-            }
-            mapF.put(Config.OFFICEHOURS_FIELD, officeHours);
-            
-            ArrayList<String> officeLocation =new ArrayList<String>();
-            for(k=0; k< officeLocationField.size(); k++) {
-              officeLocation.add((String) officeLocationField.get(k));
-            }
-            mapF.put(Config.OFFICELOCATION_FIELD, officeLocation);
-            
-            addUser(username, mapF);
-            
-            break;
-          default:
-            System.out.println("ERROR: UserDriverApplication_addUser: ");
-            System.out.println("  ProfileType is not defined");
+
+              // get the fields related to the student
+              JSONArray majorField = (JSONArray) profileInfo.get(Config.MAJORS_FIELD);
+              JSONArray certificatesField = (JSONArray) profileInfo.get(Config.CERTIFICATES_FIELD);
+              JSONArray clubsField = (JSONArray) profileInfo.get(Config.CLUBS_FIELD);
+              JSONArray scholarshipField = (JSONArray) profileInfo.get(Config.SCHOLARSHIPS_FIELD);
+              JSONArray coursesField = (JSONArray) profileInfo.get(Config.COURSES_FIELD);
+              JSONArray workField = (JSONArray) profileInfo.get(Config.WORK_EXPERIENCES_FIELD);
+              JSONArray yearOfGradField = (JSONArray) profileInfo.get(Config.YEAROFGRAD_FIELD); // TOD
+
+
+
+              Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+
+              map.put(Config.USERNAME_FIELD, new ArrayList<String>(Arrays.asList(email)));
+              map.put(Config.NAME_FIELD, new ArrayList<String>(Arrays.asList(name)));
+              map.put(Config.PROFILE_TYPE_FIELD,
+                new ArrayList<String>(Arrays.asList(profileTypeName)));
+              map.put(Config.IS_ADMIN_FIELD, new ArrayList<String>(Arrays.asList(isAdminText)));
+              map.put(Config.IS_PUBLIC_FIELD, new ArrayList<String>(Arrays.asList(isPublicText)));
+
+              ArrayList<String> major = new ArrayList<String>();
+
+
+
+              for (k = 0; k < majorField.size(); k++) {
+                major.add((String) majorField.get(k));
+
+              }
+              map.put(Config.MAJORS_FIELD, major);
+
+              ArrayList<String> certificates = new ArrayList<String>();
+              for (k = 0; k < certificatesField.size(); k++) {
+                certificates.add((String) certificatesField.get(k));
+              }
+              map.put(Config.CERTIFICATES_FIELD, certificates);
+
+              ArrayList<String> clubs = new ArrayList<String>();
+              for (k = 0; k < clubsField.size(); k++) {
+                clubs.add((String) clubsField.get(k));
+              }
+              map.put(Config.CLUBS_FIELD, clubs);
+
+              ArrayList<String> scholarship = new ArrayList<String>();
+              for (k = 0; k < scholarshipField.size(); k++) {
+                scholarship.add((String) scholarshipField.get(k));
+              }
+              map.put(Config.SCHOLARSHIPS_FIELD, scholarship);
+
+              ArrayList<String> courses = new ArrayList<String>();
+              for (k = 0; k < coursesField.size(); k++) {
+                courses.add((String) coursesField.get(k));
+              }
+              map.put(Config.COURSES_FIELD, courses);
+
+              ArrayList<String> work = new ArrayList<String>();
+              for (k = 0; k < workField.size(); k++) {
+                work.add((String) workField.get(k));
+              }
+              map.put(Config.WORK_EXPERIENCES_FIELD, work);
+
+
+              map.put(Config.YEAROFGRAD_FIELD,
+                new ArrayList<String>(Arrays.asList(yearOfGradField.toString())));
+
+              addUser(email, map);
+
+              break;
+
+            case "faculty":
+              JSONArray coursesTaughtField =
+                (JSONArray) profileInfo.get(Config.COURSESTAUGHT_FILED);
+              JSONArray officeHoursField = (JSONArray) profileInfo.get(Config.OFFICEHOURS_FIELD);
+              JSONArray officeLocationField =
+                (JSONArray) profileInfo.get(Config.OFFICELOCATION_FIELD);
+              // get the fields related to the student
+
+              
+              Map<String, ArrayList<String>> mapF = new HashMap<String, ArrayList<String>>();
+
+              mapF.put(Config.USERNAME_FIELD, new ArrayList<String>(Arrays.asList(email)));
+              mapF.put(Config.NAME_FIELD, new ArrayList<String>(Arrays.asList(name)));
+              mapF.put(Config.PROFILE_TYPE_FIELD,
+                new ArrayList<String>(Arrays.asList(profileTypeName)));
+              mapF.put(Config.IS_ADMIN_FIELD, new ArrayList<String>(Arrays.asList(isAdminText)));
+              mapF.put(Config.IS_PUBLIC_FIELD, new ArrayList<String>(Arrays.asList(isPublicText)));
+
+              ArrayList<String> coursesTaught = new ArrayList<String>();
+              for (k = 0; k < coursesTaughtField.size(); k++) {
+                coursesTaught.add((String) coursesTaughtField.get(k));
+              }
+              mapF.put(Config.COURSESTAUGHT_FILED, coursesTaught);
+
+              ArrayList<String> officeHours = new ArrayList<String>();
+              for (k = 0; k < officeHoursField.size(); k++) {
+                officeHours.add((String) officeHoursField.get(k));
+              }
+              mapF.put(Config.OFFICEHOURS_FIELD, officeHours);
+
+              ArrayList<String> officeLocation = new ArrayList<String>();
+              for (k = 0; k < officeLocationField.size(); k++) {
+                officeLocation.add((String) officeLocationField.get(k));
+              }
+              mapF.put(Config.OFFICELOCATION_FIELD, officeLocation);
+
+              addUser(email, mapF);
+
+              break;
+            default:
+              System.out.println("ERROR: UserDriverApplication_addUser: ");
+              System.out.println("  ProfileType is not defined");
+          }
+          // TODO: add all the users
+
         }
-       //TODO: add all the users
 
+        // System.out.println("DONE!");
+
+
+      } catch (FileNotFoundException e) {
+        throw new FileNotFoundException();
+      } catch (IOException e) {
+        throw new IOException();
+      } catch (ParseException e) {
+        throw new ParseException(0);
       }
-
-//      System.out.println("DONE!");
-
-
-    } catch (FileNotFoundException e) {
-      throw new FileNotFoundException();
-    } catch (IOException e) {
-      throw new IOException();
-    } catch (ParseException e) {
-      throw new ParseException(0);
-    }
     }
 
-    //TODO: set data populated true
+    // TODO: set data populated true
   }
 
   /**
@@ -599,21 +619,22 @@ public class UserDriverApplication {
    * @return the list
    * @throws InvalidUsername the invalid username
    */
-  public List<User> searchUser(Map<String,ArrayList<String>> profileInfo) throws InvalidUsername {
-//TODO: find the complexity analysis for this algo
-    
-    //iterate through all the profileInfo fields; 
-      // check if the field exists
-        //create set of all the fields
-    
-    
-      // find the field with least load factor
-        // search for the users in field
-        // add to a list
-    
-    //if list of users doesn't contain other fields listed in the profileInfo, remove the user from the list
+  public List<User> searchUser(Map<String, ArrayList<String>> profileInfo) throws InvalidUsername {
+    // TODO: find the complexity analysis for this algo
+
+    // iterate through all the profileInfo fields;
+    // check if the field exists
+    // create set of all the fields
+
+
+    // find the field with least load factor
+    // search for the users in field
+    // add to a list
+
+    // if list of users doesn't contain other fields listed in the profileInfo, remove the user from the
+    // list
     // and if user show if public
-    
+
     return null;
   }
 
@@ -625,38 +646,38 @@ public class UserDriverApplication {
    * @return true, if successful
    * @throws InvalidUsername the invalid username
    */
-  public boolean editUser(Map<String,ArrayList<String>> profileInfo) {
-      
-    
-    if (username == this.username || this.isAdmin) {
-//if own profile or if the user is an admin
+  public boolean editUser(Map<String, ArrayList<String>> profileInfo) {
 
-      //      List<User> foundUsers = searchUser(profileInfo); 
-//     foundUsers.contains(o)
-      
+
+    if (username == this.username || this.isAdmin) {
+      // if own profile or if the user is an admin
+
+      // List<User> foundUsers = searchUser(profileInfo);
+      // foundUsers.contains(o)
+
       Category userCategory = this.database.get(USERS_CATEGORY);
-      
-     
-      
-    //get arraylist that are required for any type of User
+
+
+
+      // get arraylist that are required for any type of User
       ArrayList<String> profileTypeField = profileInfo.get(Config.PROFILE_TYPE_FIELD);
       ArrayList<String> nameField = profileInfo.get(Config.NAME_FIELD);
       ArrayList<String> usernameField = profileInfo.get(Config.USERNAME_FIELD);
       ArrayList<String> isAdminField = profileInfo.get(Config.IS_ADMIN_FIELD);
       ArrayList<String> isPublicField = profileInfo.get(Config.IS_PUBLIC_FIELD);
-      
-      //access the first element since they should only have one element
-      String name = nameField.get(0); 
-      String email = usernameField.get(0); 
+
+      // access the first element since they should only have one element
+      String name = nameField.get(0);
+      String email = usernameField.get(0);
       String profileTypeName = profileTypeField.get(0);
-      Boolean isAdminText = Boolean.parseBoolean( isAdminField.get(0));
-      Boolean isPublicText = Boolean.parseBoolean( isPublicField.get(0));
-      
+      Boolean isAdminText = Boolean.parseBoolean(isAdminField.get(0));
+      Boolean isPublicText = Boolean.parseBoolean(isPublicField.get(0));
+
       int yearOfGrad = 0;
-      
-      switch(profileTypeName) {
+
+      switch (profileTypeName) {
         case "student":
-          //get the fields related to the student
+          // get the fields related to the student
           ArrayList<String> majorField = profileInfo.get(Config.MAJORS_FIELD);
           ArrayList<String> certificatesField = profileInfo.get(Config.CERTIFICATES_FIELD);
           ArrayList<String> clubsField = profileInfo.get(Config.CLUBS_FIELD);
@@ -664,41 +685,42 @@ public class UserDriverApplication {
           ArrayList<String> coursesField = profileInfo.get(Config.COURSES_FIELD);
           ArrayList<String> workField = profileInfo.get(Config.WORK_EXPERIENCES_FIELD);
           ArrayList<String> yearOfGradField = profileInfo.get(Config.YEAROFGRAD_FIELD); // TODO: add year of grad
-          try{
-             yearOfGrad = Integer.parseInt(yearOfGradField.get(0)); //TODO: parseInt from the first element of yearOfGradField
-          } catch(NumberFormatException e) {
-              
+          try {
+            yearOfGrad = Integer.parseInt(yearOfGradField.get(0)); // TODO: parseInt from the first element of yearOfGradField
+          } catch (NumberFormatException e) {
+
           }
-          
-//          Student user = userCategory.getUser(username); // TODO: have cal implement the method
-          Student user = new Student(yearOfGrad, majorField, majorField, majorField, majorField, majorField, majorField, profileTypeName, profileTypeName); //TODO: remove this line after CAL adds new method
-          
-          
-         user.setMajor(majorField);
-         user.setCertificate(certificatesField);
-         user.setClubs(clubsField);
-         user.setScholership(scholarshipField);
-         user.setCourses(coursesField);
-         user.setWorkExperience(workField);
-         user.setYearOfGrad(yearOfGrad);
-            
-                
-          
+
+          // Student user = userCategory.getUser(username); // TODO: have cal implement the method
+          Student user = new Student(yearOfGrad, majorField, majorField, majorField, majorField,
+            majorField, majorField, profileTypeName, profileTypeName); // TODO: remove this line after CAL adds new method
+
+
+          user.setMajor(majorField);
+          user.setCertificate(certificatesField);
+          user.setClubs(clubsField);
+          user.setScholership(scholarshipField);
+          user.setCourses(coursesField);
+          user.setWorkExperience(workField);
+          user.setYearOfGrad(yearOfGrad);
+
+
+
           break;
-        case "faculty":   
-            ArrayList<String> coursesTaughtField = profileInfo.get(Config.COURSESTAUGHT_FILED);
-            ArrayList<String> officeHoursField = profileInfo.get(Config.OFFICEHOURS_FIELD);
-            ArrayList<String> officeLocationField = profileInfo.get(Config.OFFICELOCATION_FIELD);
-          //get the fields related to the student
-          
-//            Faculty userF = userCategory.getUser(username); // TODO: have cal implement the method
-            majorField = null; // TODO remove this link after cal adds new method
-            Faculty userF = new Faculty(majorField, majorField, majorField, "TESTNAME", username); //TODO: remove this line after CAL adds new method
-        
+        case "faculty":
+          ArrayList<String> coursesTaughtField = profileInfo.get(Config.COURSESTAUGHT_FILED);
+          ArrayList<String> officeHoursField = profileInfo.get(Config.OFFICEHOURS_FIELD);
+          ArrayList<String> officeLocationField = profileInfo.get(Config.OFFICELOCATION_FIELD);
+          // get the fields related to the student
+
+          // Faculty userF = userCategory.getUser(username); // TODO: have cal implement the method
+          majorField = null; // TODO remove this link after cal adds new method
+          Faculty userF = new Faculty(majorField, majorField, majorField, "TESTNAME", username); // TODO: remove this line after CAL adds new method
+
           userF.setCoursesTaught(coursesTaughtField);
           userF.setOfficeHours(officeHoursField);
           userF.setOfficeLocation(officeLocationField);
-         
+
           break;
         default:
           System.out.println("ERROR: UserDriverApplication_addUser: ");

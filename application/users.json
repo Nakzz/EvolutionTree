@@ -29,7 +29,7 @@
 			"type": ["student"],
 			"isAdmin": ["true"],
 			"isPublic": ["true"],
-			"yearOfGad": ["2021"],
+			"yearOfGrad": ["2021"],
 			"major": ["math"],
 			"certificate": ["computer science"],
 			"clubs": ["coding4good"],
