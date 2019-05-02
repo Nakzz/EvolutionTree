@@ -1,4 +1,8 @@
 package application;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Category Class
  * 
@@ -164,6 +168,20 @@ public class Category{
 			}
 		}
 		return null;
+	}
+	
+	public List<User> getAll(){
+		List<User> list = new ArrayList<User>();
+		for(int count = 0; count < table.length; count++) {
+			if(table[count].size > 0) {
+				Node temp = table[count].head;
+				while(temp != null) {
+					list.add(temp.user);
+					temp = temp.next;
+				}
+			}
+		}
+		return list;
 	}
 	
 	//@return numKeys

@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Set;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -623,7 +626,156 @@ if(profileInfo != null) {
    */
   public List<User> searchUser(Map<String, ArrayList<String>> profileInfo) throws InvalidUsername {
     // TODO: find the complexity analysis for this algo
-
+	  if(profileInfo != null) {
+		    //get arraylist that are required for any type of User
+		     ArrayList<String> profileTypeField = profileInfo.get(Config.PROFILE_TYPE_FIELD);
+		     ArrayList<String> nameField = profileInfo.get(Config.NAME_FIELD);
+		     ArrayList<String> isAdminField = profileInfo.get(Config.IS_ADMIN_FIELD);
+		     ArrayList<String> isPublicField = profileInfo.get(Config.IS_PUBLIC_FIELD);
+		     String profileTypeName = profileTypeField.get(0);
+		     switch(profileTypeName) {
+		       case "student":
+		         //get the fields related to the student
+		         ArrayList<String> majorField = profileInfo.get(Config.MAJORS_FIELD);
+		         ArrayList<String> certificatesField = profileInfo.get(Config.CERTIFICATES_FIELD);
+		         ArrayList<String> clubsField = profileInfo.get(Config.CLUBS_FIELD);
+		         ArrayList<String> scholarshipField = profileInfo.get(Config.SCHOLARSHIPS_FIELD);
+		         ArrayList<String> coursesField = profileInfo.get(Config.COURSES_FIELD);
+		         ArrayList<String> workField = profileInfo.get(Config.WORK_EXPERIENCES_FIELD);
+		         ArrayList<String> yearOfGradField = profileInfo.get(Config.YEAROFGRAD_FIELD);
+		         
+		         Set<User> majorSet = new HashSet<User>();
+		         if(majorField.size() > 0) {
+		        	 for(int count = 0; count < majorField.size(); count++) {
+		        		 if(this.database.containsKey(majorField.get(count))) {
+		        			 List<User> list = this.database.get(majorField.get(count)).getAll();	
+		        			 for(int count2 = 0; count2 < list.size(); count2++) {
+		        				 majorSet.add(list.get(count2));
+		        			 }
+		        		 }
+		        	 }
+		         }
+		         
+		         Set<User> certificateSet = new HashSet<User>();
+		         if(certificatesField.size() > 0) {
+		        	 for(int count = 0; count < certificatesField.size(); count++) {
+		        		 if(this.database.containsKey(certificatesField.get(count))) {
+		        			 List<User> list = this.database.get(certificatesField.get(count)).getAll();	
+		        			 for(int count2 = 0; count2 < list.size(); count2++) {
+		        				 certificateSet.add(list.get(count2));
+		        			 }
+		        		 }
+		        	 }
+		         }
+		         
+		         Set<User> clubSet = new HashSet<User>();
+		         if(clubsField.size() > 0) {
+		        	 for(int count = 0; count < clubsField.size(); count++) {
+		        		 if(this.database.containsKey(clubsField.get(count))) {
+		        			 List<User> list = this.database.get(clubsField.get(count)).getAll();	
+		        			 for(int count2 = 0; count2 < list.size(); count2++) {
+		        				 clubSet.add(list.get(count2));
+		        			 }
+		        		 }
+		        	 }
+		         }
+		         
+		         Set<User> scholarshipSet = new HashSet<User>();
+		         if(scholarshipField.size() > 0) {
+		        	 for(int count = 0; count < scholarshipField.size(); count++) {
+		        		 if(this.database.containsKey(scholarshipField.get(count))) {
+		        			 List<User> list = this.database.get(scholarshipField.get(count)).getAll();	
+		        			 for(int count2 = 0; count2 < list.size(); count2++) {
+		        				 scholarshipSet.add(list.get(count2));
+		        			 }
+		        		 }
+		        	 }
+		         }
+		         
+		         Set<User> courseSet = new HashSet<User>();
+		         if(coursesField.size() > 0) {
+		        	 for(int count = 0; count < coursesField.size(); count++) {
+		        		 if(this.database.containsKey(coursesField.get(count))) {
+		        			 List<User> list = this.database.get(coursesField.get(count)).getAll();	
+		        			 for(int count2 = 0; count2 < list.size(); count2++) {
+		        				 courseSet.add(list.get(count2));
+		        			 }
+		        		 }
+		        	 }
+		         }
+		         
+		         Set<User> workSet = new HashSet<User>();
+		         if(workField.size() > 0) {
+		        	 for(int count = 0; count < workField.size(); count++) {
+		        		 if(this.database.containsKey(workField.get(count))) {
+		        			 List<User> list = this.database.get(workField.get(count)).getAll();	
+		        			 for(int count2 = 0; count2 < list.size(); count2++) {
+		        				 workSet.add(list.get(count2));
+		        			 }
+		        		 }
+		        	 }
+		         }
+		         
+		         Set<User> yearOfGradSet = new HashSet<User>();
+		         if(yearOfGradField.size() > 0) {
+		        	 for(int count = 0; count < yearOfGradField.size(); count++) {
+		        		 if(this.database.containsKey(yearOfGradField.get(count))) {
+		        			 List<User> list = this.database.get(yearOfGradField.get(count)).getAll();	
+		        			 for(int count2 = 0; count2 < list.size(); count2++) {
+		        				 yearOfGradSet.add(list.get(count2));
+		        			 }
+		        		 }
+		        	 }
+		         }
+		         
+		         Set<User> inter = new HashSet<User>();
+		         //Intersection????
+		         break;
+		       case("Faculty"):
+		         ArrayList<String> coursesTaughtField = profileInfo.get(Config.COURSESTAUGHT_FILED);
+	             ArrayList<String> officeHoursField = profileInfo.get(Config.OFFICEHOURS_FIELD);
+	             ArrayList<String> officeLocationField = profileInfo.get(Config.OFFICELOCATION_FIELD);
+	            
+	             Set<User> coursesTaughtSet = new HashSet<User>();
+		         if(coursesTaughtField.size() > 0) {
+		        	 for(int count = 0; count < coursesTaughtField.size(); count++) {
+		        		 if(this.database.containsKey(coursesTaughtField.get(count))) {
+		        			 List<User> list = this.database.get(coursesTaughtField.get(count)).getAll();	
+		        			 for(int count2 = 0; count2 < list.size(); count2++) {
+		        				 coursesTaughtSet.add(list.get(count2));
+		        			 }
+		        		 }
+		        	 }
+		         }
+		         
+	             Set<User> officeHourSet = new HashSet<User>();
+		         if(officeHoursField.size() > 0) {
+		        	 for(int count = 0; count < officeHoursField.size(); count++) {
+		        		 if(this.database.containsKey(officeHoursField.get(count))) {
+		        			 List<User> list = this.database.get(officeHoursField.get(count)).getAll();	
+		        			 for(int count2 = 0; count2 < list.size(); count2++) {
+		        				 officeHourSet.add(list.get(count2));
+		        			 }
+		        		 }
+		        	 }
+		         }
+		         
+	             Set<User> officeLocationSet = new HashSet<User>();
+		         if(officeLocationField.size() > 0) {
+		        	 for(int count = 0; count < officeLocationField.size(); count++) {
+		        		 if(this.database.containsKey(officeLocationField.get(count))) {
+		        			 List<User> list = this.database.get(officeLocationField.get(count)).getAll();	
+		        			 for(int count2 = 0; count2 < list.size(); count2++) {
+		        				 officeLocationSet.add(list.get(count2));
+		        			 }
+		        		 }
+		        	 }
+		         }
+		         
+		         //Intersection?????
+	  }
+		     
+  }
     // iterate through all the profileInfo fields;
     // check if the field exists
     // create set of all the fields
