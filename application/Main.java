@@ -419,6 +419,7 @@ public class Main extends Application {
 	    map.put(Config.COURSES_FIELD, new ArrayList<String>());
 	    map.put(Config.YEAROFGRAD_FIELD, new ArrayList<String>());
 	    map.put(Config.MAJORS_FIELD, new ArrayList<String>());
+	    map.put(Config.CERTIFICATES_FIELD, new ArrayList<String>());
 	    map.put(Config.CLUBS_FIELD, new ArrayList<String>());
 	    map.put(Config.SCHOLARSHIPS_FIELD, new ArrayList<String>());
 	    map.put(Config.WORK_EXPERIENCES_FIELD, new ArrayList<String>());
@@ -462,25 +463,30 @@ public class Main extends Application {
       }
       map.get(Config.MAJORS_FIELD).addAll(Arrays.asList(majorArray));
       
-      String[] clubsArray = userInput.get(3).getText().split(",");
+      String[] certificatesArray = userInput.get(3).getText().split(",");
+      for (int curIndex=0;curIndex<majorArray.length;curIndex++) {
+    	  certificatesArray[curIndex] = certificatesArray[curIndex].trim();
+      }
+      map.get(Config.CERTIFICATES_FIELD).addAll(Arrays.asList(certificatesArray));
+      
+      String[] clubsArray = userInput.get(4).getText().split(",");
       for (int curIndex=0;curIndex<clubsArray.length;curIndex++) {
           clubsArray[curIndex] = clubsArray[curIndex].trim();
       }
       map.get(Config.CLUBS_FIELD).addAll(Arrays.asList(clubsArray));
      
-      String[] scholarshipArray = userInput.get(2).getText().split(",");
+      String[] scholarshipArray = userInput.get(5).getText().split(",");
       for (int curIndex=0;curIndex<scholarshipArray.length;curIndex++) {
           scholarshipArray[curIndex] = scholarshipArray[curIndex].trim();
       }
       map.get(Config.SCHOLARSHIPS_FIELD).addAll(Arrays.asList(scholarshipArray));
       
-      String[] workExperienceArray = userInput.get(2).getText().split(",");
+      String[] workExperienceArray = userInput.get(6).getText().split(",");
       for (int curIndex=0;curIndex<workExperienceArray.length;curIndex++) {
          	workExperienceArray[curIndex] = workExperienceArray[curIndex].trim();
       }
       map.get(Config.WORK_EXPERIENCES_FIELD).addAll(Arrays.asList(workExperienceArray));
       
-      System.out.println(map.toString());
       return map;
   }
   
@@ -538,6 +544,7 @@ public class Main extends Application {
     fields.add(new Text("Courses: "));
     fields.add(new Text("Year of graduation: "));
     fields.add(new Text("Major: "));
+    fields.add(new Text("Certificates:  "));
     fields.add(new Text("Clubs: "));
     fields.add(new Text("Scholarships: "));
     fields.add(new Text("Work Experience: "));
@@ -548,6 +555,7 @@ public class Main extends Application {
     TextField coursesTextField = new TextField();
     TextField yearsGraduationTextField = new TextField();
     TextField majorTextField = new TextField();
+    TextField certificatesTextField = new TextField();
     TextField clubsTextField = new TextField();
     TextField scholarshipsTextField = new TextField();
     TextField workExperienceTextField = new TextField();
@@ -559,6 +567,7 @@ public class Main extends Application {
         add(coursesTextField);
         add(yearsGraduationTextField);
         add(majorTextField);
+        add(certificatesTextField);
         add(clubsTextField);
         add(scholarshipsTextField);
         add(workExperienceTextField);
