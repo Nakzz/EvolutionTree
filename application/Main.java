@@ -23,14 +23,18 @@ package application;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
@@ -48,8 +52,11 @@ import javafx.scene.text.Text;
 public class Main extends Application {
   Stage primaryStage; // the one and only stage
   Button logout = new Button("Logout"); // add logout button functionality on each page
-  UserDriverApplication currentDriver;
-  String currentUsername;
+  UserDriverApplication currentDriver; // driver application for user/search functionality
+  String currentUsername; // the current user, either logging in or registering
+  List<User> searchReturn; // the list of users that are returned by the search
+  List<String> recommended; // the list of recommended classes to take 
+  
   /**
    * The start method that sets the stage
    */
@@ -492,21 +499,26 @@ public class Main extends Application {
    */
   private Scene searchResults() {
     Text users = new Text("Users with your search criteria: ");
-    Text user1 = new Text("Erica Heying: eheying@wisc.edu");
-    Text user2 = new Text("Ben Procknow: bprocknow@wisc.edu");
-    Text user3 = new Text("Ajman Naqab : @wisc.edu");
-    Text user4 = new Text("Callan Patel: cpatel@wisc.edu");
+    ListView<String> toDisplay = new ListView<String>();
+    ObservableList<String> items = FXCollections.observableArrayList();
+    for(int i=0; i<searchReturn.size(); i++) 
+      items.add(searchReturn.get(i).getName() + ": " + searchReturn.get(i).getUsername());
+    
+    toDisplay.setItems(items);
+    
     Text otherInfo = new Text("More information about your search: ");
-    Text otherInfo1 = new Text("Recommended next course: CS352");
+    ListView<String> reco = new ListView<String>();
+    ObservableList<String> recoItems = FXCollections.observableArrayList();
+    for(int i=0; i<recoReturn.size(); i++) 
+      recoItems.add(recoReturn.get(i));
+    reco.setItems(recoItems); 
+    
     Text otherInfo2 = new Text("This search returned 5% of users.");
     GridPane grid = new GridPane();
     grid.add(users, 0, 0);
-    grid.add(user1, 1, 2);
-    grid.add(user2, 1, 3);
-    grid.add(user3, 1, 4);
-    grid.add(user4, 1, 5);
-    grid.add(otherInfo, 0, 7);
-    grid.add(otherInfo1, 1, 8);
+    grid.add(toDisplay,0,1);
+    grid.add(otherInfo, 0, 2);
+    grid.add(reco, 1, 3);
     grid.add(otherInfo2, 1, 9);
 
     BorderPane borderPane = new BorderPane();
