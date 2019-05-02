@@ -501,22 +501,33 @@ public class Main extends Application {
     Text users = new Text("Users with your search criteria: ");
     ListView<String> toDisplay = new ListView<String>();
     ObservableList<String> items = FXCollections.observableArrayList();
+    if(searchReturn != null) {
     for(int i=0; i<searchReturn.size(); i++) 
-      items.add(searchReturn.get(i).getName() + ": " + searchReturn.get(i).getUsername());
+      items.add(searchReturn.get(i).getName() + ": " + searchReturn.get(i).getEmail());
     
     toDisplay.setItems(items);
+    }
+    else {
+      items.add("Search returned 0 users.");
+      toDisplay.setItems(items);
+    }
     
     Text otherInfo = new Text("More information about your search: ");
     ListView<String> reco = new ListView<String>();
     ObservableList<String> recoItems = FXCollections.observableArrayList();
-    for(int i=0; i<recoReturn.size(); i++) 
-      recoItems.add(recoReturn.get(i));
+    if(recommended != null) {
+    for(int i=0; i<recommended.size(); i++) 
+      recoItems.add(recommended.get(i));
     reco.setItems(recoItems); 
-    
+    }
+    else {
+      recoItems.add("No recommended classes.");
+      reco.setItems(recoItems);
+    }
     Text otherInfo2 = new Text("This search returned 5% of users.");
     GridPane grid = new GridPane();
     grid.add(users, 0, 0);
-    grid.add(toDisplay,0,1);
+    grid.add(toDisplay,1,1);
     grid.add(otherInfo, 0, 2);
     grid.add(reco, 1, 3);
     grid.add(otherInfo2, 1, 9);
