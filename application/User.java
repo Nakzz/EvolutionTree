@@ -93,4 +93,8 @@ public class User {
 		type = t;
 	}
 	
+	public String getType() {
+		return type;
+	}
+	
 }

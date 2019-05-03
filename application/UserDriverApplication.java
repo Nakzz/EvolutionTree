@@ -212,8 +212,6 @@ if(profileInfo != null) {
      String name = nameField.get(0); 
 //     String email = TODO: get the username 
      String profileTypeName = profileTypeField.get(0);
-     Boolean isAdminText = Boolean.parseBoolean( isAdminField.get(0));
-     Boolean isPublicText = Boolean.parseBoolean( isPublicField.get(0));
      
      Category userCategory = this.database.get(USERS_CATEGORY);
      Category cat = null;
@@ -237,6 +235,7 @@ if(profileInfo != null) {
          
          //create a student user 
          Student newUser = new Student(yearOfGrad,majorField, certificatesField, clubsField, scholarshipField, coursesField, workField, nameField.get(0), username);
+         newUser.setType("student");
          this.totalUsers++;
          
          userCategory.insert(newUser); // this is the master category that contains all the users
@@ -360,6 +359,8 @@ if(profileInfo != null) {
 
          // create a faculty user
          Faculty newUser2 = new Faculty(coursesTaughtField, officeHoursField, officeLocationField, nameField.get(0), username);
+         this.totalUsers++;
+         newUser2.setType("faculty");
          
          userCategory.insert(newUser2);
          this.listOfUsers.add(username);
@@ -916,7 +917,7 @@ if(profileInfo != null) {
 			         }
 			         
 			         for(int count = 0; count < searchlist.size(); count++) {
-			        	 if(getType(searchlist.get(count)).equals("faculty")) {
+			        	 if(searchlist.get(count).getType().equals("faculty")) {
 			        		 searchlist.remove(count);
 			        	 }
 			         }
@@ -993,7 +994,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         for(int count = 0; count < searchlist.size(); count++) {
-		        	 if(searchlist.get(count) instanceof Student) {
+		        	 if(searchlist.get(count).getType().equals("student")) {
 		        		 searchlist.remove(count);
 		        	 }
 		         }
