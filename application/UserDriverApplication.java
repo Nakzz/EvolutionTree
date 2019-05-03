@@ -788,7 +788,7 @@ if(profileInfo != null) {
 		         coursesTaughtSet.retainAll(officeHourSet);
 		         coursesTaughtSet.retainAll(officeLocationSet);
 
-		         for(User u : majorSet) {
+		         for(User u : coursesTaughtSet) {
 		        	 searchlist.add(u);
 		         }
 		         
