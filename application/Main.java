@@ -29,6 +29,8 @@ import java.util.Map;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -71,14 +73,12 @@ public class Main extends Application {
       
 
       Button exit = new Button("Save on exit"); 
-      Alert exitSaving = new Alert(AlertType.NONE); 
-      exit.setOnAction(toExit -> { 
-        // set alert type 
-        exitSaving.setAlertType(AlertType.CONFIRMATION); 
-
-        // show the dialog 
-        exitSaving.show(); 
-      }); 
+      
+      exit.setOnAction(event -> {
+        Alert exitSaving = new Alert(AlertType.CONFIRMATION);
+        exitSaving.setContentText("Save on exit? Ok - save, Cancel - no save");
+        exitSaving.show();
+      });
       
       // logout button functionality
       logout.setOnAction(toLogout -> {
