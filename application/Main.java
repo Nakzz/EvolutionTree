@@ -32,6 +32,8 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -52,6 +54,7 @@ import javafx.scene.text.Text;
 public class Main extends Application {
   Stage primaryStage; // the one and only stage
   Button logout = new Button("Logout"); // add logout button functionality on each page
+  Button exit = new Button("Exit"); // to be able to choose whether or not to save on exit
   UserDriverApplication currentDriver; // driver application for user/search functionality
   String currentUsername; // the current user, either logging in or registering
   List<User> searchReturn; // the list of users that are returned by the search
@@ -65,6 +68,18 @@ public class Main extends Application {
   public void start(Stage primaryStage) {
     try { // create a new instance of the driver application
       currentDriver = new UserDriverApplication();
+      
+
+      Button exit = new Button("Save on exit"); 
+      Alert exitSaving = new Alert(AlertType.NONE); 
+      exit.setOnAction(toExit -> { 
+        // set alert type 
+        exitSaving.setAlertType(AlertType.CONFIRMATION); 
+
+        // show the dialog 
+        exitSaving.show(); 
+      }); 
+      
       // logout button functionality
       logout.setOnAction(toLogout -> {
         currentDriver.logout();
@@ -217,6 +232,7 @@ public class Main extends Application {
     BorderPane root = new BorderPane();
     root.setCenter(grid);
     root.setBottom(logout);
+    root.setRight(exit);
 
     Scene login = new Scene(root, 800, 600);
     login.getStylesheets().add(getClass().getResource("application.css").toExternalForm());

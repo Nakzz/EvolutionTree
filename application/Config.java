@@ -3,8 +3,8 @@ package application;
 public class Config {
 
   //JSON FILE NAME
-  public static final String JSON_LOCATION = "./application/users.json";
-  public static final String JSON_LOCATION2 = "./application/manyUsers.json";
+
+  public static final String JSON_LOCATION = "./application/manyUsers.json";
   
   //ALL THE FIELD IN JSON file
   public static final String USERNAME_FIELD = "username";
