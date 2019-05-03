@@ -110,16 +110,28 @@ class UserDriverTest {
    * Tests to be sure a new user can be added
    */
   @Test
-  void test006_add_new_user() {
+  void test006_user_type() {
     try {
       userDriver.login("ben@wisc.edu");
-      userDriver.logout();
-      if(!userDriver.login("ccpatel2@wisc.edu")) // should return !true
-        fail("Unable to log in new user after one was logged out in test005.");
-    } catch(InvalidUsername e) {
-      fail("InvalidUsername thrown inproperly at test005.");
-    }catch (Exception e) {
-      fail("Unexpected exception in test005.");
+      if(userDriver.getUser() == null)
+        fail("User should be type student in test006.");
+    }catch(Exception e) {
+      e.printStackTrace();
+      fail("Unexpected exception in test006.");
+    }
+  }
+
+  /**
+   * Tests to be sure the username is correct
+   */
+  @Test
+  void test007_user_type() {
+    try {
+      userDriver.login("ben@wisc.edu");
+      if(!userDriver.getUsername().equals("ben@wisc.edu"))
+        fail("Username should match what was used to login in test007");
+    }catch(Exception e) {
+      fail("Unexpected exception in test007.");
     }
   }
 }
