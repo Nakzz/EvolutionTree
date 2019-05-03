@@ -127,6 +127,7 @@ public class Main extends Application {
   private Map<String, ArrayList<String>> createNewFacultyMap(){
     Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
     map.put(Config.USERNAME_FIELD, new ArrayList<String>());
+    map.put(Config.PROFILE_TYPE_FIELD, new ArrayList<String>());
     map.put(Config.NAME_FIELD, new ArrayList<String>());
     map.put(Config.OFFICELOCATION_FIELD, new ArrayList<String>());
     map.put(Config.COURSESTAUGHT_FILED, new ArrayList<String>());
