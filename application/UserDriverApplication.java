@@ -445,7 +445,8 @@ if(profileInfo != null) {
     throws FileNotFoundException, IOException, ParseException, UserExists {
 
     this.totalUsers = 0;
-
+    
+    long startTime = System.currentTimeMillis();
 
     if (database == null) {
       database = new HashMap<String, Category>();
@@ -606,6 +607,10 @@ if(profileInfo != null) {
 
         }
 
+        long endTime = System.currentTimeMillis(); 
+        long timeElapsed = endTime - startTime;
+        System.out.println("Execution time for populateDatastructure()"+ timeElapsed);
+        
         // System.out.println("DONE!");
 
 
@@ -628,7 +633,10 @@ if(profileInfo != null) {
    * @return the list
    */
   public List<User> searchUser(Map<String, ArrayList<String>> profileInfo) {
-	  List<User>searchlist = new ArrayList<User>();
+
+    long startTime = System.currentTimeMillis();
+    
+    List<User>searchlist = new ArrayList<User>();
     // TODO: find the complexity analysis for this algo
 	  if(profileInfo != null) {
 		    //get arraylist that are required for any type of User
@@ -649,7 +657,7 @@ if(profileInfo != null) {
 		         ArrayList<String> yearOfGradField = profileInfo.get(Config.YEAROFGRAD_FIELD);
 		         
 		         Set<User> majorSet = new HashSet<User>();
-		         if(majorField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
+		         if(majorField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {   //if string was empty, it gave nullPointer
 		        	 for(int count = 0; count < majorField.size(); count++) {
 		        		 if(this.database.containsKey(majorField.get(count))) {
 		        			 List<User> list = this.database.get(majorField.get(count)).getAll();	
@@ -661,7 +669,11 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> certificateSet = new HashSet<User>();
-		         if(certificatesField.size() > 0 && !certificatesField.get(0).equalsIgnoreCase("")) {
+
+
+		         if(certificatesField.size() > 0 && !certificatesField.get(0).equalsIgnoreCase("")) { 
+
+
 		        	 for(int count = 0; count < certificatesField.size(); count++) {
 		        		 if(this.database.containsKey(certificatesField.get(count))) {
 		        			 List<User> list = this.database.get(certificatesField.get(count)).getAll();	
@@ -825,7 +837,7 @@ if(profileInfo != null) {
 		         
 		         
 		         break;
-		       case("Faculty"):
+		       case("faculty"):
 		         ArrayList<String> coursesTaughtField = profileInfo.get(Config.COURSESTAUGHT_FILED);
 	             ArrayList<String> officeHoursField = profileInfo.get(Config.OFFICEHOURS_FIELD);
 	             ArrayList<String> officeLocationField = profileInfo.get(Config.OFFICELOCATION_FIELD);
@@ -909,7 +921,16 @@ if(profileInfo != null) {
     // if list of users doesn't contain other fields listed in the profileInfo, remove the user from the
     // list
     // and if user show if public
+
+		     
+		 long endTime = System.currentTimeMillis(); 
+		 long timeElapsed = endTime - startTime;
+		 System.out.println("Execution time for searchUser()"+ timeElapsed);
+		 
+		     
+
 	  System.out.print(searchlist.size());
+
 	if(searchlist.size() > 0) {
 		return searchlist;
 	} 
@@ -931,7 +952,8 @@ if(profileInfo != null) {
 
       // List<User> foundUsers = searchUser(profileInfo);
       // foundUsers.contains(o)
-
+      long startTime = System.currentTimeMillis();
+      
       Category userCategory = this.database.get(USERS_CATEGORY);
 
 
@@ -1007,6 +1029,11 @@ if(profileInfo != null) {
           return false;
       }
 
+      long endTime = System.currentTimeMillis(); 
+      long timeElapsed = endTime - startTime;
+      System.out.println("Execution time for editUser()"+ timeElapsed);
+      
+      
       return true; // successfully edited profile info
     }
 
