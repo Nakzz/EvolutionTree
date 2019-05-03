@@ -157,13 +157,15 @@ public class Category{
 	
 	public User get(String username) {
 		for(int count = 0; count < table.length; count++) {
-			if(table[count].size > 0) {
-				Node temp = table[count].head;
-				while(temp != null) {
-					if(temp.user.getEmail().equals(username)) {
-						return temp.user;
+			if(table[count] != null) {
+				if(table[count].size > 0) {
+					Node temp = table[count].head;
+					while(temp != null) {
+						if(temp.user.getEmail().equals(username)) {
+							return temp.user;
+						}
+						temp = temp.next;
 					}
-					temp = temp.next;
 				}
 			}
 		}
@@ -173,11 +175,13 @@ public class Category{
 	public List<User> getAll(){
 		List<User> list = new ArrayList<User>();
 		for(int count = 0; count < table.length; count++) {
-			if(table[count].size > 0) {
-				Node temp = table[count].head;
-				while(temp != null) {
-					list.add(temp.user);
-					temp = temp.next;
+			if(table[count] != null) {
+				if(table[count].size > 0) {
+					Node temp = table[count].head;
+					while(temp != null) {
+						list.add(temp.user);
+						temp = temp.next;
+					}
 				}
 			}
 		}
