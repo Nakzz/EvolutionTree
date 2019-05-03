@@ -215,6 +215,7 @@ public class Main extends Application {
       try { // try logging in the user with the username provided
         if(currentDriver.login(loginTextField.getText())) {
           // once logged in, display the search screen
+          this.currentUsername = loginTextField.getText();
           Scene search = search();
           primaryStage.setScene(search);
           primaryStage.show();
@@ -668,7 +669,6 @@ public class Main extends Application {
       
       Scene searchResults = searchResults();
       primaryStage.setScene(searchResults);
-      primaryStage.show();
     });
     
     Button editButton = new Button("Edit Profile");
@@ -676,6 +676,7 @@ public class Main extends Application {
     // goes to the edit user screen
     editButton.setOnAction(event->{
     	//Check for type of user
+    	System.out.println("TYPE: "+this.currentDriver.getType());
     	if (this.currentDriver.getType().equals("student")) {
     		System.out.println("Here! "+this.currentDriver.getType());
     		this.primaryStage.setScene(this.editStudentScene());
