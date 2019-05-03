@@ -134,4 +134,20 @@ class UserDriverTest {
       fail("Unexpected exception in test007.");
     }
   }
+  
+  /**
+   * Tests to ensure properly writing to JSON file
+   */
+//  @Test
+  void test008_write_to_JSON() {
+    try {
+      userDriver.register("test");
+     
+      userDriver.addUserToJSON();
+      
+      
+    }catch(Exception e) {
+      fail("Unexpected exception in test008.");
+    }
+  }
 }

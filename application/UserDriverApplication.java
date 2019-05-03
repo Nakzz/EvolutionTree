@@ -18,7 +18,9 @@ import org.json.simple.parser.ParseException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.lang.reflect.Array;
 
 // TODO: Auto-generated Javadoc
@@ -54,6 +56,7 @@ public class UserDriverApplication {
   private final String USERS_CATEGORY = "USERS_CATEGORY";
   
   private final String JSON_LOCATION = Config.JSON_LOCATION;
+//  private final String JSON_LOCATION = "./application/writerTest.json";
 
 
   /**
@@ -112,12 +115,10 @@ public class UserDriverApplication {
         this.isLogged = true;
 
         // SET isAdmin field
-        // TODO: CHECK IF THE USER IS AN ADMIN
         Category allUsers = this.database.get(USERS_CATEGORY);
-
-        // User thisUser = allUsers.getUser(username); //TODO: hava Cal make a method that gives user from
-        // string.
-        User thisUser = new User("TESTNAME", username); // TODO: remove this line after CAL adds new method
+        
+        Category userCategory = this.database.get(USERS_CATEGORY);
+        User thisUser = userCategory.get(this.username);
 
         if (thisUser.getAdmin())
           this.isAdmin = true;
@@ -212,12 +213,12 @@ if(profileInfo != null) {
      
      //access the first element since they should only have one element
      String name = nameField.get(0); 
-//     String email = TODO: get the username 
+//     String email = 
      String profileTypeName = profileTypeField.get(0);
      
      Category userCategory = this.database.get(USERS_CATEGORY);
      Category cat = null;
-     int yearOfGrad = 0000; // TODO: get this field
+     int yearOfGrad = 0000; 
      
      switch(profileTypeName) {
        case "student":
@@ -228,9 +229,9 @@ if(profileInfo != null) {
          ArrayList<String> scholarshipField = profileInfo.get(Config.SCHOLARSHIPS_FIELD);
          ArrayList<String> coursesField = profileInfo.get(Config.COURSES_FIELD);
          ArrayList<String> workField = profileInfo.get(Config.WORK_EXPERIENCES_FIELD);
-         ArrayList<String> yearOfGradField = profileInfo.get(Config.YEAROFGRAD_FIELD); // TODO: add year of grad
+         ArrayList<String> yearOfGradField = profileInfo.get(Config.YEAROFGRAD_FIELD);
          try{
-            yearOfGrad = Integer.parseInt(yearOfGradField.get(0)); //TODO: parseInt from the first element of yearOfGradField
+            yearOfGrad = Integer.parseInt(yearOfGradField.get(0));
          } catch(NumberFormatException e) {
         	 
          }
@@ -437,14 +438,102 @@ if(profileInfo != null) {
     return true; // if user was not added, otherwise should return true
   }
 
-  public void addUserToJSON() {
+  public void addUserToJSON() throws FileNotFoundException{
     File file = new File(JSON_LOCATION);
     if (!file.exists()) {
-        System.out.println("No file");
+      System.out.println("  FileNotFoundException. Make sure JSON file path is proper");
+      throw new FileNotFoundException();
     } else {
+      
+      JSONParser parser = new JSONParser();
+      Object obj;
+      try {
+        obj = parser.parse(new FileReader(JSON_LOCATION));
+        JSONObject jsonObject = (JSONObject) obj;
+
+        JSONArray users = (JSONArray) jsonObject.get("users");
+        JSONObject newUser = new JSONObject();
+        
+        User thisUser = getUser();
+        
+        newUser.put(Config.NAME_FIELD, thisUser.getName());
+        newUser.put(Config.USERNAME_FIELD, thisUser.getEmail());
+        newUser.put(Config.PROFILE_TYPE_FIELD, thisUser.getType());
+        newUser.put(Config.IS_ADMIN_FIELD, String.valueOf(thisUser.getAdmin()));    // making sure no credenial mismatch
+        newUser.put(Config.IS_PUBLIC_FIELD, String.valueOf(thisUser.isPublic()));
+           
+switch (thisUser.getType()) {
+  case "student":
+    
+    Student studentUser = (Student) thisUser;
+    
+    newUser.put(Config.YEAROFGRAD_FIELD, (studentUser.getYearOfGrad()));
+    newUser.put(Config.MAJORS_FIELD, arraylistToString(studentUser.getMajor()));
+    newUser.put(Config.CERTIFICATES_FIELD, arraylistToString(studentUser.getCertificate()));
+    newUser.put(Config.CLUBS_FIELD, arraylistToString(studentUser.getClubs()));
+    newUser.put(Config.SCHOLARSHIPS_FIELD, arraylistToString(studentUser.getScholership()));
+    newUser.put(Config.COURSES_FIELD, arraylistToString(studentUser.getCourses()));
+    newUser.put(Config.WORK_EXPERIENCES_FIELD, arraylistToString(studentUser.getWorkExperience()));
+    
+    
+    
+    break;
+    
+  case "faculty":
+    
+    Faculty facultyUser = (Faculty) thisUser;
+    
+    newUser.put(Config.COURSESTAUGHT_FILED, (facultyUser.getCoursesTaught()));
+    newUser.put(Config.OFFICEHOURS_FIELD, arraylistToString(facultyUser.getOfficeHours()));
+    newUser.put(Config.OFFICELOCATION_FIELD, arraylistToString(facultyUser.getOfficeLocation()));
+ 
+    
+    break;
+
+  default:
+    System.out.println("Something went wrong determining the type while trying to write to the file.");
+    break;
+}
+  
+
+        StringWriter out = new StringWriter();
+        newUser.writeJSONString(out);
+        String jsonText = out.toString();
+        System.out.println(jsonText);
+
+        users.add(newUser);
+        jsonObject.put("users", users);
+        FileWriter fileToWrite = new FileWriter(JSON_LOCATION, false);
+        
+        try {
+          fileToWrite.write(jsonObject.toJSONString());
+      } catch (IOException e) {
+          e.printStackTrace();
+      }
+      fileToWrite.flush();
+      fileToWrite.close();
+
+        
+      } catch (IOException e) {
+
+        e.printStackTrace();
+      } catch (ParseException e) {
+
+        e.printStackTrace();
+      }
+     
       
     }
   }
+  
+  private String arraylistToString (ArrayList<String> list) {
+    
+    String str = list.toString();
+    str = str.replaceAll("\\[", "").replaceAll("\\]","");
+
+    return str;
+  }
+  
   
   /**
    * Populate datastructure with users by parsing user informations from json file. Also add users to
@@ -478,16 +567,12 @@ if(profileInfo != null) {
 
         JSONObject jsonObject = (JSONObject) obj;
 
-        // loop array TODO: check with file
         JSONArray users = (JSONArray) jsonObject.get("users");
 
 
         for (int i = 0; i < users.size(); i++) {
           JSONObject profileInfo = (JSONObject) users.get(i);
 
-          // TODO: GET ALL THE FIELDS. there has to be a better way of doing this.
-          // JSONArray packageName = (JSONArray) profileInfo.get(); // gets each packgename
-          // JSONArray dependencies = (JSONArray) profileInfo.get("dependencies"); // gets each dependencies
 
           JSONArray profileTypeField = (JSONArray) profileInfo.get(Config.PROFILE_TYPE_FIELD);
           JSONArray usernameField = (JSONArray) profileInfo.get(Config.USERNAME_FIELD);
@@ -620,7 +705,6 @@ if(profileInfo != null) {
               System.out.println("ERROR: UserDriverApplication_addUser: ");
               System.out.println("  ProfileType is not defined");
           }
-          // TODO: add all the users
 
         }
 
@@ -641,7 +725,7 @@ if(profileInfo != null) {
       }
     }
 
-    // TODO: set data populated true
+    this.isPopulated = true;
   }
 
   /**
@@ -655,7 +739,7 @@ if(profileInfo != null) {
     long startTime = System.currentTimeMillis();
     
     List<User>searchlist = new ArrayList<User>();
-    // TODO: find the complexity analysis for this algo
+
 	  if(profileInfo != null) {
 		    //get arraylist that are required for any type of User
 		     ArrayList<String> profileTypeField = profileInfo.get(Config.PROFILE_TYPE_FIELD);
@@ -1092,16 +1176,14 @@ if(profileInfo != null) {
           ArrayList<String> scholarshipField = profileInfo.get(Config.SCHOLARSHIPS_FIELD);
           ArrayList<String> coursesField = profileInfo.get(Config.COURSES_FIELD);
           ArrayList<String> workField = profileInfo.get(Config.WORK_EXPERIENCES_FIELD);
-          ArrayList<String> yearOfGradField = profileInfo.get(Config.YEAROFGRAD_FIELD); // TODO: add year of grad
+          ArrayList<String> yearOfGradField = profileInfo.get(Config.YEAROFGRAD_FIELD); 
           try {
             yearOfGrad = Integer.parseInt(yearOfGradField.get(0)); // TODO: parseInt from the first element of yearOfGradField
           } catch (NumberFormatException e) {
 
           }
 
-          // Student user = userCategory.getUser(username); // TODO: have cal implement the method
-     //     Student user = new Student(yearOfGrad, majorField, majorField, majorField, majorField,
-     //, majorField, profileTypeName, profileTypeName); // TODO: remove this line after CAL adds new method
+          
           Student user = (Student)userCategory.get(username);
 
 
@@ -1122,9 +1204,9 @@ if(profileInfo != null) {
           ArrayList<String> officeLocationField = profileInfo.get(Config.OFFICELOCATION_FIELD);
           // get the fields related to the student
 
-          // Faculty userF = userCategory.getUser(username); // TODO: have cal implement the method
+         
           majorField = null; // TODO remove this link after cal adds new method
-         // Faculty userF = new Faculty(majorField, majorField, majorField, "TESTNAME", username); // TODO: remove this line after CAL adds new method
+        
           Faculty userF = (Faculty)userCategory.get(username);
 
           userF.setCoursesTaught(coursesTaughtField);
@@ -1155,7 +1237,7 @@ if(profileInfo != null) {
     long startTime = System.currentTimeMillis();
     
 	  List<User>searchlist = new ArrayList<User>();
-	    // TODO: find the complexity analysis for this algo
+
 		  if(profileInfo != null) {
 			    //get arraylist that are required for any type of User
 			     ArrayList<String> profileTypeField = profileInfo.get(Config.PROFILE_TYPE_FIELD);
