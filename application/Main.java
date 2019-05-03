@@ -619,10 +619,12 @@ public class Main extends Application {
     
     editButton.setOnAction(event->{
     	//Check for type of user
-    	if (this.currentDriver.getType()=="student") {
+    	if (this.currentDriver.getType().equals("student")) {
+    		System.out.println("Here! "+this.currentDriver.getType());
     		this.primaryStage.setScene(this.editStudentScene());
     	}
     	else {
+    		System.out.println("HERE: "+this.currentDriver.getType());
     		this.primaryStage.setScene(this.editFacultyScene());
     	}
     });
