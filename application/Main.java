@@ -182,19 +182,19 @@ public class Main extends Application {
     	  this.currentUsername = signUpTextField.getText();
     	  try {
         	  this.currentDriver.register(signUpTextField.getText());
+        	  if (userTypeStudent.isSelected()) {
+                  Scene studentSignUp = signupScreenStudent();
+                  primaryStage.setScene(studentSignUp);
+                }
+                  else {
+                    Scene facultySignUp = signupScreenFaculty();
+                    primaryStage.setScene(facultySignUp);
+                  }
           } catch (UserExists e) {
         	  grid.add(userNameTakenText, 1, 5);
           }
-          if (userTypeStudent.isSelected()) {
-            Scene studentSignUp = signupScreenStudent();
-            primaryStage.setScene(studentSignUp);
-          }
-            else {
-              Scene facultySignUp = signupScreenFaculty();
-              primaryStage.setScene(facultySignUp);
-            }
-          }
-      });
+      }
+    });
 
     // button functionality for logging in
     submit.setOnAction(toSearch -> {
@@ -851,7 +851,18 @@ public class Main extends Application {
       recoItems.add("No recommended classes.");
       reco.setItems(recoItems);
     }
-    Text otherInfo2 = new Text("This search returned 5% of users.");
+    double totalUser = this.currentDriver.getTotalUser();
+    System.out.println("Total Users: "+totalUser);
+    double searchedUser = 0;
+    System.out.println("Returned Size: "+this.searchReturn.size());
+    try {
+    	searchedUser = this.searchReturn.size();
+    } catch (NullPointerException e) {
+    	;
+    }
+    double percentUser = searchedUser/totalUser*100;
+    percentUser = Math.round(percentUser);
+    Text otherInfo2 = new Text("This search returned "+percentUser+"% of users.");
     GridPane grid = new GridPane();
     grid.add(users, 0, 0);
     grid.add(toDisplay,1,1);
