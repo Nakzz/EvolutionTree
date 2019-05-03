@@ -909,6 +909,7 @@ if(profileInfo != null) {
     // if list of users doesn't contain other fields listed in the profileInfo, remove the user from the
     // list
     // and if user show if public
+	  System.out.print(searchlist.size());
 	if(searchlist.size() > 0) {
 		return searchlist;
 	} 
