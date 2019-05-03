@@ -93,7 +93,6 @@ public class Main extends Application {
     map.put(Config.USERNAME_FIELD, new ArrayList<String>());
     map.put(Config.NAME_FIELD, new ArrayList<String>());
     map.put(Config.PROFILE_TYPE_FIELD, new ArrayList<String>());
-    map.put(Config.IS_ADMIN_FIELD, new ArrayList<String>());
     map.put(Config.IS_PUBLIC_FIELD, new ArrayList<String>());
     map.put(Config.MAJORS_FIELD, new ArrayList<String>());
     map.put(Config.CERTIFICATES_FIELD, new ArrayList<String>());
@@ -327,11 +326,7 @@ public class Main extends Application {
       signup.setOnAction(toSearch -> {
           Map<String,ArrayList<String>> studentMap = this.createNewStudentMap();
           this.addStudentUserText(studentMap, signUpStudentTextFieldList);
-          try {
-        	  this.currentDriver.addUser(this.currentUsername, this.addStudentUserText(studentMap, signUpStudentTextFieldList));
-          } catch (UserExists e) {
-        	  ;
-          }
+          this.currentDriver.editUser(this.addStudentUserText(studentMap, signUpStudentTextFieldList));
           Scene search = search();
           primaryStage.setScene(search);
           primaryStage.show();
@@ -422,12 +417,7 @@ public class Main extends Application {
       // button functionality to go to the search screen and save the user
       signup.setOnAction(toSearch -> {
           Map<String, ArrayList<String>> facultyMap = this.createNewFacultyMap();
-          try {
-        	  this.currentDriver.addUser(this.currentUsername, this.addFacultyUserText(facultyMap, signUpFacultyTextFieldList));
-          } catch(UserExists e) {
-        	  //This will never happen because if the user changes the username, there will be a textbox that pops up and asks the user to change the username
-        	  ;
-          }
+          this.currentDriver.editUser(this.addFacultyUserText(facultyMap, signUpFacultyTextFieldList));
           Scene search = search();
           primaryStage.setScene(search);
           primaryStage.show();
