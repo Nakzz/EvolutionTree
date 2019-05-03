@@ -3,7 +3,11 @@ package application;
 public class Config {
 
   //JSON FILE NAME
+<<<<<<< HEAD
   public static final String JSON_LOCATION = "./application.EvolutionTree.application/users.json";
+=======
+  public static final String JSON_LOCATION = "./application/manyUsers.json";
+>>>>>>> 43919b62e3fbe9f8050b0b4d250ac7c8ec3567b0
   
   //ALL THE FIELD IN JSON file
   public static final String USERNAME_FIELD = "username";
