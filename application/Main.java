@@ -241,37 +241,37 @@ public class Main extends Application {
       }
       map.get(Config.NAME_FIELD).addAll(Arrays.asList(nameArray));
       
-      String[] yearOfGradArray = userInput.get(2).getText().split(",");
+      String[] yearOfGradArray = userInput.get(1).getText().split(",");
       for (int curIndex=0;curIndex<yearOfGradArray.length;curIndex++) {
           yearOfGradArray[curIndex] = yearOfGradArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.YEAROFGRAD_FIELD).addAll(Arrays.asList(yearOfGradArray));
       
-      String[] majorArray = userInput.get(3).getText().split(",");
+      String[] majorArray = userInput.get(2).getText().split(",");
       for (int curIndex=0;curIndex<majorArray.length;curIndex++) {
           majorArray[curIndex] = majorArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.MAJORS_FIELD).addAll(Arrays.asList(majorArray));
       
-      String[] clubArray = userInput.get(4).getText().split(",");
+      String[] clubArray = userInput.get(3).getText().split(",");
       for (int curIndex=0;curIndex<clubArray.length;curIndex++) {
           clubArray[curIndex] = clubArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.CLUBS_FIELD).addAll(Arrays.asList(clubArray));
       
-      String[] scholarshipArray = userInput.get(5).getText().split(",");
+      String[] scholarshipArray = userInput.get(4).getText().split(",");
       for (int curIndex=0;curIndex<scholarshipArray.length;curIndex++) {
           scholarshipArray[curIndex] = scholarshipArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.SCHOLARSHIPS_FIELD).addAll(Arrays.asList(scholarshipArray));
       
-      String[] coursesArray = userInput.get(6).getText().split(",");
-      for (int curIndex=0;curIndex<userInput.get(6).getText().split(",").length;curIndex++) {
+      String[] coursesArray = userInput.get(5).getText().split(",");
+      for (int curIndex=0;curIndex<coursesArray.length;curIndex++) {
           coursesArray[curIndex] = coursesArray[curIndex].trim().toUpperCase();
       }
       map.get(Config.COURSES_FIELD).addAll(Arrays.asList(coursesArray));
       
-      String[] workExperienceArray = userInput.get(7).getText().split(",");
+      String[] workExperienceArray = userInput.get(6).getText().split(",");
       for (int curIndex=0;curIndex<workExperienceArray.length;curIndex++) {
           workExperienceArray[curIndex] = workExperienceArray[curIndex].trim().toLowerCase();
       }
@@ -363,19 +363,19 @@ public class Main extends Application {
       }
       map.get(Config.NAME_FIELD).addAll(Arrays.asList(nameArray));
       
-      String[] officeBuildingArray = userInput.get(2).getText().split(",");
+      String[] officeBuildingArray = userInput.get(1).getText().split(",");
       for (int curIndex=0;curIndex<officeBuildingArray.length;curIndex++) {
           officeBuildingArray[curIndex] = officeBuildingArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.OFFICELOCATION_FIELD).addAll(Arrays.asList(officeBuildingArray));
       
-      String[] classesTaughtArray = userInput.get(3).getText().split(",");
+      String[] classesTaughtArray = userInput.get(2).getText().split(",");
       for (int curIndex=0;curIndex<classesTaughtArray.length;curIndex++) {
           classesTaughtArray[curIndex] = classesTaughtArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.COURSESTAUGHT_FILED).addAll(Arrays.asList(classesTaughtArray));
       
-      String[] officeHoursArray = userInput.get(4).getText().split(",");
+      String[] officeHoursArray = userInput.get(3).getText().split(",");
       for (int curIndex=0;curIndex<officeHoursArray.length;curIndex++) {
           officeHoursArray[curIndex] = officeHoursArray[curIndex].trim().toLowerCase();
       }
