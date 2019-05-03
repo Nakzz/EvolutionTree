@@ -1194,6 +1194,7 @@ switch (thisUser.getType()) {
           user.setCourses(coursesField);
           user.setWorkExperience(workField);
           user.setYearOfGrad(yearOfGrad);
+          user.setType("student");
 
 
 
@@ -1212,6 +1213,7 @@ switch (thisUser.getType()) {
           userF.setCoursesTaught(coursesTaughtField);
           userF.setOfficeHours(officeHoursField);
           userF.setOfficeLocation(officeLocationField);
+          userF.setType("faculty");
 
           break;
         default:

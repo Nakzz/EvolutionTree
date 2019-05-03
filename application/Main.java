@@ -874,7 +874,9 @@ public class Main extends Application {
       try {
         currentDriver.addUserToJSON();
       } catch (FileNotFoundException e) {
-        
+
+        e.printStackTrace();
+
       }
     });
     
