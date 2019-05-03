@@ -661,7 +661,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> certificateSet = new HashSet<User>();
-		         if(certificatesField.size() > 0) {
+		         if(certificatesField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < certificatesField.size(); count++) {
 		        		 if(this.database.containsKey(certificatesField.get(count))) {
 		        			 List<User> list = this.database.get(certificatesField.get(count)).getAll();	
@@ -914,9 +914,7 @@ if(profileInfo != null) {
     return false; // either you are not an admin, or the same user that you are trying to edit for;
   }
   
-<<<<<<< HEAD
   //computation method returns the top class that the other users are also taking
-=======
   /**
    * Computation.
    *
@@ -924,7 +922,6 @@ if(profileInfo != null) {
    * @return the list
    */
   //computation method
->>>>>>> 1ddddd16e4de00ca4e7efc30a82ca40cb907bfcd
   public List<String> computation(Map<String, ArrayList<String>> profileInfo){
 	  List<User>searchlist = new ArrayList<User>();
 	    // TODO: find the complexity analysis for this algo
