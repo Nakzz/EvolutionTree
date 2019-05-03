@@ -661,7 +661,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> certificateSet = new HashSet<User>();
-		         if(certificatesField.size() > 0) {
+		         if(certificatesField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < certificatesField.size(); count++) {
 		        		 if(this.database.containsKey(certificatesField.get(count))) {
 		        			 List<User> list = this.database.get(certificatesField.get(count)).getAll();	
