@@ -673,7 +673,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> clubSet = new HashSet<User>();
-		         if(clubsField.size() > 0) {
+		         if(clubsField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < clubsField.size(); count++) {
 		        		 if(this.database.containsKey(clubsField.get(count))) {
 		        			 List<User> list = this.database.get(clubsField.get(count)).getAll();	
@@ -685,7 +685,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> scholarshipSet = new HashSet<User>();
-		         if(scholarshipField.size() > 0) {
+		         if(scholarshipField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < scholarshipField.size(); count++) {
 		        		 if(this.database.containsKey(scholarshipField.get(count))) {
 		        			 List<User> list = this.database.get(scholarshipField.get(count)).getAll();	
@@ -697,7 +697,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> courseSet = new HashSet<User>();
-		         if(coursesField.size() > 0) {
+		         if(coursesField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < coursesField.size(); count++) {
 		        		 if(this.database.containsKey(coursesField.get(count))) {
 		        			 List<User> list = this.database.get(coursesField.get(count)).getAll();	
@@ -707,10 +707,9 @@ if(profileInfo != null) {
 		        		 }
 		        	 }
 		         }
-		         System.out.println(courseSet.size());
 		         
 		         Set<User> workSet = new HashSet<User>();
-		         if(workField.size() > 0) {
+		         if(workField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < workField.size(); count++) {
 		        		 if(this.database.containsKey(workField.get(count))) {
 		        			 List<User> list = this.database.get(workField.get(count)).getAll();	
@@ -722,7 +721,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> yearOfGradSet = new HashSet<User>();
-		         if(yearOfGradField.size() > 0) {
+		         if(yearOfGradField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < yearOfGradField.size(); count++) {
 		        		 if(this.database.containsKey(yearOfGradField.get(count))) {
 		        			 List<User> list = this.database.get(yearOfGradField.get(count)).getAll();	
@@ -733,16 +732,97 @@ if(profileInfo != null) {
 		        	 }
 		         }
 		         
-		         majorSet.retainAll(clubSet);
-		         majorSet.retainAll(certificateSet);
-		         majorSet.retainAll(scholarshipSet);
-		         majorSet.retainAll(courseSet);
-		         majorSet.retainAll(workSet);
-		         majorSet.retainAll(yearOfGradSet);
-		         
-		         for(User u : majorSet) {
-		        	 searchlist.add(u);
+		         if(majorSet.size() != 0) {
+			         majorSet.retainAll(clubSet);
+			         majorSet.retainAll(certificateSet);
+			         majorSet.retainAll(scholarshipSet);
+			         majorSet.retainAll(courseSet);
+			         majorSet.retainAll(workSet);
+			         majorSet.retainAll(yearOfGradSet);
+			         
+			         for(User u : majorSet) {
+			        	 searchlist.add(u);
+			         }
 		         }
+		         
+		         else if(clubSet.size() != 0) {
+			         clubSet.retainAll(majorSet);
+			         clubSet.retainAll(certificateSet);
+			         clubSet.retainAll(scholarshipSet);
+			         clubSet.retainAll(courseSet);
+			         clubSet.retainAll(workSet);
+			         clubSet.retainAll(yearOfGradSet);
+			         
+			         for(User u : clubSet) {
+			        	 searchlist.add(u);
+			         }
+		         }
+		         
+		         else if(certificateSet.size() != 0) {
+			         certificateSet.retainAll(majorSet);
+			         certificateSet.retainAll(clubSet);
+			         certificateSet.retainAll(scholarshipSet);
+			         certificateSet.retainAll(courseSet);
+			         certificateSet.retainAll(workSet);
+			         certificateSet.retainAll(yearOfGradSet);
+			         
+			         for(User u : certificateSet) {
+			        	 searchlist.add(u);
+			         }
+		         }
+		         
+		         else if(scholarshipSet.size() != 0) {
+			         scholarshipSet.retainAll(majorSet);
+			         scholarshipSet.retainAll(certificateSet);
+			         scholarshipSet.retainAll(clubSet);
+			         scholarshipSet.retainAll(courseSet);
+			         scholarshipSet.retainAll(workSet);
+			         scholarshipSet.retainAll(yearOfGradSet);
+			         
+			         for(User u : scholarshipSet) {
+			        	 searchlist.add(u);
+			         }
+		         }
+		         
+		         else if(courseSet.size() != 0) {
+			         courseSet.retainAll(majorSet);
+			         courseSet.retainAll(certificateSet);
+			         courseSet.retainAll(clubSet);
+			         courseSet.retainAll(scholarshipSet);
+			         courseSet.retainAll(workSet);
+			         courseSet.retainAll(yearOfGradSet);
+			         
+			         for(User u : courseSet) {
+			        	 searchlist.add(u);
+			         }
+		         }
+		         
+		         else if(workSet.size() != 0) {
+			         workSet.retainAll(majorSet);
+			         workSet.retainAll(certificateSet);
+			         workSet.retainAll(clubSet);
+			         workSet.retainAll(scholarshipSet);
+			         workSet.retainAll(courseSet);
+			         workSet.retainAll(yearOfGradSet);
+			         
+			         for(User u : workSet) {
+			        	 searchlist.add(u);
+			         }
+		         }
+		         
+		         else {
+			         yearOfGradSet.retainAll(majorSet);
+			         yearOfGradSet.retainAll(certificateSet);
+			         yearOfGradSet.retainAll(clubSet);
+			         yearOfGradSet.retainAll(scholarshipSet);
+			         yearOfGradSet.retainAll(courseSet);
+			         yearOfGradSet.retainAll(workSet);
+			         
+			         for(User u : yearOfGradSet) {
+			        	 searchlist.add(u);
+			         }
+		         }
+		         
 		         
 		         break;
 		       case("Faculty"):
@@ -751,7 +831,7 @@ if(profileInfo != null) {
 	             ArrayList<String> officeLocationField = profileInfo.get(Config.OFFICELOCATION_FIELD);
 	            
 	             Set<User> coursesTaughtSet = new HashSet<User>();
-		         if(coursesTaughtField.size() > 0) {
+		         if(coursesTaughtField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < coursesTaughtField.size(); count++) {
 		        		 if(this.database.containsKey(coursesTaughtField.get(count))) {
 		        			 List<User> list = this.database.get(coursesTaughtField.get(count)).getAll();	
@@ -763,7 +843,7 @@ if(profileInfo != null) {
 		         }
 		         
 	             Set<User> officeHourSet = new HashSet<User>();
-		         if(officeHoursField.size() > 0) {
+		         if(officeHoursField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < officeHoursField.size(); count++) {
 		        		 if(this.database.containsKey(officeHoursField.get(count))) {
 		        			 List<User> list = this.database.get(officeHoursField.get(count)).getAll();	
@@ -775,7 +855,7 @@ if(profileInfo != null) {
 		         }
 		         
 	             Set<User> officeLocationSet = new HashSet<User>();
-		         if(officeLocationField.size() > 0) {
+		         if(officeLocationField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < officeLocationField.size(); count++) {
 		        		 if(this.database.containsKey(officeLocationField.get(count))) {
 		        			 List<User> list = this.database.get(officeLocationField.get(count)).getAll();	
@@ -786,11 +866,31 @@ if(profileInfo != null) {
 		        	 }
 		         }
 		         
-		         coursesTaughtSet.retainAll(officeHourSet);
-		         coursesTaughtSet.retainAll(officeLocationSet);
+		         if(coursesTaughtSet.size() != 0) {
+			         coursesTaughtSet.retainAll(officeHourSet);
+			         coursesTaughtSet.retainAll(officeLocationSet);
 
-		         for(User u : coursesTaughtSet) {
-		        	 searchlist.add(u);
+			         for(User u : coursesTaughtSet) {
+			        	 searchlist.add(u);
+			         }
+		         }
+		         
+		         else if(officeHourSet.size() != 0) {
+			         officeHourSet.retainAll(coursesTaughtSet);
+			         officeHourSet.retainAll(officeLocationSet);
+
+			         for(User u : officeHourSet) {
+			        	 searchlist.add(u);
+			         }
+		         }
+		         
+		         else {
+			         officeLocationSet.retainAll(coursesTaughtSet);
+			         officeLocationSet.retainAll(officeHourSet);
+
+			         for(User u : officeLocationSet) {
+			        	 searchlist.add(u);
+			         }
 		         }
 		         
 		         break;
