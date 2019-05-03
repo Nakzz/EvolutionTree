@@ -200,7 +200,21 @@
 			"certificate": [""],
 			"clubs": [""],
 			"scholership": ["perfect student"],
-			"courses": ["CS300", "MT451", "MTH640", "MTH441", "MTH"],
+			"courses": ["CS300", "MT451", "MTH640", "MTH441", "MTH360"],
+			"workExperience": [""]
+		},
+		{
+			"username": ["wow@wisc.edu"],
+			"name": ["Wendy Worker"],
+			"type": ["student"],
+			"isAdmin": ["false"],
+			"isPublic": ["true"],
+			"yearOfGrad": ["2020"],
+			"major": ["math"],
+			"certificate": ["computer science"],
+			"clubs": ["coding4good"],
+			"scholership": ["perfect student"],
+			"courses": ["CS300", "CS540", "MTH640", "MTH441", "CS52"],
 			"workExperience": [""]
 		}
 	]
