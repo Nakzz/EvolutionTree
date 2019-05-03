@@ -327,6 +327,7 @@ public class Main extends Application {
       signup.setOnAction(toSearch -> {
           Map<String,ArrayList<String>> studentMap = this.createNewStudentMap();
           this.addStudentUserText(studentMap, signUpStudentTextFieldList);
+          this.currentDriver.getUser().setType("student");
           this.currentDriver.editUser(this.addStudentUserText(studentMap, signUpStudentTextFieldList));
           Scene search = search();
           primaryStage.setScene(search);
@@ -418,6 +419,7 @@ public class Main extends Application {
       // button functionality to go to the search screen and save the user
       signup.setOnAction(toSearch -> {
           Map<String, ArrayList<String>> facultyMap = this.createNewFacultyMap();
+          this.currentDriver.getUser().setType("faculty");
           this.currentDriver.editUser(this.addFacultyUserText(facultyMap, signUpFacultyTextFieldList));
           Scene search = search();
           primaryStage.setScene(search);
