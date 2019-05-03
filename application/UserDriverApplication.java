@@ -930,6 +930,12 @@ if(profileInfo != null) {
 			         for(User u : yearOfGradSet) {
 			        	 searchlist.add(u);
 			         }
+			         
+			         for(int count = 0; count < searchlist.size(); count++) {
+			        	 if(searchlist.get(count) instanceof Faculty) {
+			        		 searchlist.remove(count);
+			        	 }
+			         }
 		         }
 		         
 		         
@@ -1000,6 +1006,12 @@ if(profileInfo != null) {
 			         for(User u : officeLocationSet) {
 			        	 searchlist.add(u);
 			         }
+		         }
+		         
+		         for(int count = 0; count < searchlist.size(); count++) {
+		        	 if(searchlist.get(count) instanceof Student) {
+		        		 searchlist.remove(count);
+		        	 }
 		         }
 		         
 		         break;
