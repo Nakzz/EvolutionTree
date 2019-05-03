@@ -868,8 +868,7 @@ public class Main extends Application {
     grid.add(users, 0, 0);
     grid.add(toDisplay,1,1);
     grid.add(otherInfo, 0, 2);
-    grid.add(reco, 1, 3);
-    grid.add(otherInfo2, 1, 9);
+    grid.add(otherInfo2, 1, 3);
 
     // set button functionality, will return to the search screen
     Button searchAgain = new Button("Search again");
@@ -885,8 +884,9 @@ public class Main extends Application {
       try {
         currentDriver.addUserToJSON();
       } catch (FileNotFoundException e) {
-        // TODO Auto-generated catch block
+
         e.printStackTrace();
+
       }
     });
     
