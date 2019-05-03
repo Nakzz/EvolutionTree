@@ -94,7 +94,7 @@ public class User {
 	}
 	
 	public String getType() {
-		return type;
+		return this.type;
 	}
 	
 }
