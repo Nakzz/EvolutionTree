@@ -609,7 +609,7 @@ if(profileInfo != null) {
 
         long endTime = System.currentTimeMillis(); 
         long timeElapsed = endTime - startTime;
-        System.out.println("Execution time for populateDatastructure()"+ timeElapsed);
+        System.out.println("Execution time for populateDatastructure(): "+ timeElapsed + "milliseconds");
         
         // System.out.println("DONE!");
 
@@ -925,7 +925,7 @@ if(profileInfo != null) {
 		     
 		 long endTime = System.currentTimeMillis(); 
 		 long timeElapsed = endTime - startTime;
-		 System.out.println("Execution time for searchUser()"+ timeElapsed);
+		 System.out.println("Execution time for searchUser(): "+ timeElapsed + "milliseconds");
 		 
 		     
 
@@ -1031,7 +1031,7 @@ if(profileInfo != null) {
 
       long endTime = System.currentTimeMillis(); 
       long timeElapsed = endTime - startTime;
-      System.out.println("Execution time for editUser()"+ timeElapsed);
+      System.out.println("Execution time for editUser(): "+ timeElapsed  + "milliseconds");
       
       
       return true; // successfully edited profile info
