@@ -58,28 +58,36 @@ public class Main extends Application {
   List<String> recommended; // the list of recommended classes to take 
   
   /**
-   * The start method that sets the stage
+   * The start method that sets the stage and allows the logout button to be displayed on all
+   * pages
    */
   @Override
   public void start(Stage primaryStage) {
-    try {
+    try { // create a new instance of the driver application
       currentDriver = new UserDriverApplication();
+      // logout button functionality
       logout.setOnAction(toLogout -> {
         currentDriver.logout();
         Scene loginScreen = loginScreen();
         primaryStage.setScene(loginScreen);
         primaryStage.show();
       });
+      // get it started
       this.primaryStage = primaryStage;
       Scene login = loginScreen();
       primaryStage.setScene(login);
       primaryStage.show();
 
     } catch (Exception e) {
+      // shouldn't get here
       e.printStackTrace();
     }
   }
 
+  /**
+   * to create a map of the student information to be able to create a new user (student)
+   * @return
+   */
   private Map<String, ArrayList<String>> createNewStudentMap(){
     Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
     map.put(Config.USERNAME_FIELD, new ArrayList<String>());
@@ -97,6 +105,10 @@ public class Main extends Application {
     return map;
   }
 
+  /**
+   * to create a map of the student information to be able to create a new user (faculty)
+   * @return
+   */
   private Map<String, ArrayList<String>> createNewFacultyMap(){
     Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
     map.put(Config.USERNAME_FIELD, new ArrayList<String>());
@@ -110,27 +122,18 @@ public class Main extends Application {
   /**
    * Create the log in scene
    * 
-   * @return
+   * @return the log in screen to display
    */
   private Scene loginScreen() {
     // log in with valid username
     Text loginPrompt = new Text(20, 30, "Login: ");
     Button submit = new Button("Submit");
+    
+    // or the user can sign up as either a faculty or student
     Text signupPrompt = new Text(20, 30, "Sign-up: ");
     GridPane grid = new GridPane();
     TextField loginTextField = new TextField();
     TextField signUpTextField = new TextField("Email Address");
-    grid.add(loginPrompt, 0, 1);
-    grid.add(loginTextField, 1, 1);
-    grid.add(submit, 3, 1);
-    grid.add(signupPrompt, 0, 2);
-    grid.add(signUpTextField, 1, 2);
-
-    signUpTextField.setOnMouseClicked(event->{
-      if (signUpTextField.getText().equals("Email Address")) {
-        signUpTextField.clear();
-      }
-    });
 
     // radio button for the user type when a user wants to sign up
     ToggleGroup type = new ToggleGroup();
@@ -151,13 +154,26 @@ public class Main extends Application {
     Text userNameTakenText = new Text("This username has already been taken, try again!");
     Text userNameMoreThanOneWord = new Text("Make sure the username email adress is correct.  Must be one word.");
 
+    grid.add(loginPrompt, 0, 1);
+    grid.add(loginTextField, 1, 1);
+    grid.add(submit, 3, 1);
+    grid.add(signupPrompt, 0, 2);
+    grid.add(signUpTextField, 1, 2);
     grid.add(userTypeStudent, 1, 3);
     grid.add(userTypeFaculty, 1, 4);
     grid.add(blankText, 1, 5);
     grid.add(signup, 1, 6);
 
-    // button functionality
+    // button functionality for the signup field to clear when a user clicks on it
+    signUpTextField.setOnMouseClicked(event->{
+      if (signUpTextField.getText().equals("Email Address")) {
+        signUpTextField.clear();
+      }
+    });
+
+    // button functionality for the signup button, will go to the faculty or student sign up screens
     signup.setOnAction(student -> {
+      // display an error if not a 1 word username
       if(signUpTextField.getText().split(" ").length>1) {
         grid.add(userNameMoreThanOneWord, 1, 5);
       }
@@ -191,6 +207,7 @@ public class Main extends Application {
       }
     });
 
+    // align the grid on the screen
     grid.setAlignment(Pos.CENTER);
     BorderPane root = new BorderPane();
     root.setCenter(grid);
@@ -201,12 +218,12 @@ public class Main extends Application {
     return login;
   }
 
-
   /**
-   * Create a map out of the user input from the ArrayList of TextFields.  The keys are all of the keys are the attributes that a student can have. 
+   * Create a map out of the user input from the ArrayList of TextFields.  
+   * The keys are all of the keys are the attributes that a student can have. 
    * @param map
    * @param userInput
-   * @return
+   * @return a map to add the student user
    */
   private Map<String,ArrayList<String>> addStudentUserText(Map<String,ArrayList<String>> map, ArrayList<TextField> userInput){
       map.get(Config.USERNAME_FIELD).add(this.currentUsername);
@@ -293,6 +310,7 @@ public class Main extends Application {
           }
       };
       
+      // add the features to a grid
       GridPane grid = new GridPane();
       for (int i = 0; i < fields.size(); i++) {
           grid.add(fields.get(i), 0, i);
@@ -301,7 +319,7 @@ public class Main extends Application {
       Button signup = new Button("Sign-up!");
       grid.add(signup, 1, fields.size());
 
-      // button functionality
+      // button functionality to go to the search screen once signed up
       signup.setOnAction(toSearch -> {
           Map<String,ArrayList<String>> studentMap = this.createNewStudentMap();
           this.addStudentUserText(studentMap, signUpStudentTextFieldList);
@@ -322,7 +340,8 @@ public class Main extends Application {
   }
   
   /**
-   * Create a map out of the user input from the ArrayList of TextFields.  The keys are all of the keys are the attributes that a student can have. 
+   * Create a map out of the user input from the ArrayList of TextFields.  
+   * The keys are all of the keys are the attributes that a student can have. 
    * @param map
    * @param userInput
    * @return
@@ -364,6 +383,7 @@ public class Main extends Application {
    */
   private Scene signupScreenFaculty() {
       ArrayList<Text> fields = new ArrayList<Text>();
+      // gather all the features needed to gather information for the user
       fields.add(new Text("Name: "));
       fields.add(new Text("Email: "));
       fields.add(new Text("Office building: "));
@@ -385,6 +405,7 @@ public class Main extends Application {
           }
       };
 
+      // add to a grid
       GridPane grid = new GridPane();
       for (int i = 0; i < fields.size(); i++) {
           grid.add(fields.get(i), 0, i);
@@ -393,7 +414,7 @@ public class Main extends Application {
       Button signup = new Button("Sign-up!");
       grid.add(signup, 1, fields.size());
 
-      // button functionality
+      // button functionality to go to the search screen and save the user
       signup.setOnAction(toSearch -> {
           Map<String, ArrayList<String>> facultyMap = this.createNewFacultyMap();
           this.addFacultyUserText(facultyMap, signUpFacultyTextFieldList);
@@ -413,6 +434,10 @@ public class Main extends Application {
       return signupScreen;
   }
 
+  /**
+   * this will be able to make the map to search for a student
+   * @return
+   */
   private Map<String, ArrayList<String>> createNewSearchStudentMap(){
 	    Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
 	    map.put(Config.PROFILE_TYPE_FIELD, new ArrayList<String>());
@@ -426,6 +451,10 @@ public class Main extends Application {
 	    return map;
 	  }
   
+  /**
+   * this will be able to make the map to search for faculty
+   * @return
+   */
   private Map<String, ArrayList<String>> createNewSearchFacultyMap(){
 	    Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
 	    map.put(Config.PROFILE_TYPE_FIELD, new ArrayList<String>());
@@ -436,7 +465,8 @@ public class Main extends Application {
 	  }
   
   /**
-   * Create a map out of the user input from the ArrayList of TextFields.  The keys are all of the keys are the attributes that a student can have. 
+   * Create a map out of the user input from the ArrayList of TextFields.  
+   * The keys are all of the keys are the attributes that a student can have. 
    * @param map
    * @param userInput
    * @return
@@ -491,7 +521,8 @@ public class Main extends Application {
   }
   
   /**
-   * Create a map out of the user input from the ArrayList of TextFields.  The keys are all of the keys are the attributes that a student can have. 
+   * Create a map out of the user input from the ArrayList of TextFields.  
+   * The keys are all of the keys are the attributes that a student can have. 
    * @param map
    * @param userInput
    * @return
@@ -525,7 +556,7 @@ public class Main extends Application {
    * Create search screen
    */
   private Scene search() {
-    // radio button for which type of user to return
+    // radio button for which type of user to search for
     ToggleGroup type = new ToggleGroup();
 
     RadioButton userTypeStudent = new RadioButton("Student");
@@ -538,6 +569,7 @@ public class Main extends Application {
     HBox userType = new HBox();
     userType.getChildren().addAll(userTypeStudent, userTypeFaculty);
 
+    // for all the features you can search for
     ArrayList<Text> fields = new ArrayList<Text>();
     fields.add(new Text("Courses: "));
     fields.add(new Text("Year of graduation: "));
@@ -579,6 +611,7 @@ public class Main extends Application {
     	}
     };
     
+    // add to a grid
     GridPane grid = new GridPane();
     grid.add(userType, 0, 0);
     for (int i = 1; i < fields.size() + 1; i++) {
@@ -597,7 +630,7 @@ public class Main extends Application {
     grid.add(searchButton, 1, fields.size() + 1);
     
 
-    // button functionality
+    // button functionality for searching, will then display the search results screen
     searchButton.setOnAction(toSearch -> {
       if (userTypeStudent.isSelected()) {
     	  Map<String,ArrayList<String>> studentSearchMap = this.createNewSearchStudentMap();
@@ -617,6 +650,7 @@ public class Main extends Application {
     
     Button editButton = new Button("Edit Profile");
     
+    // goes to the edit user screen
     editButton.setOnAction(event->{
     	//Check for type of user
     	if (this.currentDriver.getType().equals("student")) {
@@ -640,6 +674,11 @@ public class Main extends Application {
     return searchScreen;
   }
 
+  /**
+   * makes the list into one string
+   * @param list
+   * @return a single string
+   */
   private String listToString(ArrayList<String> list) {
 	  String output = "";
 	  for (String i:list) {
@@ -649,6 +688,11 @@ public class Main extends Application {
 	  return output;
   }
   
+  /**
+   * the screen where a student can edit their profile, is very similar to the sign up 
+   * student page, but pre-fills the options already chosen
+   * @return the scene to display
+   */
   private Scene editStudentScene() {
 	  ArrayList<Text> fields = new ArrayList<Text>();
       fields.add(new Text("Name: "));
@@ -690,7 +734,7 @@ public class Main extends Application {
       Button confirmChangesButton = new Button("Confirm changes");
       grid.add(confirmChangesButton, 1, fields.size());
 
-      // button functionality
+      // button functionality, saves profile and goes to search screen
       confirmChangesButton.setOnAction(toSearch -> {
     	  Map<String,ArrayList<String>> studentMap = this.createNewStudentMap();
     	  this.addStudentUserText(studentMap, editStudentTextFieldList);
@@ -711,7 +755,11 @@ public class Main extends Application {
   }
   
   
-  
+  /**
+   * a screen to edit the faculty user profile, similar to the add faculty user screen
+   * but is prefilled with the already choosen options
+   * @return the scene to displa
+   */
   private Scene editFacultyScene() {
 	  ArrayList<Text> fields = new ArrayList<Text>();
       fields.add(new Text("Name: "));
