@@ -674,8 +674,6 @@ if(profileInfo != null) {
 
 
 		         if(certificatesField.size() > 0 && !certificatesField.get(0).equalsIgnoreCase("")) { 
-
-
 		        	 for(int count = 0; count < certificatesField.size(); count++) {
 		        		 if(this.database.containsKey(certificatesField.get(count))) {
 		        			 List<User> list = this.database.get(certificatesField.get(count)).getAll();	
@@ -860,7 +858,7 @@ if(profileInfo != null) {
 		        	 if(workSet.size() != 0) {
 				         courseSet.retainAll(workSet);
 		        	 }
-		        	 if(courseSet.size() != 0) {
+		        	 if(yearOfGradSet.size() != 0) {
 				         courseSet.retainAll(yearOfGradSet);
 		        	 }
 		        	 
