@@ -931,14 +931,13 @@ if(profileInfo != null) {
 			         for(User u : yearOfGradSet) {
 			        	 searchlist.add(u);
 			         }
-			         
-			         for(int count = 0; count < searchlist.size(); count++) {
-			        	 if(searchlist.get(count).getType().equals("faculty")) {
-			        		 searchlist.remove(count);
-			        	 }
-			         }
 		         }
 		         
+		         for(int count = 0; count < searchlist.size(); count++) {
+		        	 if(searchlist.get(count).getType().equals("faculty")) {
+		        		 searchlist.remove(count);
+		        	 }
+		         }
 		         
 		         break;
 		       case("faculty"):
@@ -1014,6 +1013,7 @@ if(profileInfo != null) {
 		        		 searchlist.remove(count);
 		        	 }
 		         }
+		       
 		         
 		         break;
 	  }
