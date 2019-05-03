@@ -445,7 +445,8 @@ if(profileInfo != null) {
     throws FileNotFoundException, IOException, ParseException, UserExists {
 
     this.totalUsers = 0;
-
+    
+    long startTime = System.currentTimeMillis();
 
     if (database == null) {
       database = new HashMap<String, Category>();
@@ -606,6 +607,10 @@ if(profileInfo != null) {
 
         }
 
+        long endTime = System.currentTimeMillis(); 
+        long timeElapsed = endTime - startTime;
+        System.out.println("Execution time for populateDatastructure()"+ timeElapsed);
+        
         // System.out.println("DONE!");
 
 
@@ -628,7 +633,10 @@ if(profileInfo != null) {
    * @return the list
    */
   public List<User> searchUser(Map<String, ArrayList<String>> profileInfo) {
-	  List<User>searchlist = new ArrayList<User>();
+
+    long startTime = System.currentTimeMillis();
+    
+    List<User>searchlist = new ArrayList<User>();
     // TODO: find the complexity analysis for this algo
 	  if(profileInfo != null) {
 		    //get arraylist that are required for any type of User
@@ -661,7 +669,9 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> certificateSet = new HashSet<User>();
+
 		         if(certificatesField.size() > 0 && !certificatesField.get(0).equalsIgnoreCase("")) { 
+
 		        	 for(int count = 0; count < certificatesField.size(); count++) {
 		        		 if(this.database.containsKey(certificatesField.get(count))) {
 		        			 List<User> list = this.database.get(certificatesField.get(count)).getAll();	
@@ -707,6 +717,7 @@ if(profileInfo != null) {
 		        		 }
 		        	 }
 		         }
+		         System.out.println(courseSet.size());
 		         
 		         Set<User> workSet = new HashSet<User>();
 		         if(workField.size() > 0 && !workField.get(0).equalsIgnoreCase("")) {
@@ -739,9 +750,8 @@ if(profileInfo != null) {
 		         majorSet.retainAll(workSet);
 		         majorSet.retainAll(yearOfGradSet);
 		         
-		         User[]inter = (User[])majorSet.toArray();
-		         for(int count = 0; count < inter.length; count++) {
-		        	 searchlist.add(inter[count]);
+		         for(User u : majorSet) {
+		        	 searchlist.add(u);
 		         }
 		         
 		         break;
@@ -788,9 +798,9 @@ if(profileInfo != null) {
 		         
 		         coursesTaughtSet.retainAll(officeHourSet);
 		         coursesTaughtSet.retainAll(officeLocationSet);
-		         User[]inter2 = (User[])coursesTaughtSet.toArray();
-		         for(int count = 0; count < inter2.length; count++) {
-		        	 searchlist.add(inter2[count]);
+
+		         for(User u : coursesTaughtSet) {
+		        	 searchlist.add(u);
 		         }
 		         
 		         break;
@@ -809,7 +819,12 @@ if(profileInfo != null) {
     // if list of users doesn't contain other fields listed in the profileInfo, remove the user from the
     // list
     // and if user show if public
-
+		     
+		 long endTime = System.currentTimeMillis(); 
+		 long timeElapsed = endTime - startTime;
+		 System.out.println("Execution time for searchUser()"+ timeElapsed);
+		 
+		     
 	if(searchlist.size() > 0) {
 		return searchlist;
 	} 
@@ -831,7 +846,8 @@ if(profileInfo != null) {
 
       // List<User> foundUsers = searchUser(profileInfo);
       // foundUsers.contains(o)
-
+      long startTime = System.currentTimeMillis();
+      
       Category userCategory = this.database.get(USERS_CATEGORY);
 
 
@@ -907,6 +923,11 @@ if(profileInfo != null) {
           return false;
       }
 
+      long endTime = System.currentTimeMillis(); 
+      long timeElapsed = endTime - startTime;
+      System.out.println("Execution time for editUser()"+ timeElapsed);
+      
+      
       return true; // successfully edited profile info
     }
 
@@ -914,13 +935,6 @@ if(profileInfo != null) {
     return false; // either you are not an admin, or the same user that you are trying to edit for;
   }
   
-  /**
-   * Computation.
-   *
-   * @param profileInfo the profile info
-   * @return the list
-   */
-  //computation method
   public List<String> computation(Map<String, ArrayList<String>> profileInfo){
 	  List<User>searchlist = new ArrayList<User>();
 	    // TODO: find the complexity analysis for this algo
