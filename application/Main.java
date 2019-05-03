@@ -25,17 +25,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -56,7 +51,6 @@ import javafx.scene.text.Text;
 public class Main extends Application {
   Stage primaryStage; // the one and only stage
   Button logout = new Button("Logout"); // add logout button functionality on each page
-  Button exit = new Button("Exit"); // to be able to choose whether or not to save on exit
   UserDriverApplication currentDriver; // driver application for user/search functionality
   String currentUsername; // the current user, either logging in or registering
   List<User> searchReturn; // the list of users that are returned by the search
@@ -70,15 +64,6 @@ public class Main extends Application {
   public void start(Stage primaryStage) {
     try { // create a new instance of the driver application
       currentDriver = new UserDriverApplication();
-      
-
-      Button exit = new Button("Save on exit"); 
-      
-      exit.setOnAction(event -> {
-        Alert exitSaving = new Alert(AlertType.CONFIRMATION);
-        exitSaving.setContentText("Save on exit? Ok - save, Cancel - no save");
-        exitSaving.show();
-      });
       
       // logout button functionality
       logout.setOnAction(toLogout -> {
@@ -233,7 +218,6 @@ public class Main extends Application {
     BorderPane root = new BorderPane();
     root.setCenter(grid);
     root.setBottom(logout);
-    root.setRight(exit);
 
     Scene login = new Scene(root, 800, 600);
     login.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -882,10 +866,18 @@ public class Main extends Application {
       primaryStage.show();
     });
     
+
+    Button saveUser = new Button("Save user to database"); // to be able to choose whether or not to save the user
+    saveUser.setOnAction(save -> {
+      currentDriver.addUserToJSON();
+    });
+    
+    HBox upperRight = new HBox();
+    upperRight.getChildren().addAll(searchAgain, saveUser);
     BorderPane borderPane = new BorderPane();
     borderPane.setCenter(grid);
     borderPane.setBottom(logout);
-    borderPane.setRight(searchAgain);
+    borderPane.setRight(upperRight);
 
     Scene searchResults = new Scene(borderPane, 800, 600);
     searchResults.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
