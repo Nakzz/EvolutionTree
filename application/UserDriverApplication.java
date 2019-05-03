@@ -149,14 +149,14 @@ public class UserDriverApplication {
     // IF USER doesn't EXISTS, then do the following
     if (this.listOfUsers != null && !this.listOfUsers.contains(username)) {
 
-      // add user to database
-      try {
-        addUser(username, null);
-      } catch (UserExists e) {
-        System.out.println("ERROR: UserDriverApplication_register: ");
-        System.out.println("  THIS SHOULD NOT HAPPEN. Already checked that User exists.");
-        e.printStackTrace();
-      }
+//      // add user to database
+//      try {
+//        addUser(username, null);
+//      } catch (UserExists e) {
+//        System.out.println("ERROR: UserDriverApplication_register: ");
+//        System.out.println("  THIS SHOULD NOT HAPPEN. Already checked that User exists.");
+//        e.printStackTrace();
+//      }
 
       this.username = username; // SET USERNAME field.
       this.isAdmin = false; // SET isAdmin field
