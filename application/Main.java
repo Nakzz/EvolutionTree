@@ -65,6 +65,20 @@ public class Main extends Application {
   public void start(Stage primaryStage) {
     try { // create a new instance of the driver application
       currentDriver = new UserDriverApplication();
+      
+
+//      Button exit = new Button("Save on exit"); 
+//      EventHandler<ActionEvent> event = new 
+//          EventHandler<ActionEvent>() { 
+//public void handle(ActionEvent e) 
+//{ 
+// // set alert type 
+// a.setAlertType(AlertType.CONFIRMATION); 
+//
+// // show the dialog 
+// a.show(); 
+//} 
+}; 
       // logout button functionality
       logout.setOnAction(toLogout -> {
         currentDriver.logout();
