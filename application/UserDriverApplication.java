@@ -649,7 +649,7 @@ if(profileInfo != null) {
 		         ArrayList<String> yearOfGradField = profileInfo.get(Config.YEAROFGRAD_FIELD);
 		         
 		         Set<User> majorSet = new HashSet<User>();
-		         if(majorField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
+		         if(majorField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {   //if string was empty, it gave nullPointer
 		        	 for(int count = 0; count < majorField.size(); count++) {
 		        		 if(this.database.containsKey(majorField.get(count))) {
 		        			 List<User> list = this.database.get(majorField.get(count)).getAll();	
@@ -661,7 +661,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> certificateSet = new HashSet<User>();
-		         if(certificatesField.size() > 0) {
+		         if(certificatesField.size() > 0 && !certificatesField.get(0).equalsIgnoreCase("")) { 
 		        	 for(int count = 0; count < certificatesField.size(); count++) {
 		        		 if(this.database.containsKey(certificatesField.get(count))) {
 		        			 List<User> list = this.database.get(certificatesField.get(count)).getAll();	
@@ -673,7 +673,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> clubSet = new HashSet<User>();
-		         if(clubsField.size() > 0) {
+		         if(clubsField.size() > 0 && !clubsField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < clubsField.size(); count++) {
 		        		 if(this.database.containsKey(clubsField.get(count))) {
 		        			 List<User> list = this.database.get(clubsField.get(count)).getAll();	
@@ -685,7 +685,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> scholarshipSet = new HashSet<User>();
-		         if(scholarshipField.size() > 0) {
+		         if(scholarshipField.size() > 0 && !scholarshipField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < scholarshipField.size(); count++) {
 		        		 if(this.database.containsKey(scholarshipField.get(count))) {
 		        			 List<User> list = this.database.get(scholarshipField.get(count)).getAll();	
@@ -697,7 +697,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> courseSet = new HashSet<User>();
-		         if(coursesField.size() > 0) {
+		         if(coursesField.size() > 0 && !coursesField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < coursesField.size(); count++) {
 		        		 if(this.database.containsKey(coursesField.get(count))) {
 		        			 List<User> list = this.database.get(coursesField.get(count)).getAll();	
@@ -709,7 +709,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> workSet = new HashSet<User>();
-		         if(workField.size() > 0) {
+		         if(workField.size() > 0 && !workField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < workField.size(); count++) {
 		        		 if(this.database.containsKey(workField.get(count))) {
 		        			 List<User> list = this.database.get(workField.get(count)).getAll();	
@@ -721,7 +721,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> yearOfGradSet = new HashSet<User>();
-		         if(yearOfGradField.size() > 0) {
+		         if(yearOfGradField.size() > 0 && !yearOfGradField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < yearOfGradField.size(); count++) {
 		        		 if(this.database.containsKey(yearOfGradField.get(count))) {
 		        			 List<User> list = this.database.get(yearOfGradField.get(count)).getAll();	
@@ -745,7 +745,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         break;
-		       case("Faculty"):
+		       case("faculty"):
 		         ArrayList<String> coursesTaughtField = profileInfo.get(Config.COURSESTAUGHT_FILED);
 	             ArrayList<String> officeHoursField = profileInfo.get(Config.OFFICEHOURS_FIELD);
 	             ArrayList<String> officeLocationField = profileInfo.get(Config.OFFICELOCATION_FIELD);
