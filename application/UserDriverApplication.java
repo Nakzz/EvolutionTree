@@ -198,7 +198,6 @@ public class UserDriverApplication {
       throw new UserExists();
     } 
     
-    
     if(username == null )
       return false;
     
@@ -569,9 +568,10 @@ if(profileInfo != null) {
               }
               map.put(Config.WORK_EXPERIENCES_FIELD, work);
 
-
-              map.put(Config.YEAROFGRAD_FIELD,
-                new ArrayList<String>(Arrays.asList(yearOfGradField.toString())));
+              ArrayList<String> yog = new ArrayList<String>();
+              yog.add((String) yearOfGradField.get(0));
+              map.put(Config.YEAROFGRAD_FIELD, yog
+              
 
               addUser(email, map);
 
