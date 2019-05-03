@@ -609,7 +609,7 @@ if(profileInfo != null) {
 
         long endTime = System.currentTimeMillis(); 
         long timeElapsed = endTime - startTime;
-        System.out.println("Execution time for populateDatastructure()"+ timeElapsed);
+        System.out.println("Execution time for populateDatastructure(): "+ timeElapsed + "milliseconds");
         
         // System.out.println("DONE!");
 
@@ -745,51 +745,97 @@ if(profileInfo != null) {
 		         }
 		         
 		         if(majorSet.size() != 0) {
-			         majorSet.retainAll(clubSet);
-			         majorSet.retainAll(certificateSet);
-			         majorSet.retainAll(scholarshipSet);
-			         majorSet.retainAll(courseSet);
-			         majorSet.retainAll(workSet);
-			         majorSet.retainAll(yearOfGradSet);
-			         
+		        	 if(clubSet.size() != 0) {
+		        		 majorSet.retainAll(clubSet);
+		        	 }
+		        	 if(certificateSet.size() != 0) {
+		        	 	majorSet.retainAll(certificateSet);
+		        	 }
+		        	 if(scholarshipSet.size() != 0) {
+		        	 	majorSet.retainAll(scholarshipSet);
+		        	 }
+		        	 if(courseSet.size() != 0) {
+		        	 	majorSet.retainAll(courseSet);
+		        	 }
+		        	 if(workSet.size() != 0) {
+		        	 	majorSet.retainAll(workSet);
+		        	 }
+		        	 if(yearOfGradSet.size() != 0) {
+		        	 	majorSet.retainAll(yearOfGradSet);
+		        	 }
+		        	 
 			         for(User u : majorSet) {
 			        	 searchlist.add(u);
 			         }
 		         }
 		         
 		         else if(clubSet.size() != 0) {
-			         clubSet.retainAll(majorSet);
-			         clubSet.retainAll(certificateSet);
-			         clubSet.retainAll(scholarshipSet);
-			         clubSet.retainAll(courseSet);
-			         clubSet.retainAll(workSet);
-			         clubSet.retainAll(yearOfGradSet);
-			         
+		        	 if(majorSet.size() != 0) {
+				         clubSet.retainAll(majorSet);
+		        	 }
+		        	 if(certificateSet.size() != 0) {
+				         clubSet.retainAll(certificateSet);
+		        	 }
+		        	 if(scholarshipSet.size() != 0) {
+				         clubSet.retainAll(scholarshipSet);
+		        	 }
+		        	 if(courseSet.size() != 0) {
+				         clubSet.retainAll(courseSet);
+		        	 }
+		        	 if(workSet.size() != 0) {
+				         clubSet.retainAll(workSet);
+		        	 }
+		        	 if(yearOfGradSet.size() != 0) {
+				         clubSet.retainAll(yearOfGradSet);
+		        	 }
 			         for(User u : clubSet) {
 			        	 searchlist.add(u);
 			         }
 		         }
 		         
 		         else if(certificateSet.size() != 0) {
-			         certificateSet.retainAll(majorSet);
-			         certificateSet.retainAll(clubSet);
-			         certificateSet.retainAll(scholarshipSet);
-			         certificateSet.retainAll(courseSet);
-			         certificateSet.retainAll(workSet);
-			         certificateSet.retainAll(yearOfGradSet);
-			         
+		        	 if(majorSet.size() != 0) {
+				         certificateSet.retainAll(majorSet);
+		        	 }
+		        	 if(clubSet.size() != 0) {
+				         certificateSet.retainAll(clubSet);
+		        	 }
+		        	 if(scholarshipSet.size() != 0) {
+				         certificateSet.retainAll(scholarshipSet);
+		        	 }
+		        	 if(courseSet.size() != 0) {
+				         certificateSet.retainAll(courseSet);
+		        	 }
+		        	 if(workSet.size() != 0) {
+				         certificateSet.retainAll(workSet);
+		        	 }
+		        	 if(yearOfGradSet.size() != 0) {
+				         certificateSet.retainAll(yearOfGradSet);
+		        	 }
 			         for(User u : certificateSet) {
 			        	 searchlist.add(u);
 			         }
 		         }
 		         
 		         else if(scholarshipSet.size() != 0) {
-			         scholarshipSet.retainAll(majorSet);
-			         scholarshipSet.retainAll(certificateSet);
-			         scholarshipSet.retainAll(clubSet);
-			         scholarshipSet.retainAll(courseSet);
-			         scholarshipSet.retainAll(workSet);
-			         scholarshipSet.retainAll(yearOfGradSet);
+		        	 if(majorSet.size() != 0) {
+				         scholarshipSet.retainAll(majorSet);
+		        	 }
+		        	 if(certificateSet.size() != 0) {
+				         scholarshipSet.retainAll(certificateSet);
+		        	 }
+		        	 if(clubSet.size() != 0) {
+				         scholarshipSet.retainAll(clubSet);
+		        	 }
+		        	 if(courseSet.size() != 0) {
+				         scholarshipSet.retainAll(courseSet);
+		        	 }
+		        	 if(workSet.size() != 0) {
+				         scholarshipSet.retainAll(workSet);
+		        	 }
+		        	 if(yearOfGradSet.size() != 0) {
+				         scholarshipSet.retainAll(yearOfGradSet);
+		        	 }
 			         
 			         for(User u : scholarshipSet) {
 			        	 searchlist.add(u);
@@ -797,39 +843,74 @@ if(profileInfo != null) {
 		         }
 		         
 		         else if(courseSet.size() != 0) {
-			         courseSet.retainAll(majorSet);
-			         courseSet.retainAll(certificateSet);
-			         courseSet.retainAll(clubSet);
-			         courseSet.retainAll(scholarshipSet);
-			         courseSet.retainAll(workSet);
-			         courseSet.retainAll(yearOfGradSet);
-			         
+		        	 if(majorSet.size() != 0) {
+				         courseSet.retainAll(majorSet);
+		        	 }
+		        	 if(certificateSet.size() != 0) {
+				         courseSet.retainAll(certificateSet);
+		        	 }
+		        	 if(clubSet.size() != 0) {
+				         courseSet.retainAll(clubSet);
+		        	 }
+		        	 if(scholarshipSet.size() != 0) {
+				         courseSet.retainAll(scholarshipSet);
+		        	 }
+		        	 if(workSet.size() != 0) {
+				         courseSet.retainAll(workSet);
+		        	 }
+		        	 if(courseSet.size() != 0) {
+				         courseSet.retainAll(yearOfGradSet);
+		        	 }
+		        	 
 			         for(User u : courseSet) {
 			        	 searchlist.add(u);
 			         }
 		         }
 		         
 		         else if(workSet.size() != 0) {
-			         workSet.retainAll(majorSet);
-			         workSet.retainAll(certificateSet);
-			         workSet.retainAll(clubSet);
-			         workSet.retainAll(scholarshipSet);
-			         workSet.retainAll(courseSet);
-			         workSet.retainAll(yearOfGradSet);
-			         
+		        	 if(majorSet.size() != 0) {
+				         workSet.retainAll(majorSet);
+		        	 }
+		        	 if(certificateSet.size() != 0) {
+				         workSet.retainAll(certificateSet);
+		        	 }
+		        	 if(clubSet.size() != 0) {
+				         workSet.retainAll(clubSet);
+		        	 }
+		        	 if(scholarshipSet.size() != 0) {
+				         workSet.retainAll(scholarshipSet);
+		        	 }
+		        	 if(courseSet.size() != 0) {
+				         workSet.retainAll(courseSet);
+		        	 }
+		        	 if(yearOfGradSet.size() != 0) {
+				         workSet.retainAll(yearOfGradSet);
+		        	 }
 			         for(User u : workSet) {
 			        	 searchlist.add(u);
 			         }
 		         }
 		         
 		         else {
-			         yearOfGradSet.retainAll(majorSet);
-			         yearOfGradSet.retainAll(certificateSet);
-			         yearOfGradSet.retainAll(clubSet);
-			         yearOfGradSet.retainAll(scholarshipSet);
-			         yearOfGradSet.retainAll(courseSet);
-			         yearOfGradSet.retainAll(workSet);
-			         
+		        	 if(majorSet.size() != 0) {
+				         yearOfGradSet.retainAll(majorSet);
+		        	 }
+		        	 if(certificateSet.size() != 0) {
+				         yearOfGradSet.retainAll(certificateSet);
+		        	 }
+		        	 if(clubSet.size() != 0) {
+				         yearOfGradSet.retainAll(clubSet);
+		        	 }
+		        	 if(scholarshipSet.size() != 0) {
+				         yearOfGradSet.retainAll(scholarshipSet);
+		        	 }
+		        	 if(courseSet.size() != 0) {
+				         yearOfGradSet.retainAll(courseSet);
+		        	 }
+		        	 if(workSet.size() != 0) {
+				         yearOfGradSet.retainAll(workSet);
+		        	 }
+		        	 
 			         for(User u : yearOfGradSet) {
 			        	 searchlist.add(u);
 			         }
@@ -925,7 +1006,7 @@ if(profileInfo != null) {
 		     
 		 long endTime = System.currentTimeMillis(); 
 		 long timeElapsed = endTime - startTime;
-		 System.out.println("Execution time for searchUser()"+ timeElapsed);
+		 System.out.println("Execution time for searchUser(): "+ timeElapsed + "milliseconds");
 		 
 		     
 
@@ -1031,7 +1112,7 @@ if(profileInfo != null) {
 
       long endTime = System.currentTimeMillis(); 
       long timeElapsed = endTime - startTime;
-      System.out.println("Execution time for editUser()"+ timeElapsed);
+      System.out.println("Execution time for editUser(): "+ timeElapsed  + "milliseconds");
       
       
       return true; // successfully edited profile info

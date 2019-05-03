@@ -14,7 +14,17 @@
 			"workExperience": ["Salad Chef"]
 		},
 		{
-			"username": ["aj@wisc.edu"],
+			"username": ["admin"],
+			"name": ["admin"],
+			"type": ["faculty"],
+			"isAdmin": ["true"],
+			"isPublic": ["true"],
+			"coursesTaught": ["CS400", "CS300", "CS200"],
+			"officeHours": ["12:00 PM", "12:00 AM"],
+			"officeLocation": ["1551 Computer Science"]
+		},
+		{
+			"username": ["naqib@wisc.edu"],
 			"name": ["AJ"],
 			"type": ["faculty"],
 			"isAdmin": ["false"],
