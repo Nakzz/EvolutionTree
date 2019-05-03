@@ -739,9 +739,8 @@ if(profileInfo != null) {
 		         majorSet.retainAll(workSet);
 		         majorSet.retainAll(yearOfGradSet);
 		         
-		         User[]inter = (User[])majorSet.toArray();
-		         for(int count = 0; count < inter.length; count++) {
-		        	 searchlist.add(inter[count]);
+		         for(User u : majorSet) {
+		        	 searchlist.add(u);
 		         }
 		         
 		         break;
@@ -788,9 +787,9 @@ if(profileInfo != null) {
 		         
 		         coursesTaughtSet.retainAll(officeHourSet);
 		         coursesTaughtSet.retainAll(officeLocationSet);
-		         User[]inter2 = (User[])coursesTaughtSet.toArray();
-		         for(int count = 0; count < inter2.length; count++) {
-		        	 searchlist.add(inter2[count]);
+
+		         for(User u : majorSet) {
+		        	 searchlist.add(u);
 		         }
 		         
 		         break;
