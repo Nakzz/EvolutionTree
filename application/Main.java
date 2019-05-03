@@ -191,17 +191,23 @@ public class Main extends Application {
       if(signUpTextField.getText().split(" ").length>1) {
         grid.add(userNameMoreThanOneWord, 1, 5);
       }
-      else if (userTypeStudent.isSelected()) {
-        currentUsername = signUpTextField.getText();
-        Scene studentSignUp = signupScreenStudent();
-        primaryStage.setScene(studentSignUp);
-        primaryStage.show();
-      }
-        else {
-          currentUsername = signUpTextField.getText();
-          Scene facultySignUp = signupScreenFaculty();
-          primaryStage.setScene(facultySignUp);
-        }
+      else {
+    	  try {
+        	  this.currentDriver.register(signUpTextField.getText());
+          } catch (UserExists e) {
+        	  grid.add(userNameTakenText, 1, 5);
+          }
+          if (userTypeStudent.isSelected()) {
+            currentUsername = signUpTextField.getText();
+            Scene studentSignUp = signupScreenStudent();
+            primaryStage.setScene(studentSignUp);
+          }
+            else {
+              currentUsername = signUpTextField.getText();
+              Scene facultySignUp = signupScreenFaculty();
+              primaryStage.setScene(facultySignUp);
+            }
+          }
       });
 
     // button functionality for logging in
