@@ -15,6 +15,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -440,7 +441,7 @@ if(profileInfo != null) {
   }
 
   public void addUserToJSON() {
-    File file = new File();
+    File file = new File(JSON_LOCATION);
     if (!file.exists()) {
         System.out.println("No file");
     } else {
@@ -1264,13 +1265,7 @@ if(profileInfo != null) {
     }
       
     
-    if(getUser() instanceof Student)
-    return "student";
-    
-    if(getUser() instanceof Faculty)
-    return "faculty"; 
-    
-    return "";
+    return getUser().getType();
   }
   
   /**
