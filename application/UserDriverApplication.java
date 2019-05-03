@@ -570,7 +570,7 @@ if(profileInfo != null) {
 
               ArrayList<String> yog = new ArrayList<String>();
               yog.add((String) yearOfGradField.get(0));
-              map.put(Config.YEAROFGRAD_FIELD, yog
+              map.put(Config.YEAROFGRAD_FIELD, yog);
               
 
               addUser(email, map);
@@ -1078,8 +1078,8 @@ if(profileInfo != null) {
       String name = nameField.get(0);
       String email = usernameField.get(0);
       String profileTypeName = profileTypeField.get(0);
-      Boolean isAdminText = Boolean.parseBoolean(isAdminField.get(0));
-      Boolean isPublicText = Boolean.parseBoolean(isPublicField.get(0));
+  //    Boolean isAdminText = Boolean.parseBoolean(isAdminField.get(0));
+  //    Boolean isPublicText = Boolean.parseBoolean(isPublicField.get(0));
 
       int yearOfGrad = 0;
 
