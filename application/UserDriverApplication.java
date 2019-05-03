@@ -238,7 +238,6 @@ if(profileInfo != null) {
          
          //create a student user 
          Student newUser = new Student(yearOfGrad,majorField, certificatesField, clubsField, scholarshipField, coursesField, workField, nameField.get(0), username);
-         newUser.setType("student");
          this.totalUsers++;
          
          userCategory.insert(newUser); // this is the master category that contains all the users
@@ -363,7 +362,6 @@ if(profileInfo != null) {
          // create a faculty user
          Faculty newUser2 = new Faculty(coursesTaughtField, officeHoursField, officeLocationField, nameField.get(0), username);
          this.totalUsers++;
-         newUser2.setType("faculty");
          
          userCategory.insert(newUser2);
          this.listOfUsers.add(username);

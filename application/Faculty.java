@@ -23,6 +23,7 @@ public class Faculty extends User{
 		this.coursesTaught = coursesTaught;
 		this.officeHours = officeHours;
 		this.officeLocation = officeLocation;
+		setType("faculty");
 	}
 	
 	//Constructor
@@ -34,6 +35,7 @@ public class Faculty extends User{
 		this.coursesTaught = coursesTaught;
 		this.officeHours = officeHours;
 		this.officeLocation = officeLocation;
+		setType("faculty");
 	}
 	
 	//@param ArrayList<String> coursesTaught
