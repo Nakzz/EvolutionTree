@@ -27,7 +27,8 @@ public class Student extends User{
      this.clubs = clubs;
      this.scholership = scholership;
      this.courses = courses;
-     this.workExperience = workExperience;   
+     this.workExperience = workExperience; 
+     setType("student");
  }
 	
 	//Constructor
@@ -43,7 +44,8 @@ public class Student extends User{
 		this.clubs = clubs;
 		this.scholership = scholership;
 		this.courses = courses;
-		this.workExperience = workExperience;	
+		this.workExperience = workExperience;
+		setType("student");
 	}
 	
 	//@return int yearOfGrad

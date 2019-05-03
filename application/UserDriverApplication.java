@@ -199,7 +199,6 @@ public class UserDriverApplication {
       throw new UserExists();
     } 
     
-    
     if(username == null )
       return false;
     
@@ -239,7 +238,6 @@ if(profileInfo != null) {
          
          //create a student user 
          Student newUser = new Student(yearOfGrad,majorField, certificatesField, clubsField, scholarshipField, coursesField, workField, nameField.get(0), username);
-         newUser.setType("student");
          this.totalUsers++;
          
          userCategory.insert(newUser); // this is the master category that contains all the users
@@ -364,7 +362,6 @@ if(profileInfo != null) {
          // create a faculty user
          Faculty newUser2 = new Faculty(coursesTaughtField, officeHoursField, officeLocationField, nameField.get(0), username);
          this.totalUsers++;
-         newUser2.setType("faculty");
          
          userCategory.insert(newUser2);
          this.listOfUsers.add(username);
@@ -656,9 +653,10 @@ switch (thisUser.getType()) {
               }
               map.put(Config.WORK_EXPERIENCES_FIELD, work);
 
-
-              map.put(Config.YEAROFGRAD_FIELD,
-                new ArrayList<String>(Arrays.asList(yearOfGradField.toString())));
+              ArrayList<String> yog = new ArrayList<String>();
+              yog.add((String) yearOfGradField.get(0));
+              map.put(Config.YEAROFGRAD_FIELD, yog);
+              
 
               addUser(email, map);
 
@@ -1016,14 +1014,13 @@ switch (thisUser.getType()) {
 			         for(User u : yearOfGradSet) {
 			        	 searchlist.add(u);
 			         }
-			         
-			         for(int count = 0; count < searchlist.size(); count++) {
-			        	 if(searchlist.get(count).getType().equals("faculty")) {
-			        		 searchlist.remove(count);
-			        	 }
-			         }
 		         }
 		         
+		         for(int count = 0; count < searchlist.size(); count++) {
+		        	 if(searchlist.get(count).getType().equals("faculty")) {
+		        		 searchlist.remove(count);
+		        	 }
+		         }
 		         
 		         break;
 		       case("faculty"):
@@ -1099,6 +1096,7 @@ switch (thisUser.getType()) {
 		        		 searchlist.remove(count);
 		        	 }
 		         }
+		       
 		         
 		         break;
 	  }
@@ -1164,8 +1162,8 @@ switch (thisUser.getType()) {
       String name = nameField.get(0);
       String email = usernameField.get(0);
       String profileTypeName = profileTypeField.get(0);
-      Boolean isAdminText = Boolean.parseBoolean(isAdminField.get(0));
-      Boolean isPublicText = Boolean.parseBoolean(isPublicField.get(0));
+  //    Boolean isAdminText = Boolean.parseBoolean(isAdminField.get(0));
+  //    Boolean isPublicText = Boolean.parseBoolean(isPublicField.get(0));
 
       int yearOfGrad = 0;
 

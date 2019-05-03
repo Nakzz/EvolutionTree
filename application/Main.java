@@ -25,15 +25,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -54,7 +51,6 @@ import javafx.scene.text.Text;
 public class Main extends Application {
   Stage primaryStage; // the one and only stage
   Button logout = new Button("Logout"); // add logout button functionality on each page
-  Button exit = new Button("Exit"); // to be able to choose whether or not to save on exit
   UserDriverApplication currentDriver; // driver application for user/search functionality
   String currentUsername; // the current user, either logging in or registering
   List<User> searchReturn; // the list of users that are returned by the search
@@ -68,17 +64,6 @@ public class Main extends Application {
   public void start(Stage primaryStage) {
     try { // create a new instance of the driver application
       currentDriver = new UserDriverApplication();
-      
-
-      Button exit = new Button("Save on exit"); 
-      Alert exitSaving = new Alert(AlertType.NONE); 
-      exit.setOnAction(toExit -> { 
-        // set alert type 
-        exitSaving.setAlertType(AlertType.CONFIRMATION); 
-
-        // show the dialog 
-        exitSaving.show(); 
-      }); 
       
       // logout button functionality
       logout.setOnAction(toLogout -> {
@@ -127,6 +112,7 @@ public class Main extends Application {
   private Map<String, ArrayList<String>> createNewFacultyMap(){
     Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
     map.put(Config.USERNAME_FIELD, new ArrayList<String>());
+    map.put(Config.PROFILE_TYPE_FIELD, new ArrayList<String>());
     map.put(Config.NAME_FIELD, new ArrayList<String>());
     map.put(Config.OFFICELOCATION_FIELD, new ArrayList<String>());
     map.put(Config.COURSESTAUGHT_FILED, new ArrayList<String>());
@@ -193,29 +179,29 @@ public class Main extends Application {
         grid.add(userNameMoreThanOneWord, 1, 5);
       }
       else {
+    	  this.currentUsername = signUpTextField.getText();
     	  try {
         	  this.currentDriver.register(signUpTextField.getText());
+        	  if (userTypeStudent.isSelected()) {
+                  Scene studentSignUp = signupScreenStudent();
+                  primaryStage.setScene(studentSignUp);
+                }
+                  else {
+                    Scene facultySignUp = signupScreenFaculty();
+                    primaryStage.setScene(facultySignUp);
+                  }
           } catch (UserExists e) {
         	  grid.add(userNameTakenText, 1, 5);
           }
-          if (userTypeStudent.isSelected()) {
-            currentUsername = signUpTextField.getText();
-            Scene studentSignUp = signupScreenStudent();
-            primaryStage.setScene(studentSignUp);
-          }
-            else {
-              currentUsername = signUpTextField.getText();
-              Scene facultySignUp = signupScreenFaculty();
-              primaryStage.setScene(facultySignUp);
-            }
-          }
-      });
+      }
+    });
 
     // button functionality for logging in
     submit.setOnAction(toSearch -> {
       try { // try logging in the user with the username provided
         if(currentDriver.login(loginTextField.getText())) {
           // once logged in, display the search screen
+          this.currentUsername = loginTextField.getText();
           Scene search = search();
           primaryStage.setScene(search);
           primaryStage.show();
@@ -233,7 +219,6 @@ public class Main extends Application {
     BorderPane root = new BorderPane();
     root.setCenter(grid);
     root.setBottom(logout);
-    root.setRight(exit);
 
     Scene login = new Scene(root, 800, 600);
     login.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -258,37 +243,37 @@ public class Main extends Application {
       }
       map.get(Config.NAME_FIELD).addAll(Arrays.asList(nameArray));
       
-      String[] yearOfGradArray = userInput.get(2).getText().split(",");
+      String[] yearOfGradArray = userInput.get(1).getText().split(",");
       for (int curIndex=0;curIndex<yearOfGradArray.length;curIndex++) {
           yearOfGradArray[curIndex] = yearOfGradArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.YEAROFGRAD_FIELD).addAll(Arrays.asList(yearOfGradArray));
       
-      String[] majorArray = userInput.get(3).getText().split(",");
+      String[] majorArray = userInput.get(2).getText().split(",");
       for (int curIndex=0;curIndex<majorArray.length;curIndex++) {
           majorArray[curIndex] = majorArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.MAJORS_FIELD).addAll(Arrays.asList(majorArray));
       
-      String[] clubArray = userInput.get(4).getText().split(",");
+      String[] clubArray = userInput.get(3).getText().split(",");
       for (int curIndex=0;curIndex<clubArray.length;curIndex++) {
           clubArray[curIndex] = clubArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.CLUBS_FIELD).addAll(Arrays.asList(clubArray));
       
-      String[] scholarshipArray = userInput.get(5).getText().split(",");
+      String[] scholarshipArray = userInput.get(4).getText().split(",");
       for (int curIndex=0;curIndex<scholarshipArray.length;curIndex++) {
           scholarshipArray[curIndex] = scholarshipArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.SCHOLARSHIPS_FIELD).addAll(Arrays.asList(scholarshipArray));
       
-      String[] coursesArray = userInput.get(6).getText().split(",");
-      for (int curIndex=0;curIndex<userInput.get(6).getText().split(",").length;curIndex++) {
+      String[] coursesArray = userInput.get(5).getText().split(",");
+      for (int curIndex=0;curIndex<coursesArray.length;curIndex++) {
           coursesArray[curIndex] = coursesArray[curIndex].trim().toUpperCase();
       }
       map.get(Config.COURSES_FIELD).addAll(Arrays.asList(coursesArray));
       
-      String[] workExperienceArray = userInput.get(7).getText().split(",");
+      String[] workExperienceArray = userInput.get(6).getText().split(",");
       for (int curIndex=0;curIndex<workExperienceArray.length;curIndex++) {
           workExperienceArray[curIndex] = workExperienceArray[curIndex].trim().toLowerCase();
       }
@@ -303,7 +288,6 @@ public class Main extends Application {
   private Scene signupScreenStudent() {
       ArrayList<Text> fields = new ArrayList<Text>();
       fields.add(new Text("Name: "));
-      fields.add(new Text("Email: "));
       fields.add(new Text("Year of graduation: "));
       fields.add(new Text("Major: "));
       fields.add(new Text("Clubs: "));
@@ -312,7 +296,6 @@ public class Main extends Application {
       fields.add(new Text("Work Experience: "));
 
       TextField nameTextField = new TextField();
-      TextField emailTextField = new TextField(this.currentUsername);
       TextField yearOfGraduationTextField = new TextField();
       TextField majorTextField = new TextField();
       TextField clubsTextField = new TextField();
@@ -322,7 +305,6 @@ public class Main extends Application {
       ArrayList<TextField> signUpStudentTextFieldList = new ArrayList<TextField>() {
           {
               add(nameTextField);
-              add(emailTextField);
               add(yearOfGraduationTextField);
               add(majorTextField);
               add(clubsTextField);
@@ -345,7 +327,11 @@ public class Main extends Application {
       signup.setOnAction(toSearch -> {
           Map<String,ArrayList<String>> studentMap = this.createNewStudentMap();
           this.addStudentUserText(studentMap, signUpStudentTextFieldList);
-          //this.currentDriver.addUser(this.currentUsername, this.addStudentUserText(studentMap, signUpStudentTextFieldList));
+          try {
+        	  this.currentDriver.addUser(this.currentUsername, this.addStudentUserText(studentMap, signUpStudentTextFieldList));
+          } catch (UserExists e) {
+        	  ;
+          }
           Scene search = search();
           primaryStage.setScene(search);
           primaryStage.show();
@@ -379,19 +365,19 @@ public class Main extends Application {
       }
       map.get(Config.NAME_FIELD).addAll(Arrays.asList(nameArray));
       
-      String[] officeBuildingArray = userInput.get(2).getText().split(",");
+      String[] officeBuildingArray = userInput.get(1).getText().split(",");
       for (int curIndex=0;curIndex<officeBuildingArray.length;curIndex++) {
           officeBuildingArray[curIndex] = officeBuildingArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.OFFICELOCATION_FIELD).addAll(Arrays.asList(officeBuildingArray));
       
-      String[] classesTaughtArray = userInput.get(3).getText().split(",");
+      String[] classesTaughtArray = userInput.get(2).getText().split(",");
       for (int curIndex=0;curIndex<classesTaughtArray.length;curIndex++) {
           classesTaughtArray[curIndex] = classesTaughtArray[curIndex].trim().toLowerCase();
       }
       map.get(Config.COURSESTAUGHT_FILED).addAll(Arrays.asList(classesTaughtArray));
       
-      String[] officeHoursArray = userInput.get(4).getText().split(",");
+      String[] officeHoursArray = userInput.get(3).getText().split(",");
       for (int curIndex=0;curIndex<officeHoursArray.length;curIndex++) {
           officeHoursArray[curIndex] = officeHoursArray[curIndex].trim().toLowerCase();
       }
@@ -407,20 +393,17 @@ public class Main extends Application {
       ArrayList<Text> fields = new ArrayList<Text>();
       // gather all the features needed to gather information for the user
       fields.add(new Text("Name: "));
-      fields.add(new Text("Email: "));
       fields.add(new Text("Office building: "));
       fields.add(new Text("Classes taught: "));
       fields.add(new Text("Office Hours: "));
       
       TextField nameTextField = new TextField();
-      TextField emailGraduationTextField = new TextField();
       TextField officeBuildingTextField = new TextField();
       TextField classesTaughtTextField = new TextField();
       TextField officeHoursTextField = new TextField();
       ArrayList<TextField> signUpFacultyTextFieldList = new ArrayList<TextField>() {
           {
               add(nameTextField);
-              add(emailGraduationTextField);
               add(officeBuildingTextField);
               add(classesTaughtTextField);
               add(officeHoursTextField);
@@ -439,8 +422,12 @@ public class Main extends Application {
       // button functionality to go to the search screen and save the user
       signup.setOnAction(toSearch -> {
           Map<String, ArrayList<String>> facultyMap = this.createNewFacultyMap();
-          this.addFacultyUserText(facultyMap, signUpFacultyTextFieldList);
-        //this.currentDriver.addUser(this.currentUsername, this.addFacultyUserText(studentMap, signUpStudentTextFieldList));
+          try {
+        	  this.currentDriver.addUser(this.currentUsername, this.addFacultyUserText(facultyMap, signUpFacultyTextFieldList));
+          } catch(UserExists e) {
+        	  //This will never happen because if the user changes the username, there will be a textbox that pops up and asks the user to change the username
+        	  ;
+          }
           Scene search = search();
           primaryStage.setScene(search);
           primaryStage.show();
@@ -667,7 +654,6 @@ public class Main extends Application {
       
       Scene searchResults = searchResults();
       primaryStage.setScene(searchResults);
-      primaryStage.show();
     });
     
     Button editButton = new Button("Edit Profile");
@@ -675,6 +661,7 @@ public class Main extends Application {
     // goes to the edit user screen
     editButton.setOnAction(event->{
     	//Check for type of user
+    	System.out.println("TYPE: "+this.currentDriver.getType());
     	if (this.currentDriver.getType().equals("student")) {
     		System.out.println("Here! "+this.currentDriver.getType());
     		this.primaryStage.setScene(this.editStudentScene());
@@ -864,7 +851,18 @@ public class Main extends Application {
       recoItems.add("No recommended classes.");
       reco.setItems(recoItems);
     }
-    Text otherInfo2 = new Text("This search returned 5% of users.");
+    double totalUser = this.currentDriver.getTotalUser();
+    System.out.println("Total Users: "+totalUser);
+    double searchedUser = 0;
+    System.out.println("Returned Size: "+this.searchReturn.size());
+    try {
+    	searchedUser = this.searchReturn.size();
+    } catch (NullPointerException e) {
+    	;
+    }
+    double percentUser = searchedUser/totalUser*100;
+    percentUser = Math.round(percentUser);
+    Text otherInfo2 = new Text("This search returned "+percentUser+"% of users.");
     GridPane grid = new GridPane();
     grid.add(users, 0, 0);
     grid.add(toDisplay,1,1);
@@ -880,10 +878,18 @@ public class Main extends Application {
       primaryStage.show();
     });
     
+
+    Button saveUser = new Button("Save user to database"); // to be able to choose whether or not to save the user
+    saveUser.setOnAction(save -> {
+      currentDriver.addUserToJSON();
+    });
+    
+    HBox upperRight = new HBox();
+    upperRight.getChildren().addAll(searchAgain, saveUser);
     BorderPane borderPane = new BorderPane();
     borderPane.setCenter(grid);
     borderPane.setBottom(logout);
-    borderPane.setRight(searchAgain);
+    borderPane.setRight(upperRight);
 
     Scene searchResults = new Scene(borderPane, 800, 600);
     searchResults.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
