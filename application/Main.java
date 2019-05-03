@@ -602,12 +602,12 @@ public class Main extends Application {
       if (userTypeStudent.isSelected()) {
     	  Map<String,ArrayList<String>> studentSearchMap = this.createNewSearchStudentMap();
     	  this.addSearchStudentUserText(studentSearchMap, studentSearchTextFieldList, "student");
-    	  this.currentDriver.searchUser(studentSearchMap);
+    	  searchReturn = this.currentDriver.searchUser(studentSearchMap);
     	  
       } else {
     	  Map<String, ArrayList<String>> facultySearchMap = this.createNewSearchFacultyMap();
     	  this.addSearchFacultyUserText(facultySearchMap, facultySearchTextFieldList, "faculty");
-    	  this.currentDriver.searchUser(facultySearchMap);
+    	  searchReturn = this.currentDriver.searchUser(facultySearchMap);
       }
       
       Scene searchResults = searchResults();
