@@ -181,7 +181,7 @@ public class Main extends Application {
       else {
     	  this.currentUsername = signUpTextField.getText();
     	  try {
-        	  this.currentDriver.register(signUpTextField.getText());
+    		  this.currentDriver.register(this.currentUsername);
         	  if (userTypeStudent.isSelected()) {
                   Scene studentSignUp = signupScreenStudent();
                   primaryStage.setScene(studentSignUp);
@@ -328,7 +328,11 @@ public class Main extends Application {
           Map<String,ArrayList<String>> studentMap = this.createNewStudentMap();
           this.addStudentUserText(studentMap, signUpStudentTextFieldList);
           this.currentDriver.getUser().setType("student");
-          this.currentDriver.editUser(this.addStudentUserText(studentMap, signUpStudentTextFieldList));
+          try {
+        	  this.currentDriver.addUser(this.currentUsername, studentMap);
+          } catch(UserExists e) {
+        	  ;
+          }
           Scene search = search();
           primaryStage.setScene(search);
           primaryStage.show();
@@ -420,7 +424,11 @@ public class Main extends Application {
       signup.setOnAction(toSearch -> {
           Map<String, ArrayList<String>> facultyMap = this.createNewFacultyMap();
           this.currentDriver.getUser().setType("faculty");
-          this.currentDriver.editUser(this.addFacultyUserText(facultyMap, signUpFacultyTextFieldList));
+          try {
+        	  this.currentDriver.addUser(this.currentUsername, facultyMap);
+          } catch(UserExists e) {
+        	  ;
+          }
           Scene search = search();
           primaryStage.setScene(search);
           primaryStage.show();
