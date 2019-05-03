@@ -443,10 +443,11 @@ if(profileInfo != null) {
    */
   public void populateDatastructureWithUsers(String jsonFilePath)
     throws FileNotFoundException, IOException, ParseException, UserExists {
+    
+    long startTime = System.currentTimeMillis();
 
     this.totalUsers = 0;
     
-    long startTime = System.currentTimeMillis();
 
     if (database == null) {
       database = new HashMap<String, Category>();
@@ -607,10 +608,7 @@ if(profileInfo != null) {
 
         }
 
-        long endTime = System.currentTimeMillis(); 
-        long timeElapsed = endTime - startTime;
-        System.out.println("Execution time for populateDatastructure(): "+ timeElapsed + "milliseconds");
-        
+       
         // System.out.println("DONE!");
 
 
@@ -620,6 +618,10 @@ if(profileInfo != null) {
         throw new IOException();
       } catch (ParseException e) {
         throw new ParseException(0);
+      } finally {
+        long endTime = System.currentTimeMillis(); 
+        long timeElapsed = endTime - startTime;
+        System.out.println("Execution time for populateDatastructure(): "+ timeElapsed + "milliseconds");
       }
     }
 
@@ -945,14 +947,14 @@ if(profileInfo != null) {
    * @return true, if successful
    */
   public boolean editUser(Map<String, ArrayList<String>> profileInfo) {
-
+    long startTime = System.currentTimeMillis();
 
     if (username == this.username || this.isAdmin) {
       // if own profile or if the user is an admin
 
       // List<User> foundUsers = searchUser(profileInfo);
       // foundUsers.contains(o)
-      long startTime = System.currentTimeMillis();
+    
       
       Category userCategory = this.database.get(USERS_CATEGORY);
 
@@ -1042,6 +1044,9 @@ if(profileInfo != null) {
   }
   
   public List<String> computation(Map<String, ArrayList<String>> profileInfo){
+    
+    long startTime = System.currentTimeMillis();
+    
 	  List<User>searchlist = new ArrayList<User>();
 	    // TODO: find the complexity analysis for this algo
 		  if(profileInfo != null) {
@@ -1084,6 +1089,14 @@ if(profileInfo != null) {
 			         
 			     }
 		  }
+		  
+		  long endTime = System.currentTimeMillis(); 
+	        long timeElapsed = endTime - startTime;
+	        System.out.println("Execution time for computation(): "+ timeElapsed + " milliseconds");
+	        
+	        
+	        
+      return listOfUsers;
   }
 
 
@@ -1124,7 +1137,9 @@ if(profileInfo != null) {
   public User getUser() {
     
     Category userCategory = this.database.get(USERS_CATEGORY);
-    User thisUser = userCategory.get(username);
+    User thisUser = userCategory.get(this.username);
+    
+    System.out.println("     getUser: Username: " + this.username);
     
     return thisUser;
   }
