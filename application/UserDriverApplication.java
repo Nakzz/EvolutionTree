@@ -661,7 +661,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> certificateSet = new HashSet<User>();
-		         if(certificatesField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
+		         if(certificatesField.size() > 0 && !certificatesField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < certificatesField.size(); count++) {
 		        		 if(this.database.containsKey(certificatesField.get(count))) {
 		        			 List<User> list = this.database.get(certificatesField.get(count)).getAll();	
@@ -673,7 +673,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> clubSet = new HashSet<User>();
-		         if(clubsField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
+		         if(clubsField.size() > 0 && !clubsField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < clubsField.size(); count++) {
 		        		 if(this.database.containsKey(clubsField.get(count))) {
 		        			 List<User> list = this.database.get(clubsField.get(count)).getAll();	
@@ -685,7 +685,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> scholarshipSet = new HashSet<User>();
-		         if(scholarshipField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
+		         if(scholarshipField.size() > 0 && !scholarshipField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < scholarshipField.size(); count++) {
 		        		 if(this.database.containsKey(scholarshipField.get(count))) {
 		        			 List<User> list = this.database.get(scholarshipField.get(count)).getAll();	
@@ -697,7 +697,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> courseSet = new HashSet<User>();
-		         if(coursesField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
+		         if(coursesField.size() > 0 && !coursesField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < coursesField.size(); count++) {
 		        		 if(this.database.containsKey(coursesField.get(count))) {
 		        			 List<User> list = this.database.get(coursesField.get(count)).getAll();	
@@ -709,7 +709,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> workSet = new HashSet<User>();
-		         if(workField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
+		         if(workField.size() > 0 && !workField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < workField.size(); count++) {
 		        		 if(this.database.containsKey(workField.get(count))) {
 		        			 List<User> list = this.database.get(workField.get(count)).getAll();	
@@ -721,7 +721,7 @@ if(profileInfo != null) {
 		         }
 		         
 		         Set<User> yearOfGradSet = new HashSet<User>();
-		         if(yearOfGradField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
+		         if(yearOfGradField.size() > 0 && !yearOfGradField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < yearOfGradField.size(); count++) {
 		        		 if(this.database.containsKey(yearOfGradField.get(count))) {
 		        			 List<User> list = this.database.get(yearOfGradField.get(count)).getAll();	
@@ -831,7 +831,7 @@ if(profileInfo != null) {
 	             ArrayList<String> officeLocationField = profileInfo.get(Config.OFFICELOCATION_FIELD);
 	            
 	             Set<User> coursesTaughtSet = new HashSet<User>();
-		         if(coursesTaughtField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
+		         if(coursesTaughtField.size() > 0 && !coursesTaughtField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < coursesTaughtField.size(); count++) {
 		        		 if(this.database.containsKey(coursesTaughtField.get(count))) {
 		        			 List<User> list = this.database.get(coursesTaughtField.get(count)).getAll();	
@@ -843,7 +843,7 @@ if(profileInfo != null) {
 		         }
 		         
 	             Set<User> officeHourSet = new HashSet<User>();
-		         if(officeHoursField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
+		         if(officeHoursField.size() > 0 && !officeHoursField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < officeHoursField.size(); count++) {
 		        		 if(this.database.containsKey(officeHoursField.get(count))) {
 		        			 List<User> list = this.database.get(officeHoursField.get(count)).getAll();	
@@ -855,7 +855,7 @@ if(profileInfo != null) {
 		         }
 		         
 	             Set<User> officeLocationSet = new HashSet<User>();
-		         if(officeLocationField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
+		         if(officeLocationField.size() > 0 && !officeLocationField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < officeLocationField.size(); count++) {
 		        		 if(this.database.containsKey(officeLocationField.get(count))) {
 		        			 List<User> list = this.database.get(officeLocationField.get(count)).getAll();	
