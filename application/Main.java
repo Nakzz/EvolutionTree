@@ -20,6 +20,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 package application;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -880,7 +881,11 @@ public class Main extends Application {
 
     Button saveUser = new Button("Save user to database"); // to be able to choose whether or not to save the user
     saveUser.setOnAction(save -> {
-      currentDriver.addUserToJSON();
+      try {
+        currentDriver.addUserToJSON();
+      } catch (FileNotFoundException e) {
+        
+      }
     });
     
     HBox upperRight = new HBox();
