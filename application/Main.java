@@ -178,18 +178,17 @@ public class Main extends Application {
         grid.add(userNameMoreThanOneWord, 1, 5);
       }
       else {
+    	  this.currentUsername = signUpTextField.getText();
     	  try {
         	  this.currentDriver.register(signUpTextField.getText());
           } catch (UserExists e) {
         	  grid.add(userNameTakenText, 1, 5);
           }
           if (userTypeStudent.isSelected()) {
-            currentUsername = signUpTextField.getText();
             Scene studentSignUp = signupScreenStudent();
             primaryStage.setScene(studentSignUp);
           }
             else {
-              currentUsername = signUpTextField.getText();
               Scene facultySignUp = signupScreenFaculty();
               primaryStage.setScene(facultySignUp);
             }
@@ -287,7 +286,6 @@ public class Main extends Application {
   private Scene signupScreenStudent() {
       ArrayList<Text> fields = new ArrayList<Text>();
       fields.add(new Text("Name: "));
-      fields.add(new Text("Email: "));
       fields.add(new Text("Year of graduation: "));
       fields.add(new Text("Major: "));
       fields.add(new Text("Clubs: "));
@@ -296,7 +294,6 @@ public class Main extends Application {
       fields.add(new Text("Work Experience: "));
 
       TextField nameTextField = new TextField();
-      TextField emailTextField = new TextField(this.currentUsername);
       TextField yearOfGraduationTextField = new TextField();
       TextField majorTextField = new TextField();
       TextField clubsTextField = new TextField();
@@ -306,7 +303,6 @@ public class Main extends Application {
       ArrayList<TextField> signUpStudentTextFieldList = new ArrayList<TextField>() {
           {
               add(nameTextField);
-              add(emailTextField);
               add(yearOfGraduationTextField);
               add(majorTextField);
               add(clubsTextField);
@@ -329,7 +325,11 @@ public class Main extends Application {
       signup.setOnAction(toSearch -> {
           Map<String,ArrayList<String>> studentMap = this.createNewStudentMap();
           this.addStudentUserText(studentMap, signUpStudentTextFieldList);
-          //this.currentDriver.addUser(this.currentUsername, this.addStudentUserText(studentMap, signUpStudentTextFieldList));
+          try {
+        	  this.currentDriver.addUser(this.currentUsername, this.addStudentUserText(studentMap, signUpStudentTextFieldList));
+          } catch (UserExists e) {
+        	  ;
+          }
           Scene search = search();
           primaryStage.setScene(search);
           primaryStage.show();
@@ -391,20 +391,17 @@ public class Main extends Application {
       ArrayList<Text> fields = new ArrayList<Text>();
       // gather all the features needed to gather information for the user
       fields.add(new Text("Name: "));
-      fields.add(new Text("Email: "));
       fields.add(new Text("Office building: "));
       fields.add(new Text("Classes taught: "));
       fields.add(new Text("Office Hours: "));
       
       TextField nameTextField = new TextField();
-      TextField emailGraduationTextField = new TextField();
       TextField officeBuildingTextField = new TextField();
       TextField classesTaughtTextField = new TextField();
       TextField officeHoursTextField = new TextField();
       ArrayList<TextField> signUpFacultyTextFieldList = new ArrayList<TextField>() {
           {
               add(nameTextField);
-              add(emailGraduationTextField);
               add(officeBuildingTextField);
               add(classesTaughtTextField);
               add(officeHoursTextField);
@@ -423,8 +420,12 @@ public class Main extends Application {
       // button functionality to go to the search screen and save the user
       signup.setOnAction(toSearch -> {
           Map<String, ArrayList<String>> facultyMap = this.createNewFacultyMap();
-          this.addFacultyUserText(facultyMap, signUpFacultyTextFieldList);
-        //this.currentDriver.addUser(this.currentUsername, this.addFacultyUserText(studentMap, signUpStudentTextFieldList));
+          try {
+        	  this.currentDriver.addUser(this.currentUsername, this.addFacultyUserText(facultyMap, signUpFacultyTextFieldList));
+          } catch(UserExists e) {
+        	  //This will never happen because if the user changes the username, there will be a textbox that pops up and asks the user to change the username
+        	  ;
+          }
           Scene search = search();
           primaryStage.setScene(search);
           primaryStage.show();
