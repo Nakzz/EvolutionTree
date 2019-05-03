@@ -908,7 +908,7 @@ if(profileInfo != null) {
     return false; // either you are not an admin, or the same user that you are trying to edit for;
   }
   
-  //computation method
+  //computation method returns the top class that the other users are also taking
   public List<String> computation(Map<String, ArrayList<String>> profileInfo){
 	  List<User>searchlist = new ArrayList<User>();
 	    // TODO: find the complexity analysis for this algo
