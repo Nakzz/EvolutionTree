@@ -28,15 +28,28 @@ import java.lang.reflect.Array;
 public class UserDriverApplication {
 
 
+  /** The is logged. */
   private boolean isLogged = false; // if the user is logged in
+  
+  /** The username. */
   private String username = null; // the username of the user
+  
+  /** The is admin. */
   private boolean isAdmin = false; // if the user has admin priv
+  
+  /** The is populated. */
   private boolean isPopulated = false;
 
+  /** The database. */
   private Map<String, Category> database = null;
+  
+  /** The total users. */
   private int totalUsers;
+  
+  /** The list of users. */
   private List<String> listOfUsers = null; // TODO: maybe not going to need
 
+  /** The users category. */
   private final String USERS_CATEGORY = "USERS_CATEGORY";
 
 
@@ -45,10 +58,6 @@ public class UserDriverApplication {
    * proper fields. The DEV must register the user manually using register(username) method.
    * 
    * After registering the user, use editUser(username, profileInfo) to add information
-   *
-   * @param username the username
-   * @param type the type
-   * @throws UserExists the user exists
    */
   public UserDriverApplication() {
 
@@ -430,7 +439,7 @@ if(profileInfo != null) {
    * @throws FileNotFoundException the file not found exception
    * @throws IOException Signals that an I/O exception has occurred.
    * @throws ParseException the parse exception
-   * @throws UserExists
+   * @throws UserExists the user exists
    */
   public void populateDatastructureWithUsers(String jsonFilePath)
     throws FileNotFoundException, IOException, ParseException, UserExists {
@@ -617,7 +626,6 @@ if(profileInfo != null) {
    *
    * @param profileInfo the profile info
    * @return the list
-   * @throws InvalidUsername the invalid username
    */
   public List<User> searchUser(Map<String, ArrayList<String>> profileInfo) {
 	  List<User>searchlist = new ArrayList<User>();
@@ -641,7 +649,7 @@ if(profileInfo != null) {
 		         ArrayList<String> yearOfGradField = profileInfo.get(Config.YEAROFGRAD_FIELD);
 		         
 		         Set<User> majorSet = new HashSet<User>();
-		         if(majorField.size() > 0) {
+		         if(majorField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < majorField.size(); count++) {
 		        		 if(this.database.containsKey(majorField.get(count))) {
 		        			 List<User> list = this.database.get(majorField.get(count)).getAll();	
@@ -812,10 +820,8 @@ if(profileInfo != null) {
   /**
    * Edits the user's information if own profile or if the user is an admin.
    *
-   * @param username the username
    * @param profileInfo the profile info
    * @return true, if successful
-   * @throws InvalidUsername the invalid username
    */
   public boolean editUser(Map<String, ArrayList<String>> profileInfo) {
 
@@ -908,7 +914,17 @@ if(profileInfo != null) {
     return false; // either you are not an admin, or the same user that you are trying to edit for;
   }
   
+<<<<<<< HEAD
   //computation method returns the top class that the other users are also taking
+=======
+  /**
+   * Computation.
+   *
+   * @param profileInfo the profile info
+   * @return the list
+   */
+  //computation method
+>>>>>>> 1ddddd16e4de00ca4e7efc30a82ca40cb907bfcd
   public List<String> computation(Map<String, ArrayList<String>> profileInfo){
 	  List<User>searchlist = new ArrayList<User>();
 	    // TODO: find the complexity analysis for this algo
@@ -983,7 +999,41 @@ if(profileInfo != null) {
   public String getUsername() {
     return this.username;
   }
+  
+  /**
+   * Gets the user.
+   *
+   * @return the user
+   */
+  public User getUser() {
+    
+    Category userCategory = this.database.get(USERS_CATEGORY);
+    User thisUser = userCategory.get(username);
+    
+    return thisUser;
+  }
 
+  
+  /**
+   * Gets the type of the current user
+   *
+   * @return the type
+   */
+  public String getType() {
+    if(getUser() instanceof Student)
+    return "student";
+    
+    if(getUser() instanceof Faculty)
+    return "faculty"; 
+    
+    return "";
+  }
+  
+  /**
+   * Gets the total user.
+   *
+   * @return the total user
+   */
   public int getTotalUser() {
     return this.totalUsers;
   }
