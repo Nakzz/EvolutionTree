@@ -10,6 +10,7 @@ package application;
 public class User {
 	private String name;
 	private String email;
+	private String type;
 	private String password;
 	private boolean isAdmin;
 	private boolean isPublic;
@@ -86,6 +87,10 @@ public class User {
 	//@param boolean isPublic
 	public void setPublic(boolean isPublic) {
 		this.isPublic = isPublic;
+	}
+	
+	public void setType(String t) {
+		type = t;
 	}
 	
 }

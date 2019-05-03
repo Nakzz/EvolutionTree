@@ -916,7 +916,7 @@ if(profileInfo != null) {
 			         }
 			         
 			         for(int count = 0; count < searchlist.size(); count++) {
-			        	 if(searchlist.get(count) instanceof Faculty) {
+			        	 if(getType(searchlist.get(count)).equals("faculty")) {
 			        		 searchlist.remove(count);
 			        	 }
 			         }
