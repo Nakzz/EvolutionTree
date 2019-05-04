@@ -42,6 +42,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.lang.reflect.Array;
+import java.nio.file.Files;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -75,6 +76,7 @@ public class UserDriverApplication {
   /** The users category. */
   private final String USERS_CATEGORY = "USERS_CATEGORY";
   
+  /** The json location. */
   private final String JSON_LOCATION = Config.JSON_LOCATION;
 //  private final String JSON_LOCATION = "./application/writerTest.json";
 
@@ -265,6 +267,8 @@ if(profileInfo != null) {
          this.listOfUsers.add(username);
          //FIXME: maybe in the future, do something that would iterate instead of hardcoding  
 // if the fields sting. length is 0, create a new category
+         
+         // search in every category 
          if(majorField.size() != 0) {
         	 for(int count = 0; count < majorField.size(); count++) {
         		 if(this.database.containsKey(majorField.get(count))) {
@@ -458,6 +462,11 @@ if(profileInfo != null) {
     return true; // if user was not added, otherwise should return true
   }
 
+  /**
+   * Adds the user to JSON.
+   *
+   * @throws FileNotFoundException the file not found exception
+   */
   public void addUserToJSON() throws FileNotFoundException{
     File file = new File(JSON_LOCATION);
     if (!file.exists()) {
@@ -476,24 +485,62 @@ if(profileInfo != null) {
         
         User thisUser = getUser();
         
-        newUser.put(Config.NAME_FIELD, thisUser.getName());
-        newUser.put(Config.USERNAME_FIELD, thisUser.getEmail());
-        newUser.put(Config.PROFILE_TYPE_FIELD, thisUser.getType());
-        newUser.put(Config.IS_ADMIN_FIELD, String.valueOf(thisUser.getAdmin()));    // making sure no credenial mismatch
-        newUser.put(Config.IS_PUBLIC_FIELD, String.valueOf(thisUser.isPublic()));
-           
+        JSONArray name= new JSONArray(); 
+        name.add( thisUser.getName());
+        
+        JSONArray uname= new JSONArray();
+        uname.add(thisUser.getEmail());
+        
+        JSONArray t= new JSONArray();
+        t.add(thisUser.getType());
+        
+        JSONArray admin= new JSONArray();
+        admin.add(String.valueOf(thisUser.getAdmin()));
+        
+        JSONArray isPub = new JSONArray();
+        isPub.add(String.valueOf(thisUser.isPublic()));
+        
+        
+        newUser.put(Config.NAME_FIELD, name);
+        newUser.put(Config.USERNAME_FIELD, uname);
+        newUser.put(Config.PROFILE_TYPE_FIELD, t );
+        newUser.put(Config.IS_ADMIN_FIELD, admin );    // making sure no credenial mismatch
+        newUser.put(Config.IS_PUBLIC_FIELD, isPub);
+//           
 switch (thisUser.getType()) {
   case "student":
     
     Student studentUser = (Student) thisUser;
     
-    newUser.put(Config.YEAROFGRAD_FIELD, (studentUser.getYearOfGrad()));
-    newUser.put(Config.MAJORS_FIELD, arraylistToString(studentUser.getMajor()));
-    newUser.put(Config.CERTIFICATES_FIELD, arraylistToString(studentUser.getCertificate()));
-    newUser.put(Config.CLUBS_FIELD, arraylistToString(studentUser.getClubs()));
-    newUser.put(Config.SCHOLARSHIPS_FIELD, arraylistToString(studentUser.getScholership()));
-    newUser.put(Config.COURSES_FIELD, arraylistToString(studentUser.getCourses()));
-    newUser.put(Config.WORK_EXPERIENCES_FIELD, arraylistToString(studentUser.getWorkExperience()));
+    JSONArray YEAROFGRAD = new JSONArray();
+    YEAROFGRAD.add(String.valueOf(studentUser.getYearOfGrad()));
+    
+    JSONArray getMajor = new JSONArray();
+    getMajor.add(arraylistToString(studentUser.getMajor()));
+    
+    JSONArray getCertificate = new JSONArray();
+    getCertificate.add(arraylistToString(studentUser.getCertificate()));
+    
+    JSONArray getClubs = new JSONArray();
+    getClubs.add(arraylistToString(studentUser.getClubs()));
+    
+    JSONArray getScholership = new JSONArray();
+    getScholership.add(arraylistToString(studentUser.getScholership()));
+    
+    JSONArray getCourses = new JSONArray();
+    getCourses.add(arraylistToString(studentUser.getCourses()));
+    
+    JSONArray getWorkExperience = new JSONArray();
+    getWorkExperience.add(arraylistToString(studentUser.getWorkExperience()));
+    
+    
+    newUser.put(Config.YEAROFGRAD_FIELD, YEAROFGRAD);
+    newUser.put(Config.MAJORS_FIELD, getMajor);
+    newUser.put(Config.CERTIFICATES_FIELD, getCertificate);
+    newUser.put(Config.CLUBS_FIELD, getClubs);
+    newUser.put(Config.SCHOLARSHIPS_FIELD, getScholership);
+    newUser.put(Config.COURSES_FIELD, getCourses);
+    newUser.put(Config.WORK_EXPERIENCES_FIELD, getWorkExperience);
     
     
     
@@ -503,11 +550,20 @@ switch (thisUser.getType()) {
     
     Faculty facultyUser = (Faculty) thisUser;
     
-    newUser.put(Config.COURSESTAUGHT_FILED, (facultyUser.getCoursesTaught()));
-    newUser.put(Config.OFFICEHOURS_FIELD, arraylistToString(facultyUser.getOfficeHours()));
-    newUser.put(Config.OFFICELOCATION_FIELD, arraylistToString(facultyUser.getOfficeLocation()));
- 
+    JSONArray getCoursesTaught = new JSONArray();
+    getCoursesTaught.add(arraylistToString(facultyUser.getCoursesTaught()));
     
+    JSONArray getOfficeHours = new JSONArray();
+    getOfficeHours.add(arraylistToString(facultyUser.getOfficeHours()));
+    
+    JSONArray getOfficeLocation = new JSONArray();
+    getOfficeLocation.add(arraylistToString(facultyUser.getOfficeLocation()));
+    
+    newUser.put(Config.COURSESTAUGHT_FILED, getCoursesTaught);
+    newUser.put(Config.OFFICEHOURS_FIELD, getOfficeHours);
+    newUser.put(Config.OFFICELOCATION_FIELD, getOfficeLocation);
+// 
+//    
     break;
 
   default:
@@ -515,23 +571,22 @@ switch (thisUser.getType()) {
     break;
 }
   
+  users.add(newUser);
+  
+  JSONObject obj2 = new JSONObject();
+  obj2.put("users", users);
 
-        StringWriter out = new StringWriter();
-        newUser.writeJSONString(out);
-        String jsonText = out.toString();
-        System.out.println(jsonText);
+//  Files.write(JSON_LOCATION, users.toJSONString().getBytes());
+  
 
-        users.add(newUser);
-        jsonObject.put("users", users);
-        FileWriter fileToWrite = new FileWriter(JSON_LOCATION, false);
-        
-        try {
-          fileToWrite.write(jsonObject.toJSONString());
-      } catch (IOException e) {
-          e.printStackTrace();
-      }
-      fileToWrite.flush();
-      fileToWrite.close();
+  try (FileWriter fileWriter = new FileWriter(JSON_LOCATION)) {
+    
+    fileWriter.write(obj2.toJSONString());
+    fileWriter.flush();
+
+} catch (IOException e) {
+    e.printStackTrace();
+}
 
         
       } catch (IOException e) {
@@ -546,6 +601,12 @@ switch (thisUser.getType()) {
     }
   }
   
+  /**
+   * Arraylist to string.
+   *
+   * @param list the list
+   * @return the string
+   */
   private String arraylistToString (ArrayList<String> list) {
     
     String str = list.toString();
@@ -1244,6 +1305,12 @@ switch (thisUser.getType()) {
     return false; // either you are not an admin, or the same user that you are trying to edit for;
   }
   
+  /**
+   * Computation.
+   *
+   * @param profileInfo the profile info
+   * @return the list
+   */
   public List<String> computation(Map<String, ArrayList<String>> profileInfo){
     
     long startTime = System.currentTimeMillis();
@@ -1347,7 +1414,7 @@ switch (thisUser.getType()) {
 
   
   /**
-   * Gets the type of the current user
+   * Gets the type of the current user.
    *
    * @return the type
    */
