@@ -207,7 +207,7 @@ public class Main extends Application {
           primaryStage.show();
         }
         else
-          System.out.println("currentDriver.login returned false, which shouldn't happen");
+          ;
       } // if the user is not registered then display the following message 
       catch (InvalidUsername e) {
         grid.add(new Label("Invalid Username. Please sign up or try again."), 1, 0);
