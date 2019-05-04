@@ -778,6 +778,7 @@ switch (thisUser.getType()) {
 		         ArrayList<String> workField = profileInfo.get(Config.WORK_EXPERIENCES_FIELD);
 		         ArrayList<String> yearOfGradField = profileInfo.get(Config.YEAROFGRAD_FIELD);
 		         
+		         //creates a set of all Users in the specified field
 		         Set<User> majorSet = new HashSet<User>();
 		         if(majorField.size() > 0 && !majorField.get(0).equalsIgnoreCase("")) {   //if string was empty, it gave nullPointer
 		        	 for(int count = 0; count < majorField.size(); count++) {
@@ -791,8 +792,6 @@ switch (thisUser.getType()) {
 		         }
 		         
 		         Set<User> certificateSet = new HashSet<User>();
-
-
 		         if(certificatesField.size() > 0 && !certificatesField.get(0).equalsIgnoreCase("")) { 
 		        	 for(int count = 0; count < certificatesField.size(); count++) {
 		        		 if(this.database.containsKey(certificatesField.get(count))) {
@@ -864,6 +863,9 @@ switch (thisUser.getType()) {
 		        	 }
 		         }
 		         
+		         
+		         //find the first set that doesn't have a size of 0, and iterates through all other sets
+		         //that aren't empty and gets the intersection
 		         if(majorSet.size() != 0) {
 		        	 if(clubSet.size() != 0) {
 		        		 majorSet.retainAll(clubSet);
@@ -884,7 +886,7 @@ switch (thisUser.getType()) {
 		        	 	majorSet.retainAll(yearOfGradSet);
 		        	 }
 		        	 
-			         for(User u : majorSet) {
+			         for(User u : majorSet) { //adds all the Users to the list after sets are compared
 			        	 searchlist.add(u);
 			         }
 		         }
@@ -1044,10 +1046,13 @@ switch (thisUser.getType()) {
 		         
 		         break;
 		       case("faculty"):
+		    	   
+		    	   //gets ArrayLists of the profileInfo based on their specified field
 		         ArrayList<String> coursesTaughtField = profileInfo.get(Config.COURSESTAUGHT_FILED);
 	             ArrayList<String> officeHoursField = profileInfo.get(Config.OFFICEHOURS_FIELD);
 	             ArrayList<String> officeLocationField = profileInfo.get(Config.OFFICELOCATION_FIELD);
 	            
+	             //@see top of method. Same process is done but for the faculty members
 	             Set<User> coursesTaughtSet = new HashSet<User>();
 		         if(coursesTaughtField.size() > 0 && !coursesTaughtField.get(0).equalsIgnoreCase("")) {
 		        	 for(int count = 0; count < coursesTaughtField.size(); count++) {
@@ -1122,30 +1127,15 @@ switch (thisUser.getType()) {
 	  }
 		     
   }
-    // iterate through all the profileInfo fields;
-    // check if the field exists
-    // create set of all the fields
-
-
-    // find the field with least load factor
-    // search for the users in field
-    // add to a list
-
-    // if list of users doesn't contain other fields listed in the profileInfo, remove the user from the
-    // list
-    // and if user show if public
 
 		     
 		 long endTime = System.currentTimeMillis(); 
-		 long timeElapsed = endTime - startTime;
+		 long timeElapsed = endTime - startTime;  //finds time elapsed (hidden from user)
 		 System.out.println("Execution time for searchUser(): "+ timeElapsed + "milliseconds");
 		 
-		     
-
-	  System.out.print(searchlist.size());
 
 	if(searchlist.size() > 0) {
-		return searchlist;
+		return searchlist; //returns list
 	} 
 	
     return null; //no users found during the search
