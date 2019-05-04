@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
 // Title:           Final Project: EvolutionTree
-// Due Date:        Milestone 1: 4/25/2019 10pm
-//                  Milestone 2: 5/2/2019 10pm
+// Due Date:        Milestone 2: 4/25/2019 10pm
+//                  Milestone 3: 5/3/2019 11:59pm
 //                  
 // Course:          CS400, Spring 2018, Lecture 002
 //
@@ -181,7 +181,7 @@ public class Main extends Application {
       else {
     	  this.currentUsername = signUpTextField.getText();
     	  try {
-        	  this.currentDriver.register(signUpTextField.getText());
+    		  this.currentDriver.register(this.currentUsername);
         	  if (userTypeStudent.isSelected()) {
                   Scene studentSignUp = signupScreenStudent();
                   primaryStage.setScene(studentSignUp);
@@ -327,8 +327,11 @@ public class Main extends Application {
       signup.setOnAction(toSearch -> {
           Map<String,ArrayList<String>> studentMap = this.createNewStudentMap();
           this.addStudentUserText(studentMap, signUpStudentTextFieldList);
-          this.currentDriver.getUser().setType("student");
-          this.currentDriver.editUser(this.addStudentUserText(studentMap, signUpStudentTextFieldList));
+          try {
+        	  this.currentDriver.addUser(this.currentUsername, studentMap);
+          } catch(UserExists e) {
+        	  ;
+          }
           Scene search = search();
           primaryStage.setScene(search);
           primaryStage.show();
@@ -406,7 +409,6 @@ public class Main extends Application {
               add(officeHoursTextField);
           }
       };
-
       // add to a grid
       GridPane grid = new GridPane();
       for (int i = 0; i < fields.size(); i++) {
@@ -419,8 +421,11 @@ public class Main extends Application {
       // button functionality to go to the search screen and save the user
       signup.setOnAction(toSearch -> {
           Map<String, ArrayList<String>> facultyMap = this.createNewFacultyMap();
-          this.currentDriver.getUser().setType("faculty");
-          this.currentDriver.editUser(this.addFacultyUserText(facultyMap, signUpFacultyTextFieldList));
+          try {
+        	  this.currentDriver.addUser(this.currentUsername, this.addFacultyUserText(facultyMap, signUpFacultyTextFieldList));
+          } catch(UserExists e) {
+        	  ;
+          }
           Scene search = search();
           primaryStage.setScene(search);
           primaryStage.show();
@@ -654,13 +659,10 @@ public class Main extends Application {
     // goes to the edit user screen
     editButton.setOnAction(event->{
     	//Check for type of user
-    	System.out.println("TYPE: "+this.currentDriver.getType());
     	if (this.currentDriver.getType().equals("student")) {
-    		System.out.println("Here! "+this.currentDriver.getType());
     		this.primaryStage.setScene(this.editStudentScene());
     	}
     	else {
-    		System.out.println("HERE: "+this.currentDriver.getType());
     		this.primaryStage.setScene(this.editFacultyScene());
     	}
     });
@@ -845,9 +847,7 @@ public class Main extends Application {
       reco.setItems(recoItems);
     }
     double totalUser = this.currentDriver.getTotalUser();
-    System.out.println("Total Users: "+totalUser);
     double searchedUser = 0;
-    System.out.println("Returned Size: "+this.searchReturn.size());
     try {
     	searchedUser = this.searchReturn.size();
     } catch (NullPointerException e) {
