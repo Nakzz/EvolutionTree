@@ -327,7 +327,6 @@ public class Main extends Application {
       signup.setOnAction(toSearch -> {
           Map<String,ArrayList<String>> studentMap = this.createNewStudentMap();
           this.addStudentUserText(studentMap, signUpStudentTextFieldList);
-          this.currentDriver.getUser().setType("student");
           try {
         	  this.currentDriver.addUser(this.currentUsername, studentMap);
           } catch(UserExists e) {
@@ -410,7 +409,6 @@ public class Main extends Application {
               add(officeHoursTextField);
           }
       };
-
       // add to a grid
       GridPane grid = new GridPane();
       for (int i = 0; i < fields.size(); i++) {
@@ -423,9 +421,8 @@ public class Main extends Application {
       // button functionality to go to the search screen and save the user
       signup.setOnAction(toSearch -> {
           Map<String, ArrayList<String>> facultyMap = this.createNewFacultyMap();
-          this.currentDriver.getUser().setType("faculty");
           try {
-        	  this.currentDriver.addUser(this.currentUsername, facultyMap);
+        	  this.currentDriver.addUser(this.currentUsername, this.addFacultyUserText(facultyMap, signUpFacultyTextFieldList));
           } catch(UserExists e) {
         	  ;
           }
@@ -662,13 +659,10 @@ public class Main extends Application {
     // goes to the edit user screen
     editButton.setOnAction(event->{
     	//Check for type of user
-    	System.out.println("TYPE: "+this.currentDriver.getType());
     	if (this.currentDriver.getType().equals("student")) {
-    		System.out.println("Here! "+this.currentDriver.getType());
     		this.primaryStage.setScene(this.editStudentScene());
     	}
     	else {
-    		System.out.println("HERE: "+this.currentDriver.getType());
     		this.primaryStage.setScene(this.editFacultyScene());
     	}
     });
