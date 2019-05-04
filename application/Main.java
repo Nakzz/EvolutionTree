@@ -847,9 +847,7 @@ public class Main extends Application {
       reco.setItems(recoItems);
     }
     double totalUser = this.currentDriver.getTotalUser();
-    System.out.println("Total Users: "+totalUser);
     double searchedUser = 0;
-    System.out.println("Returned Size: "+this.searchReturn.size());
     try {
     	searchedUser = this.searchReturn.size();
     } catch (NullPointerException e) {
