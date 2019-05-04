@@ -199,15 +199,12 @@ public class Main extends Application {
     // button functionality for logging in
     submit.setOnAction(toSearch -> {
       try { // try logging in the user with the username provided
-        if(currentDriver.login(loginTextField.getText())) {
+        this.currentDriver.login(loginTextField.getText());
           // once logged in, display the search screen
           this.currentUsername = loginTextField.getText();
           Scene search = search();
           primaryStage.setScene(search);
           primaryStage.show();
-        }
-        else
-          ;
       } // if the user is not registered then display the following message 
       catch (InvalidUsername e) {
         grid.add(new Label("Invalid Username. Please sign up or try again."), 1, 0);
@@ -284,6 +281,8 @@ public class Main extends Application {
 
   /**
    * Create Sign-up scene for students
+   * 
+   * Adds the new user's information to the database
    */
   private Scene signupScreenStudent() {
       ArrayList<Text> fields = new ArrayList<Text>();
@@ -561,6 +560,7 @@ public class Main extends Application {
   
   /**
    * Create search screen
+   *
    */
   private Scene search() {
     // radio button for which type of user to search for
@@ -762,7 +762,7 @@ public class Main extends Application {
   /**
    * a screen to edit the faculty user profile, similar to the add faculty user screen
    * but is prefilled with the already choosen options
-   * @return the scene to displa
+   * @return the scene to display
    */
   private Scene editFacultyScene() {
 	  ArrayList<Text> fields = new ArrayList<Text>();
@@ -818,6 +818,8 @@ public class Main extends Application {
   
   /**
    * search results screen
+   * 
+   * Contains the search results of from the search screen and the percentage of users that have the results compared to the total number of users.
    */
   private Scene searchResults() {
     Text users = new Text("Users with your search criteria: ");
@@ -846,6 +848,7 @@ public class Main extends Application {
       recoItems.add("No recommended classes.");
       reco.setItems(recoItems);
     }
+    //Calculate the percentage of searched users to total users
     double totalUser = this.currentDriver.getTotalUser();
     double searchedUser = 0;
     try {
