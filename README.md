@@ -3,17 +3,18 @@
 
 
 ﻿# EvolutionTree
- This application which will keep track of any organization/ hierarchical information and help connect members with each other based on specific interest. 
+ 
+This application which will keep track of any organization/ hierarchical information and help connect members with each other based on specific interest. 
 For example: Posse Scholarship recipients. Each year there are 10 students inducted from 4 different cities. Each student has a mentor assigned from the earlier year as their mentor. This creates a lineage. This application can create a map of the linear and maybe export an visual representation. We can include informations as city, major, clubs affiliated with, current position at the workforce and etc. 
 The front-end of the application can query information based on the organization. Let’s take Posse Foundation for example- we can query for the lineage, every member interested or majored in Computer Science, or people who have graduated. 
 
 
 
 Team Members for A-Team 63:
-Ajmain Naqib: naqib@wisc.edu
-Ben Procknow: bprocknow@wisc.edu
-Callan Patel: ccpatel2@wisc.edu
-Erica Heying: eheying@wisc.edu
+- Ajmain Naqib: naqib@wisc.edu
+- Ben Procknow: bprocknow@wisc.edu
+- Callan Patel: ccpatel2@wisc.edu
+- Erica Heying: eheying@wisc.edu
 
 Course: CS400, Spring 2019    Lecturer's Name: Debra Depler
 
@@ -64,9 +65,4 @@ For ex: if first field is 'a' with value 'value1', and the next field is 'b'. Th
 
 Could not search for faculty with courses taught properly. 
 Able to add same user again.
-
-## License
-
-    Copyright [2018] [Ajmain Naqib]
-
 
